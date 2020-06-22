@@ -1,0 +1,25 @@
+<script src="static/js/client_demo.js"></script>
+
+{{> header content='Client-side rendering demo'}}
+
+<button type="button" onclick="render();">Click to render</button>
+
+<p>The content below is rendered using client-side JavaScript.</p>
+
+<div id="cat-container"></div>
+<div id="list-container"></div>
+
+<!-- Add a \ before the handlebars -->
+<script type="text/x-handlebars" id="cats-template">
+  \{{#each cats}}
+    <div class="cat">
+      {{> header content='{{this.name}}'}}
+      <p>Age: \{{this.age}}</p>
+      <img src="\{{this.photo_url}}" height="200">
+    </div>
+  \{{/each}}
+</script>
+
+<script type="text/x-handlebars" id="list-template">
+  {{> textListClient}}
+</script>

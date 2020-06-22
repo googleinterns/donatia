@@ -1,0 +1,24 @@
+{
+  "name": "step-node-starter",
+  "version": "1.0.0",
+  "description": "Skeleton app for Node.js based STEP capstone project. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccyang314/step-node-starter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccyang314/step-node-starter/issues"
+  },
+  "homepage": "https://github.com/ccyang314/step-node-starter#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4"
+  }
+}

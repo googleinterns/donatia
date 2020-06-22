@@ -1,0 +1,21 @@
+<script src="static/js/index.js"></script>
+
+<h1>STEP Example App: Index</h1>
+
+<h3>Displays text based on arguments passed in through URL</h3>
+
+<p>http://localhost:3000/fname/[your-first-name]/lname/[your-last-name]</p>
+
+<p>{{firstName}} {{lastName}}</p>
+
+<h3>Displays text based on boolean in routes/index.js</h3>
+
+{{#if auth}}
+<p>user authenticated</p>
+{{else}}
+<p>unknown user</p>
+{{/if}}
+
+<h3>Displays text based on list in routes/index.js</h3>
+
+{{> textList listElements=podMembers}}
