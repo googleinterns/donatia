@@ -1,0 +1,27 @@
+[{
+		"id": 1,
+		"name": "XYZ Homeless Shelter",
+		"description": "A description of the non-profit.",
+		"address": "12345 Road Drive",
+		"phone": 1234567890,
+		"website": "www.example.com",
+		"email": "hello@example.com",
+		"items": [{
+			"quality": ["quality check 1", "quality check 2"],
+			"instructions": ["instruction 1", "instruction 2"]
+		}]
+	},
+	{
+		"id": 2,
+		"name": "ABC Food Pantry",
+		"description": "A description of the non-profit.",
+		"address": "12345 Road Drive",
+		"phone": 1234567890,
+		"website": "www.example.com",
+		"email": "hello@example.com",
+		"items": [{
+			"quality": ["quality check 1", "quality check 2"],
+			"instructions": ["instruction 1", "instruction 2"]
+		}]
+	}
+]
