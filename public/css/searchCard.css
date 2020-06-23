@@ -1,0 +1,28 @@
+.search-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #acacac;
+  border-radius: 3px;
+}
+
+.search-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.search-dropoff-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.search-name,
+.search-address,
+.search-phone { 
+  margin: 0px;
+  padding: 0px;
+}
