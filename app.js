@@ -21,4 +21,8 @@ app.get('/', (req, res) => res.render('index'));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+  app.emit( "app_started" );
 });
+
+// Exporting for running unit tests.
+module.exports = app;
