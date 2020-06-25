@@ -1,16 +1,25 @@
 <div class="search-card">
   <div class="search-left">
-    <div>
-      <h2 class="search-name">{{title}}</h2>
+    <div class="search-dropoff-info">
+      <h1 class="search-name">{{title}}</h1>
       <h2 class="search-address">{{address}}</h2>
       <h2 class="search-phone">{{phone}}</h2>
     </div>
     <div class="search-dropoff-options">
-      <h2>Drop off</h2>
-      <h2>Mail in</h2>
+      <p>Drop off 
+        {{#if dropoff}} <span class="check">✓</span> {{else}} <span class="cross">✗</span> {{/if}}
+      </p>
+      <p>Mail in 
+        {{#if mailin}} <span class="check">✓</span> {{else}} <span class="cross">✗</span> {{/if}}
+      </p>
     </div>
   </div>
   <div class="search-right">
-    <p>this is a test</p>
+    <h2>Items</h2>
+    <div class="search-categories-contianer">
+      {{#each categories}}
+        <p class="search-category">{{this}}</p>
+      {{/each}}
+    </div>
   </div>
 </div>
