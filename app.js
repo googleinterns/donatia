@@ -17,10 +17,7 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
-// View configs.
-var searchCard = require('./routes/searchCard');
-
-app.get('/', searchCard.test, (req, res) => res.render('index'));
+app.get('/', (req, res) => res.render('index'));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
