@@ -24,4 +24,5 @@ http.createServer(app).listen(app.get('port'), function(){
   app.emit( "app_started" );
 });
 
+// Exporting for running unit tests.
 module.exports = app;
