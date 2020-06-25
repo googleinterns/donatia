@@ -7,10 +7,10 @@
     </div>
     <div class="search-dropoff-options">
       <p>Drop off 
-        {{#if dropoff}} <span class="check">✓</span> {{else}} <span class="cross">✗</span> {{/if}}
+        {{#if isSupportDropOff}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
       </p>
       <p>Mail in 
-        {{#if mailin}} <span class="check">✓</span> {{else}} <span class="cross">✗</span> {{/if}}
+        {{#if isSupportMailIn}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
       </p>
     </div>
   </div>

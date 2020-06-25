@@ -4,7 +4,7 @@ exports.test = function(req, res){
     address: "12345 Road Drive",
     phone: "(123) 456-7890",
     categories: ["clothing", "cleaning products", "food", "furniture"],
-    dropoff: false,
-    mailin: true
+    isSupportDropOff: false,
+    isSupportMailIn: true
   });
 };

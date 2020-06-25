@@ -81,12 +81,12 @@
   font-size: .9rem;
 }
 
-.check {
+.valid-symbol {
   color: #32a852; 
   font-weight: bold;
 }
 
-.cross {
+.invalid-symbol {
   color: #a83234;
   font-weight: bold;
 }
