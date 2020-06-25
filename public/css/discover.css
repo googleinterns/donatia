@@ -9,8 +9,14 @@
   width: 50%;
 }
 
-#search-dropdown {
+#search {
+  padding: 20px;
+}
 
+#search-dropdown {
+  width: 100%;
+  padding: 10px;
+  border-radius: 18px;
 }
 
 #search-list {
