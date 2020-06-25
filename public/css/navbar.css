@@ -1,0 +1,51 @@
+#navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  
+  /* Border shadow*/
+  -webkit-box-shadow: 0px 0px 3px 0px #929292;
+  -moz-box-shadow: 0px 0px 3px 0px #929292;
+  box-shadow: 0px 0px 3px 0px #929292;
+}
+
+a {
+  /* Remove default styling */
+  color: inherit;
+  text-decoration: inherit;
+}
+
+#navbar-logo,
+#navbar-links a:hover {
+  cursor: pointer;
+}
+
+#navbar-logo {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+}
+
+#navbar-links a {
+  margin: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#navbar-links a:hover:not(#login-button) {
+  border-bottom: 2px solid #929292;
+}
+
+#login-button {
+  font-weight: bold;
+  padding: 6px 20px;
+  border-radius: 15px;
+  background-color: #59d633;
+  color: white;
+}
+
+#login-button:hover {
+  background-color: #409726;
+}
