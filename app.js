@@ -17,7 +17,7 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => res.render('discover'));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
