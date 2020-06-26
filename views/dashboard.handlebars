@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/static/css/dashboard.css">
+<script src="/static/js/dashboard.js"></script>
+
+<div id="dashboard-title">
+  {{ id }}'s Dashboard
+</div>
+
+<dashboard-section>
+  <dashboard-nav>
+    <ul>
+      <li><a href="/dashboard/{{ id }}">Dashboard</a></li>
+      <li><a href="#">Edit Categories</a></li>
+      <li><a href="/dashboard/{{ id }}/edit">Edit Profile</a></li>
+    </ul>
+  </dashboard-nav>
+  
+  <dashboard-content>
+    <form>
+      <div id="form-container">
+        <script type="text/x-handlebars" id="form-template">
+          \{{#each formcontent}}
+            <label for="\{{this.computerName}}">\{{this.humanName}}</label><br>
+            {{#if editable}}
+              <input type="text" id="\{{this.computerName}}" name="\{{this.computerName}}"><br>
+            {{else}}
+              <input disabled type="text" id="\{{this.computerName}}" name="\{{this.computerName}}"><br>
+            {{/if}}
+          \{{/each}}
+        </script>
+      </div>
+      <button>Submit</button>
+    </form>
+  </dashboard-content>
+</dashboard-section>

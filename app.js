@@ -19,6 +19,17 @@ app.use('/static', express.static('public'));
 
 app.get('/', (req, res) => res.render('index'));
 
+app.get('/dashboard/:id/:page?', function(req, res) {
+  var showEditPage = req.params.page === 'edit';
+  res.render(
+    'dashboard',
+    { 
+      id: req.params.id,
+      editable: showEditPage
+    }
+  )
+});
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
