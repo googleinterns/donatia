@@ -10,6 +10,7 @@
       "supportsDropOff": true,
       "supportsMailIn": true,
       "supportsPickUp": true,
+      "placeId": "ChIJzbLivZK_QIYREiVTxxtalb4",
       "latitude": 29.7052762,
       "longitude": -95.3847942
     },
@@ -23,6 +24,7 @@
       "supportsDropOff": true,
       "supportsMailIn": false,
       "supportsPickUp": false,
+      "placeId": "ChIJqXJqIF-kQIYRDwibaAMUmiU",
       "latitude": 29.7810067,
       "longitude": -95.2747503
     },
@@ -36,6 +38,7 @@
       "supportsDropOff": true,
       "supportsMailIn": true,
       "supportsPickUp": false,
+      "placeId": "ChIJRWl1VX-_QIYRq2Ci16Q-68w",
       "latitude": 29.7264726,
       "longitude": -95.3896933
     },
@@ -49,6 +52,7 @@
       "supportsDropOff": true,
       "supportsMailIn": false,
       "supportsPickUp": false,
+      "placeId": "ChIJS5Twh3vrQIYRgsaDQPJANzg",
       "latitude": 29.591187,
       "longitude": -95.4309565
     }
