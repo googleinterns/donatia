@@ -1,4 +1,4 @@
-exports.test = function(req, res){
+exports.test = function(req, res) {
   res.render('index', {
     title: "XYZ Homeless Shelter",
     address: "12345 Road Drive",

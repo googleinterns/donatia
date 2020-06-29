@@ -6,12 +6,11 @@
       <h2 class="search-phone">{{phone}}</h2>
     </div>
     <div class="search-dropoff-options">
-      <p>Drop off 
-        {{#if isSupportDropOff}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
-      </p>
-      <p>Mail in 
-        {{#if isSupportMailIn}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
-      </p>
+      {{#*inline "acceptanceSymbol"}}
+        {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
+      {{/inline}}
+      <p>Drop off {{> acceptanceSymbol accepts=isSupportDropOff}} </p>
+      <p>Mail in {{> acceptanceSymbol accepts=isSupportMailIn}} </p>
     </div>
   </div>
   <div class="search-right">
