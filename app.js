@@ -20,6 +20,7 @@ app.use('/static', express.static('public'));
 // Routes.
 const discover = require('./routes/discover')
 
+app.get('/', (req, res) => res.render('index'));
 app.get('/discover', discover.test);
 
 http.createServer(app).listen(app.get('port'), function(){
