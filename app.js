@@ -19,19 +19,8 @@ app.use('/static', express.static('public'));
 
 app.get('/', (req, res) => res.render('index'));
 
-app.get('/dashboard/:id/:page?', function(req, res) {
-  var pageParam = req.params.page;
-  var pageName = 'dashboardView';
-  if (pageParam === 'edit') pageName = 'dashboardEdit';
-
-  res.render(
-    pageName,
-    {
-      layout: 'dashboard',
-      id: req.params.id,
-    }
-  )
-});
+const dashboard = require('./routes/dashboard');
+app.get('/dashboard/:id/:page?', dashboard.view);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
