@@ -1,7 +1,7 @@
 <div class="search-card">
   <div class="search-left">
     <div class="search-dropoff-info">
-      <h1 class="search-name">{{organization.name}}</h1>
+      <h1 class="search-title">{{organization.title}}</h1>
       <h2 class="search-address">{{organization.address}}</h2>
       <h2 class="search-phone">{{organization.phone}}</h2>
     </div>
@@ -11,6 +11,7 @@
       {{/inline}}
       <p>Drop off {{> acceptanceSymbol accepts=organization.isSupportDropOff}} </p>
       <p>Mail in {{> acceptanceSymbol accepts=organization.isSupportMailIn}} </p>
+      <p>Pick up {{> acceptanceSymbol accepts=organization.isSupportPickUp}} </p>
     </div>
   </div>
   <div class="search-right">

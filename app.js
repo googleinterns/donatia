@@ -18,9 +18,9 @@ app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
 // Routes.
-const searchCard = require('./routes/searchCard')
+const discover = require('./routes/discover')
 
-app.get('/', searchCard.test);
+app.get('/discover', discover.test);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
