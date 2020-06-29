@@ -9,9 +9,9 @@
       {{#*inline "acceptanceSymbol"}}
         {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
       {{/inline}}
-      <p>Drop off {{> acceptanceSymbol accepts=organization.isSupportDropOff}} </p>
-      <p>Mail in {{> acceptanceSymbol accepts=organization.isSupportMailIn}} </p>
-      <p>Pick up {{> acceptanceSymbol accepts=organization.isSupportPickUp}} </p>
+      <p>Drop off {{> acceptanceSymbol accepts=organization.supportsDropOff}} </p>
+      <p>Mail in {{> acceptanceSymbol accepts=organization.supportsMailIn}} </p>
+      <p>Pick up {{> acceptanceSymbol accepts=organization.supportsPickUp}} </p>
     </div>
   </div>
   <div class="search-right">
