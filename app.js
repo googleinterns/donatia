@@ -20,12 +20,15 @@ app.use('/static', express.static('public'));
 app.get('/', (req, res) => res.render('index'));
 
 app.get('/dashboard/:id/:page?', function(req, res) {
-  var showEditPage = req.params.page === 'edit';
+  var pageParam = req.params.page;
+  var pageName = 'dashboardView';
+  if (pageParam === 'edit') pageName = 'dashboardEdit';
+
   res.render(
-    'dashboard',
-    { 
+    pageName,
+    {
+      layout: 'dashboard',
       id: req.params.id,
-      editable: showEditPage
     }
   )
 });
