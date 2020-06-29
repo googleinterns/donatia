@@ -5,7 +5,7 @@
   align-items: center;
   padding: 10px 20px;
   
-  /* Border shadow*/
+  /* Border shadow */
   -webkit-box-shadow: 0px 0px 3px 0px #929292;
   -moz-box-shadow: 0px 0px 3px 0px #929292;
   box-shadow: 0px 0px 3px 0px #929292;
@@ -17,8 +17,7 @@ a {
   text-decoration: inherit;
 }
 
-#navbar-logo,
-#navbar-links a:hover {
+#navbar a:hover {
   cursor: pointer;
 }
 
@@ -34,7 +33,7 @@ a {
   padding-bottom: 5px;
 }
 
-#navbar-links a:hover:not(#login-button) {
+.underline:hover {
   border-bottom: 2px solid #929292;
 }
 
