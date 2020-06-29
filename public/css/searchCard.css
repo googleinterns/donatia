@@ -1,0 +1,92 @@
+.search-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px 20px;
+  margin: 10px 0px;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  height: 160px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.search-card:hover { 
+  background-color: #f1f1f1; 
+  cursor: pointer;
+}
+
+.search-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.search-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 50%;
+}
+
+.search-name,
+.search-address,
+.search-phone,
+.search-right h2 { 
+  margin: 0px;
+  padding: 2px;
+}
+
+.search-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.search-address,
+.search-phone {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.search-dropoff-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.search-dropoff-options p {
+  margin: 0px;
+  padding-right: 20px;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.search-right h2 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  text-align: right;
+}
+
+.search-categories-contianer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.search-category {
+  margin: 3px 0px 3px 6px;
+  padding: 3px 8px;
+  border-radius: 15px;
+  border: 1px solid #d4d4d4;
+  font-size: .9rem;
+}
+
+.valid-symbol {
+  color: #32a852; 
+  font-weight: bold;
+}
+
+.invalid-symbol {
+  color: #a83234;
+  font-weight: bold;
+}

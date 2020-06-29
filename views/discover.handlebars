@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="static/css/discover.css">
+<link rel="stylesheet" href="static/css/searchCard.css">
 
 <div class="page">
   <div id="discover">
@@ -10,11 +11,13 @@
       </select>
       
       <div id="search-list">
-
+        {{#each organizations}}
+          {{> searchCard organization = this }}
+        {{/each}}
       </div>
     </div>
     <div id="map">
-      a
+      
     </div>
   </div>
 </div> 

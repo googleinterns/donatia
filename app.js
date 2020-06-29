@@ -17,8 +17,15 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
-app.get('/', (req, res) => res.render('discover'));
+// Routes.
+const searchCard = require('./routes/searchCard')
+
+app.get('/', searchCard.test);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+  app.emit( "app_started" );
 });
+
+// Exporting for running unit tests.
+module.exports = app;
