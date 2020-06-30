@@ -13,7 +13,6 @@ body {
 
 #search {
   width: 50%;
-  height: 100%;
   padding: 20px;
   border-right: 1px solid #ececec;
   overflow-y: scroll;
@@ -28,6 +27,7 @@ body {
   width: 100%;
   padding: 10px;
   border-radius: 18px;
+  background-color: white;
 }
 
 #search-list {
