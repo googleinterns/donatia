@@ -1,5 +1,5 @@
 var data = require('../testingOrganizations.json');
 
-exports.test = function(req, res) {
+exports.view = function(req, res) {
   res.render('discover', { organizations: data.organizations });
 };

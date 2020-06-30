@@ -21,7 +21,7 @@ app.use('/static', express.static('public'));
 const discover = require('./routes/discover')
 
 app.get('/', (req, res) => res.render('index'));
-app.get('/discover', discover.test);
+app.get('/discover', discover.view);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
