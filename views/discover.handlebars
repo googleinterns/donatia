@@ -1,5 +1,13 @@
 <link rel="stylesheet" href="static/css/discover.css">
 <link rel="stylesheet" href="static/css/searchCard.css">
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap">
+</script>
+<script> 
+  // Store handlebars organization data for javascript files.
+  var organizations = {{{json organizations}}}; 
+</script>
 <script src="static/js/maps.js"></script>
 
 <div id="discover">

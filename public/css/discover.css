@@ -11,15 +11,17 @@ body {
   overflow: hidden;
 }
 
-#search,
-#map {
-  width: 50%;
-}
-
 #search {
+  width: 50%;
+  height: 100%;
   padding: 20px;
   border-right: 1px solid #ececec;
   overflow-y: scroll;
+}
+
+#map {
+  width: 50%;
+  height: 100%;
 }
 
 #search-dropdown {
