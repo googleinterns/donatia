@@ -1,4 +1,4 @@
-const HOUSTON_CORDS = { lat: 29.7604, lng: -95.3698 }
+const HOUSTON_COORDS = { lat: 29.7604, lng: -95.3698 }
 
 var map;
 var bounds;
@@ -10,7 +10,7 @@ var openMarkerWindow;
 */
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: HOUSTON_CORDS,
+    center: HOUSTON_COORDS,
     zoom: 13,
     disableDefaultUI: true,
     zoomControl: true,
@@ -21,7 +21,7 @@ function initMap() {
       }
     ]
   });
-  bounds = new google.maps.LatLngBounds(HOUSTON_CORDS);
+  bounds = new google.maps.LatLngBounds(HOUSTON_COORDS);
   generateMarkers(organizations);
 }
 
