@@ -17,6 +17,11 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
+// Load API keys.
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 // Routes.
 const discover = require('./routes/discover')
 
