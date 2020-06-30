@@ -1,0 +1,35 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#discover {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+#search,
+#map {
+  width: 50%;
+}
+
+#search {
+  padding: 20px;
+  border-right: 1px solid #ececec;
+  overflow-y: scroll;
+}
+
+#search-dropdown {
+  width: 100%;
+  padding: 10px;
+  border-radius: 18px;
+}
+
+#search-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}

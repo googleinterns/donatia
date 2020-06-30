@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 15px 20px;
-  margin: 10px;
+  margin: 10px 0px;
   border: 1px solid #ececec;
   border-radius: 3px;
   height: 160px;
@@ -19,16 +19,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-width: 50%;
 }
 
 .search-right {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  max-width: 50%;
+  max-width: 45%;
 }
 
-.search-name,
+.search-title,
 .search-address,
 .search-phone,
 .search-right h2 { 
@@ -36,8 +37,8 @@
   padding: 2px;
 }
 
-.search-name {
-  font-size: 1.6rem;
+.search-title {
+  font-size: 1.4rem;
   font-weight: bold;
 }
 
