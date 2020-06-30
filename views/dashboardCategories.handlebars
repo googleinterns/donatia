@@ -1,0 +1,49 @@
+<script src="/static/js/dashboardCategories.js"></script>
+
+<div>
+    <form class="add-card">
+        <h3>Add a category</h3>
+        
+        <label for="categories">Choose a category:</label><br>
+        <select name="categories" id="categories">
+            <script type="text/x-handlebars" id="categories-template">
+            \{{#each categoryList}}
+                <option value="\{{this.ID}}">\{{this.name}}</option>
+            \{{/each}}
+            </script>
+        </select><br>
+
+        <label for="add-card-quality">Quality Check Instructions:</label><br>
+        <input type="text" id="add-card-quality" name="add-card-quality"><br>
+
+        <label for="add-card-instructions">Donation Instructions:</label><br>
+        <input type="text" id="add-card-instructions" name="add-card-instructions"><br>
+
+        <div class="card-buttons">
+            <button> + </button>
+        </div>
+    </form>
+
+
+    <div class="view-card">
+        <h3>Generic Category Name</h3>
+        <div class="quality-section">
+            <p>Quality Check Instructions:</p>
+            <ul>
+                <li>test</li>
+                <li>ing</li>
+                <li>123</li>
+            </ul>
+        </div>
+        <div class="instructions-section">
+            <p>Donation Instructions:</p>
+            <ol>
+                <li>test</li>
+                <li>ing</li>
+                <li>123</li>
+            </ol>
+        </div>
+    </div>
+
+
+</div>

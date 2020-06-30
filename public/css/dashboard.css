@@ -27,8 +27,26 @@ dashboard-content {
   flex: 3;
   background-color: #f1f1f1;
   padding: 3em;
+  overflow-y: scroll;
 }
 
 #form-container > input {
   margin-bottom: 1em;
+}
+
+.add-card {
+  padding: 1em;
+  margin: 1em;
+  border-style: solid;
+}
+
+.view-card {
+  padding: 1em;
+  margin: 1em;
+  border-style: solid;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: flex-end;
 }
