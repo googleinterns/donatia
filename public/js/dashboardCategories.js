@@ -25,23 +25,43 @@ function getAllCategories() {
 function getAllAcceptedCategories(organizationID) {
     var allAcceptedCategories = [
         {
+            "name": "Clothes",
             "ID": "org-name-clothes",
-            "instructions": ["instruction 1","instruction 2","instruction 3"],
-            "quality": ["check 1","check 2","check 3"],
+            "instructions": ["review quality checklist","unlock donation locker (code: 5248)","place in donation locker"],
+            "quality": ["no holes","gently used","washed recently"],
         },
         {
+            "name": "Food",
             "ID": "org-name-food",
-            "instructions": ["instruction 1","instruction 2","instruction 3"],
-            "quality": ["check 1","check 2","check 3"],
+            "instructions": ["review quality checklist","place in plastic/paper bag","bring inside during open hours"],
+            "quality": ["expiration date > 6 months from current date","no holes","labels on cans"],
         },
     ]
     return allAcceptedCategories;
 }
 
+/**
+ * TODO: Add category to database
+ */
+function addCategory() {
+    console.log("added a category");
+}
+
+/**
+ * @param {string} categoryID ID of the category to be deleted.
+ */
+function deleteCategory(categoryID) {
+    console.log("deleted" + categoryID);
+}
 
 window.onload = async function() {
-    let categoriesTemplate = document.getElementById('categories-template').innerHTML;
-    const renderCategories = Handlebars.compile(categoriesTemplate);
-    const allCategories = await this.getAllCategories();
-    document.getElementById('categories').innerHTML = renderCategories({categoryList: allCategories});
+    const addCategoriesTemplate = document.getElementById('add-categories-template').innerHTML;
+    const renderAddCategories = Handlebars.compile(addCategoriesTemplate);
+    const allAvailableCategories = await this.getAllCategories();
+    document.getElementById('add-categories').innerHTML = renderAddCategories({categoryList: allAvailableCategories});
+
+    const existingCategoriesTemplate = document.getElementById('existing-cards-template').innerHTML;
+    const renderExistingCards = Handlebars.compile(existingCategoriesTemplate);
+    const allExistingCards = await this.getAllAcceptedCategories();
+    this.document.getElementById('existing-card-holder').innerHTML = renderExistingCards({cardList: allExistingCards});
 }

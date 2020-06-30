@@ -1,12 +1,12 @@
 <script src="/static/js/dashboardCategories.js"></script>
 
 <div>
-    <form class="add-card">
+    <form class="category-card" onsubmit="addCategory()">
         <h3>Add a category</h3>
         
         <label for="categories">Choose a category:</label><br>
-        <select name="categories" id="categories">
-            <script type="text/x-handlebars" id="categories-template">
+        <select name="add-categories" id="add-categories">
+            <script type="text/x-handlebars" id="add-categories-template">
             \{{#each categoryList}}
                 <option value="\{{this.ID}}">\{{this.name}}</option>
             \{{/each}}
@@ -19,31 +19,37 @@
         <label for="add-card-instructions">Donation Instructions:</label><br>
         <input type="text" id="add-card-instructions" name="add-card-instructions"><br>
 
-        <div class="card-buttons">
-            <button> + </button>
+        <div class="category-card-buttons">
+            <button> Add </button>
         </div>
     </form>
 
-
-    <div class="view-card">
-        <h3>Generic Category Name</h3>
-        <div class="quality-section">
-            <p>Quality Check Instructions:</p>
-            <ul>
-                <li>test</li>
-                <li>ing</li>
-                <li>123</li>
-            </ul>
-        </div>
-        <div class="instructions-section">
-            <p>Donation Instructions:</p>
-            <ol>
-                <li>test</li>
-                <li>ing</li>
-                <li>123</li>
-            </ol>
+    <div id="existing-card-holder">
+        <script type="text/x-handlebars" id="existing-cards-template">
+            \{{#each cardList}}
+                <div class="category-card">
+                    <h3>\{{this.name}}</h3>
+                    <div class="quality-section">
+                        <p>Quality Check Instructions:</p>
+                        <ul>
+                            \{{#each this.instructions}}
+                                <li>\{{this}}</li>
+                            \{{/each}}
+                        </ul>
+                    </div>
+                    <div class="instructions-section">
+                        <p>Donation Instructions:</p>
+                        <ol>
+                            \{{#each this.quality}}
+                                <li>\{{this}}</li>
+                            \{{/each}}
+                        </ol>
+                    </div>
+                    <div class="category-card-buttons">
+                        <button onclick="deleteCategory('\{{this.ID}}')"> Delete </button>
+                    </div>
+                </div>
+            \{{/each}}
         </div>
     </div>
-
-
 </div>

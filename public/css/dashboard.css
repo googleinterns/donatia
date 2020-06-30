@@ -1,7 +1,7 @@
 dashboard-section {
   display: -webkit-flex;
   display: flex;
-  height: 70vh;
+  height: 83vh;
 }
 
 dashboard-nav {
@@ -34,19 +34,13 @@ dashboard-content {
   margin-bottom: 1em;
 }
 
-.add-card {
+.category-card {
   padding: 1em;
   margin: 1em;
   border-style: solid;
 }
 
-.view-card {
-  padding: 1em;
-  margin: 1em;
-  border-style: solid;
-}
-
-.card-buttons {
+.category-card-buttons {
   display: flex;
   justify-content: flex-end;
 }
