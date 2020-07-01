@@ -1,6 +1,17 @@
 <link rel="stylesheet" href="static/css/discover.css">
 <link rel="stylesheet" href="static/css/searchCard.css">
 
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap">
+</script>
+
+<script> 
+  // Store handlebars organization data for javascript files.
+  let organizations = {{{json organizations}}}; 
+</script>
+
+<script src="static/js/maps.js"></script>
+
 <div id="discover">
   <div id="search">
     <select id="search-dropdown">
@@ -15,7 +26,6 @@
       {{/each}}
     </div>
   </div>
-  <div id="map">
-    
-  </div>
+
+  <div id="map"></div>
 </div>
