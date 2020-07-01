@@ -26,9 +26,8 @@
     <div id="search-list">
       <script type="text/x-handlebars" id="search-cards-template">
         \{{#each organizations}}
-          {{> test value={{this}}}}
           {{!-- {{> test value='{{this.title}}'}} --}}
-          {{!-- {{> searchCard title='{{this.title}}'}} --}}
+          {{> searchCard organization='{{this}}'}}
         \{{/each}}
       </script>
     </div>
