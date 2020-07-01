@@ -1,9 +1,9 @@
 /**
- * TODO: GET organization's information from database
  * @param {string} id Organization's unique database ID
  * @return JSON of organization's information 
  */
 function getFormInfo(id) {
+  // TODO: Get organization's information from database
   const info = {
     "ID": "google1",
     "name": "Google",
@@ -16,9 +16,8 @@ function getFormInfo(id) {
   return info;
 }
 
-/**
- * Populates the input elements of the form.
- * Removes disabled attribute if on edit page
+/*
+ * Pre-populates the input elements of the form.
  */
 window.onload = async function populateForm() {
   const formJSON = await getFormInfo("{{id}}");
