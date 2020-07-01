@@ -5,6 +5,7 @@
 exports.view = function (req, res) {
   const pageParam = req.params.page;
   var pageName = 'dashboardProfile';
+  if (pageParam === 'categories') pageName = 'dashboardCategories';
 
   res.render(
     pageName,

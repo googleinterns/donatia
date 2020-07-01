@@ -32,3 +32,14 @@
 #form-container > input {
   margin-bottom: 1em;
 }
+
+.category-card {
+  padding: 1em;
+  margin: 1em;
+  border-style: solid;
+}
+
+.category-card-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
