@@ -1,13 +1,13 @@
 const HOUSTON_COORDS = { lat: 29.7604, lng: -95.3698 }
 
-var map;
-var bounds;
-var openMarkerWindow;
+let map;
+let bounds;
+let openMarkerWindow;
 
-/*
+/** 
  * Initialize the Google Map to be centerd in Houston and to add 
  * initial organization markers.
- */
+*/
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: HOUSTON_COORDS,
@@ -25,19 +25,19 @@ function initMap() {
   generateMarkers(organizations);
 }
 
-/*
- * Add markers to the map based on the data in the data array passed in. 
+/**
+ * Add markers to the map based on the data in the data array passed in.
  * @param {JSON object} data A json containing organzation data to generate markers for.
  */
 function generateMarkers(data) {
   data.forEach(org => {
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       position: new google.maps.LatLng(org.latitude, org.longitude),
       map: map,
       title: org.title
     });
 
-    var markerWindow = new google.maps.InfoWindow({
+    let markerWindow = new google.maps.InfoWindow({
       content: org.title
     });
 
