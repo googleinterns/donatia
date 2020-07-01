@@ -1,18 +1,10 @@
 <link rel="stylesheet" href="static/css/discover.css">
 <link rel="stylesheet" href="static/css/searchCard.css">
 
-{{!-- <script async defer
+<script async defer
   src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap">
 </script>
-
-<script> 
-  // Store handlebars organization data for javascript files.
-  var organizations = {{{json organizations}}}; 
-</script>
-
-<script src="static/js/maps.js"></script> --}}
-
-
+<script src="static/js/maps.js"></script>
 <script src="static/js/searchList.js"></script>
 
 <div id="discover">
@@ -23,15 +15,30 @@
       <option value="furniture">Furniture</option>
     </select>
     
-    <div id="search-list">
-      <script type="text/x-handlebars" id="search-cards-template">
-        \{{#each organizations}}
-          {{!-- {{> test value='{{this.title}}'}} --}}
-          {{> searchCard organization='{{this}}'}}
-        \{{/each}}
-      </script>
-    </div>
+    <div id="search-list"></div>
   </div>
 
   <div id="map"></div>
 </div>
+
+<template>
+  <div class="search-card">
+    <div class="search-left">
+      <div class="search-dropoff-info">
+        <h1 class="search-title"></h1>
+        <h2 class="search-address"></h2>
+        <h2 class="search-phone"></h2>
+      </div>
+      <div class="search-dropoff-options">
+        <p class="drop-off">Drop off </p>
+        <p class="mail-in">Mail in </p>
+        <p class="pick-up">Pick up </p>
+      </div>
+    </div>
+    <div class="search-right">
+      <h2>Accepts</h2>
+      <div class="search-categories-contianer">
+      </div>
+    </div>
+  </div>
+</template>
