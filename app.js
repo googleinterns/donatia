@@ -35,6 +35,9 @@ app.get('/', (req, res) => res.render('index'));
 const discover = require('./routes/discover')
 app.get('/discover', discover.view);
 
+const dashboard = require('./routes/dashboard');
+app.get('/dashboard/:id/:page?', dashboard.view);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
   app.emit( "app_started" );
