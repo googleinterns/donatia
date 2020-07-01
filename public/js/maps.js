@@ -1,4 +1,4 @@
-const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698}
+const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
 let bounds;
@@ -34,11 +34,11 @@ function generateMarkers(data) {
     let marker = new google.maps.Marker({
       position: new google.maps.LatLng(org.latitude, org.longitude),
       map: map,
-      title: org.title
+      title: org.title,
     });
 
     let markerWindow = new google.maps.InfoWindow({
-      content: org.title
+      content: org.title,
     });
 
     google.maps.event.addListener(marker, 'click', function () {
