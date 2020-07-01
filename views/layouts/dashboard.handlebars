@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Donatia - Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha256-usTqAE1ywvdMtksWzdeWzD75MsfJN0h0U7y2NtZL3N0=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/static/css/general.css">
-    <link rel="stylesheet" href="/static/css/dashboard.css">
-</head>
-<body>
- 
-    {{> navbar }}
 
-    <div id="dashboard-title">
-        {{ id }}'s Dashboard
+<head>
+  <meta charset="utf-8">
+  <title>Donatia - Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"
+    integrity="sha256-usTqAE1ywvdMtksWzdeWzD75MsfJN0h0U7y2NtZL3N0=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/static/css/general.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+
+<body>
+
+  {{> navbar}}
+
+  <div id="dashboard-title">
+    {{id}}'s Dashboard
+  </div>
+
+  <div class="dashboard-section">
+    <div class="dashboard-nav">
+      <ul>
+        <li><a href="/dashboard/{{ id }}">Dashboard</a></li>
+        <li><a href="/dashboard/{{ id }}/edit">Edit Profile</a></li>
+      </ul>
     </div>
 
-    <dashboard-section>
-        <dashboard-nav>
-            <ul>
-            <li><a href="/dashboard/{{ id }}">Dashboard</a></li>
-            <li><a href="/dashboard/{{ id }}/edit">Edit Profile</a></li>
-            </ul>
-        </dashboard-nav>
-        
-        <dashboard-content>
-            {{{body}}}
-        </dashboard-content>
-    </dashboard-section>
+    <div class="dashboard-content">
+      {{{body}}}
+    </div>
+  </div>
 
 </body>
+
 </html>
