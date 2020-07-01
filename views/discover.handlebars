@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="static/css/discover.css">
 <link rel="stylesheet" href="static/css/searchCard.css">
 
-<script async defer
+{{!-- <script async defer
   src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap">
 </script>
 
@@ -10,7 +10,10 @@
   var organizations = {{{json organizations}}}; 
 </script>
 
-<script src="static/js/maps.js"></script>
+<script src="static/js/maps.js"></script> --}}
+
+
+<script src="static/js/searchList.js"></script>
 
 <div id="discover">
   <div id="search">
@@ -21,9 +24,13 @@
     </select>
     
     <div id="search-list">
-      {{#each organizations}}
-        {{> searchCard organization = this }}
-      {{/each}}
+      <script type="text/x-handlebars" id="search-cards-template">
+        \{{#each organizations}}
+          {{> test value={{this}}}}
+          {{!-- {{> test value='{{this.title}}'}} --}}
+          {{!-- {{> searchCard title='{{this.title}}'}} --}}
+        \{{/each}}
+      </script>
     </div>
   </div>
 
