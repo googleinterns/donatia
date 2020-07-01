@@ -5,7 +5,8 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var handlebars = require('express-handlebars')
+var handlebars = require('express-handlebars');
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.engine('handlebars', handlebarsConfig.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
+app.use(bodyParser.json())
 
 // Load API keys.
 if (process.env.NODE_ENV !== 'production') {

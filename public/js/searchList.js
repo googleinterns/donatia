@@ -1,12 +1,15 @@
+const BATCH_SIZE = 10;
+
 let searchCardsTemplate;
 let organizations;
+let fetchingNewOrganizations = false;
 
 /**
  * When the page loads, fetch initial organization data and render it
  * in cards on the list.
  */
 window.onload = function() {
-  fetchOrganizations("all").then(initalOrganizations => {
+  fetchOrganizations("all", BATCH_SIZE).then(initalOrganizations => {
     organizations = initalOrganizations;
     renderOrganizationCards(initalOrganizations);
     generateMarkers(initalOrganizations);
@@ -14,13 +17,42 @@ window.onload = function() {
 }
 
 /**
+ * Load more organization data as the user scrolls to the bottom of the list.
+ */
+function infinityScroll() {
+  let searchContainer = document.getElementById("search");
+  if (searchContainer.scrollTop + searchContainer.offsetHeight >= searchContainer.scrollHeight) {
+    if (!fetchingNewOrganizations) {
+      fetchingNewOrganizations = true;
+
+      console.log("getting new org data")
+      fetchOrganizations("all", BATCH_SIZE, organizations.length)
+      .then(newOrganizations => {
+        console.log("got new data", newOrganizations)
+        organizations.push(newOrganizations);
+        renderOrganizationCards(newOrganizations);
+        generateMarkers(newOrganizations);
+        fetchingNewOrganizations = false;
+      })
+    }
+  }
+};
+
+/**
  * Fetches the organization data with the given filters from the server.
  * @param {string} filterText The selected item category with which to filer results for.
  */
-function fetchOrganizations(filterText) {
+function fetchOrganizations(filterText, batchSize, startIndex = 0) {
   return fetch("/discover", {
     method: 'POST',
-    body: JSON.stringify({filter: filterText})
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      filter: filterText,
+      start: startIndex,
+      batchSize: batchSize,
+    })
   }).then(data => data.json());
 }
 

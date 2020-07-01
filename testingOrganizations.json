@@ -1,7 +1,7 @@
 {
   "organizations": [
     {
-      "title": "Society of St. Vincent de Paul Archdiocese",
+      "title": "1Society of St. Vincent de Paul Archdiocese",
       "address": "2403 Holcombe Blvd, Houston, TX 77021",
       "phone": "(713) 741-8234",
       "email": "info@svdphouston.org",
@@ -15,7 +15,7 @@
       "longitude": -95.3847942
     },
     {
-      "title": "Houston Food Bank",
+      "title": "2Houston Food Bank",
       "address": "535 Portwall St, Houston, TX 77029",
       "phone": "(713) 223-3700",
       "email": "info@houstonfoodbank.org",
@@ -29,7 +29,7 @@
       "longitude": -95.2747503
     },
     {
-      "title": "Emergency Aid Coalition",
+      "title": "3Emergency Aid Coalition",
       "address": "5401 Fannin St, Houston, TX 77004",
       "phone": "(713) 528-3663",
       "email": "info@eachouston.org",
@@ -43,7 +43,119 @@
       "longitude": -95.3896933
     },
     {
-      "title": "Houston Humane Society",
+      "title": "4Houston Humane Society",
+      "address": "14700 Almeda Rd, Houston, TX 77053",
+      "phone": "(713) 433-6421",
+      "email": "info@houstonhumane.org",
+      "description": "The Houston Humane Society is dedicated to, and working towards, ending cruelty, abuse and the overpopulation of animals while providing the highest quality of life to those brought to us for care. We have dogs, cats, horses, and an assortment of other animals ready to be adopted into their new forever homes! The adoption process is simple, and we even offer certain discounts for some of our furry friends.",
+      "categories": ["pet food", "vehicles"],
+      "supportsDropOff": true,
+      "supportsMailIn": false,
+      "supportsPickUp": false,
+      "placeId": "ChIJS5Twh3vrQIYRgsaDQPJANzg",
+      "latitude": 29.591187,
+      "longitude": -95.4309565
+    },
+    {
+      "title": "5Society of St. Vincent de Paul Archdiocese",
+      "address": "2403 Holcombe Blvd, Houston, TX 77021",
+      "phone": "(713) 741-8234",
+      "email": "info@svdphouston.org",
+      "description": "The Society of St. Vincent de Paul is a non-profit organization offering basic-needs assistance to the local community in need. Assistance is given through our Food Network, Clothing & Furniture Voucher, Disaster Response, and Rent & Utility Assistance Programs. The Society has been serving the local community since 1871.",
+      "categories": ["clothing", "vehicles", "furniture"],
+      "supportsDropOff": true,
+      "supportsMailIn": true,
+      "supportsPickUp": true,
+      "placeId": "ChIJzbLivZK_QIYREiVTxxtalb4",
+      "latitude": 29.7052762,
+      "longitude": -95.3847942
+    },
+    {
+      "title": "6Houston Food Bank",
+      "address": "535 Portwall St, Houston, TX 77029",
+      "phone": "(713) 223-3700",
+      "email": "info@houstonfoodbank.org",
+      "description": "More than 1.1 million people in the 18 southeast Texas counties served by Houston Food Bank are considered food insecure, meaning they lack consistent access to enough nutritious food to fuel a healthy life. In order to address this issue, the Houston Food Bank distributes food and other essentials to those in need through a network of 1,500 community partners. In addition, we also provide programs and services aimed at helping families achieve long-term stability including nutrition education, job training, health management, and help in securing state-funded assistance.",
+      "categories": ["food"],
+      "supportsDropOff": true,
+      "supportsMailIn": false,
+      "supportsPickUp": false,
+      "placeId": "ChIJqXJqIF-kQIYRDwibaAMUmiU",
+      "latitude": 29.7810067,
+      "longitude": -95.2747503
+    },
+    {
+      "title": "7Emergency Aid Coalition",
+      "address": "5401 Fannin St, Houston, TX 77004",
+      "phone": "(713) 528-3663",
+      "email": "info@eachouston.org",
+      "description": "Founded in 1983, in Houston, Texas, the Emergency Aid Coalition is an interfaith organization that collaborates to provide temporary assistance in the form of food, clothing and other basic needs, with an emphasis on serving the working poor. Each year we help more than 50,000 individuals living on the edge of poverty. Support from member congregations, dedicated volunteers, fundraisers and other benefactors allows the Emergency Aid Coalition to continue serving those in need in Houston’s inner city and Midtown neighborhoods.",
+      "categories": ["clothing", "food"],
+      "supportsDropOff": true,
+      "supportsMailIn": true,
+      "supportsPickUp": false,
+      "placeId": "ChIJRWl1VX-_QIYRq2Ci16Q-68w",
+      "latitude": 29.7264726,
+      "longitude": -95.3896933
+    },
+    {
+      "title": "8Houston Humane Society",
+      "address": "14700 Almeda Rd, Houston, TX 77053",
+      "phone": "(713) 433-6421",
+      "email": "info@houstonhumane.org",
+      "description": "The Houston Humane Society is dedicated to, and working towards, ending cruelty, abuse and the overpopulation of animals while providing the highest quality of life to those brought to us for care. We have dogs, cats, horses, and an assortment of other animals ready to be adopted into their new forever homes! The adoption process is simple, and we even offer certain discounts for some of our furry friends.",
+      "categories": ["pet food", "vehicles"],
+      "supportsDropOff": true,
+      "supportsMailIn": false,
+      "supportsPickUp": false,
+      "placeId": "ChIJS5Twh3vrQIYRgsaDQPJANzg",
+      "latitude": 29.591187,
+      "longitude": -95.4309565
+    },
+    {
+      "title": "9Society of St. Vincent de Paul Archdiocese",
+      "address": "2403 Holcombe Blvd, Houston, TX 77021",
+      "phone": "(713) 741-8234",
+      "email": "info@svdphouston.org",
+      "description": "The Society of St. Vincent de Paul is a non-profit organization offering basic-needs assistance to the local community in need. Assistance is given through our Food Network, Clothing & Furniture Voucher, Disaster Response, and Rent & Utility Assistance Programs. The Society has been serving the local community since 1871.",
+      "categories": ["clothing", "vehicles", "furniture"],
+      "supportsDropOff": true,
+      "supportsMailIn": true,
+      "supportsPickUp": true,
+      "placeId": "ChIJzbLivZK_QIYREiVTxxtalb4",
+      "latitude": 29.7052762,
+      "longitude": -95.3847942
+    },
+    {
+      "title": "10Houston Food Bank",
+      "address": "535 Portwall St, Houston, TX 77029",
+      "phone": "(713) 223-3700",
+      "email": "info@houstonfoodbank.org",
+      "description": "More than 1.1 million people in the 18 southeast Texas counties served by Houston Food Bank are considered food insecure, meaning they lack consistent access to enough nutritious food to fuel a healthy life. In order to address this issue, the Houston Food Bank distributes food and other essentials to those in need through a network of 1,500 community partners. In addition, we also provide programs and services aimed at helping families achieve long-term stability including nutrition education, job training, health management, and help in securing state-funded assistance.",
+      "categories": ["food"],
+      "supportsDropOff": true,
+      "supportsMailIn": false,
+      "supportsPickUp": false,
+      "placeId": "ChIJqXJqIF-kQIYRDwibaAMUmiU",
+      "latitude": 29.7810067,
+      "longitude": -95.2747503
+    },
+    {
+      "title": "11Emergency Aid Coalition",
+      "address": "5401 Fannin St, Houston, TX 77004",
+      "phone": "(713) 528-3663",
+      "email": "info@eachouston.org",
+      "description": "Founded in 1983, in Houston, Texas, the Emergency Aid Coalition is an interfaith organization that collaborates to provide temporary assistance in the form of food, clothing and other basic needs, with an emphasis on serving the working poor. Each year we help more than 50,000 individuals living on the edge of poverty. Support from member congregations, dedicated volunteers, fundraisers and other benefactors allows the Emergency Aid Coalition to continue serving those in need in Houston’s inner city and Midtown neighborhoods.",
+      "categories": ["clothing", "food"],
+      "supportsDropOff": true,
+      "supportsMailIn": true,
+      "supportsPickUp": false,
+      "placeId": "ChIJRWl1VX-_QIYRq2Ci16Q-68w",
+      "latitude": 29.7264726,
+      "longitude": -95.3896933
+    },
+    {
+      "title": "12LAST",
       "address": "14700 Almeda Rd, Houston, TX 77053",
       "phone": "(713) 433-6421",
       "email": "info@houstonhumane.org",
