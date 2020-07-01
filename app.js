@@ -30,9 +30,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Routes.
-const discover = require('./routes/discover')
-
 app.get('/', (req, res) => res.render('index'));
+
+const discover = require('./routes/discover')
 app.get('/discover', discover.view);
 
 http.createServer(app).listen(app.get('port'), function(){
