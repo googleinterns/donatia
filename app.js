@@ -9,20 +9,33 @@ var handlebars = require('express-handlebars')
 
 var app = express();
 
+// Handlebars helpers.
+var handlebarsConfig = handlebars.create({
+  helpers: {
+      json: function(data) { return JSON.stringify(data); }
+  }
+});
+
 // Environments configs. 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars());
+app.engine('handlebars', handlebarsConfig.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
-// Routes.
-const discover = require('./routes/discover')
-const dashboard = require('./routes/dashboard');
+// Load API keys.
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
+// Routes.
 app.get('/', (req, res) => res.render('index'));
+
+const discover = require('./routes/discover')
 app.get('/discover', discover.view);
+
+const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);
 
 http.createServer(app).listen(app.get('port'), function () {
