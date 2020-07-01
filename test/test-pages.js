@@ -16,6 +16,15 @@ it('Landing page status', function (done) {
   });
 });
 
+it('Dashboard categories page', function (done) {
+  request('http://localhost:3000/dashboard/testorg/categories', function (error, response, body) {
+    expect(response.statusCode).to.equal(200);
+    expect(body).to.contain("testorg's Dashboard");
+    expect(body).to.contain("Add a category");
+    done();
+  });
+});
+
 it('Dashboard view page', function (done) {
   request('http://localhost:3000/dashboard/testorg', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
