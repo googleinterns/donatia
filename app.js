@@ -17,9 +17,12 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
-app.get('/', (req, res) => res.render('index'));
-
+// Routes.
+const discover = require('./routes/discover')
 const dashboard = require('./routes/dashboard');
+
+app.get('/', (req, res) => res.render('index'));
+app.get('/discover', discover.view);
 app.get('/dashboard/:id/:page?', dashboard.view);
 
 http.createServer(app).listen(app.get('port'), function () {

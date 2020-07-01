@@ -4,8 +4,7 @@
 
 exports.view = function (req, res) {
   const pageParam = req.params.page;
-  var pageName = 'dashboardView';
-  if (pageParam === 'edit') pageName = 'dashboardEdit';
+  var pageName = 'dashboardProfile';
   if (pageParam === 'categories') pageName = 'dashboardCategories';
 
   res.render(
@@ -13,6 +12,7 @@ exports.view = function (req, res) {
     {
       layout: 'dashboard',
       id: req.params.id,
+      editable: pageParam === 'edit',
     }
   )
 }

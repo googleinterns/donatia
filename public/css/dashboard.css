@@ -1,10 +1,10 @@
-dashboard-section {
+.dashboard-section {
   display: -webkit-flex;
   display: flex;
-  height: 83vh;
+  height: 100%;
 }
 
-dashboard-nav {
+.dashboard-nav {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -12,7 +12,7 @@ dashboard-nav {
   padding-top: 3em;
 }
 
-dashboard-nav > ul {
+.dashboard-nav > ul {
   list-style-type: none;
 }
 
@@ -21,13 +21,12 @@ dashboard-nav > ul {
   font-size: 3em;
 }
 
-dashboard-content {
+.dashboard-content {
   -webkit-flex: 3;
   -ms-flex: 3;
   flex: 3;
   background-color: #f1f1f1;
   padding: 3em;
-  overflow-y: scroll;
 }
 
 #form-container > input {

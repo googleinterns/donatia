@@ -1,22 +1,23 @@
 <div class="search-card">
   <div class="search-left">
     <div class="search-dropoff-info">
-      <h1 class="search-name">{{title}}</h1>
-      <h2 class="search-address">{{address}}</h2>
-      <h2 class="search-phone">{{phone}}</h2>
+      <h1 class="search-title">{{organization.title}}</h1>
+      <h2 class="search-address">{{organization.address}}</h2>
+      <h2 class="search-phone">{{organization.phone}}</h2>
     </div>
     <div class="search-dropoff-options">
       {{#*inline "acceptanceSymbol"}}
         {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
       {{/inline}}
-      <p>Drop off {{> acceptanceSymbol accepts=isSupportDropOff}} </p>
-      <p>Mail in {{> acceptanceSymbol accepts=isSupportMailIn}} </p>
+      <p>Drop off {{> acceptanceSymbol accepts=organization.supportsDropOff}} </p>
+      <p>Mail in {{> acceptanceSymbol accepts=organization.supportsMailIn}} </p>
+      <p>Pick up {{> acceptanceSymbol accepts=organization.supportsPickUp}} </p>
     </div>
   </div>
   <div class="search-right">
     <h2>Accepts</h2>
     <div class="search-categories-contianer">
-      {{#each categories}}
+      {{#each organization.categories}}
         <p class="search-category">{{this}}</p>
       {{/each}}
     </div>

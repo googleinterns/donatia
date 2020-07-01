@@ -38,7 +38,6 @@ it('Dashboard edit page', function (done) {
   request('http://localhost:3000/dashboard/organization/edit', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
     expect(body).to.contain("organization's Dashboard");
-    expect(body).to.contain('<input type="text"');
     done();
   });
 });

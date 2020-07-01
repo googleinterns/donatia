@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="static/css/discover.css">
+<link rel="stylesheet" href="static/css/searchCard.css">
+
+<div id="discover">
+  <div id="search">
+    <select id="search-dropdown">
+      <option value="all">All</option>
+      <option value="clothing">Clothing</option>
+      <option value="furniture">Furniture</option>
+    </select>
+    
+    <div id="search-list">
+      {{#each organizations}}
+        {{> searchCard organization = this }}
+      {{/each}}
+    </div>
+  </div>
+  <div id="map">
+    
+  </div>
+</div>

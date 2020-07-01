@@ -12,25 +12,24 @@
 
 <body>
 
-  {{> navbar }}
+  {{> navbar}}
 
   <div id="dashboard-title">
-    {{ id }}'s Dashboard
+    {{id}}'s Dashboard
   </div>
 
-  <dashboard-section>
-    <dashboard-nav>
+  <div class="dashboard-section">
+    <div class="dashboard-nav">
       <ul>
         <li><a href="/dashboard/{{ id }}">Dashboard</a></li>
         <li><a href="/dashboard/{{ id }}/edit">Edit Profile</a></li>
-        <li><a href="/dashboard/{{ id }}/categories">Edit Categories</a></li>
       </ul>
-    </dashboard-nav>
+    </div>
 
-    <dashboard-content>
+    <div class="dashboard-content">
       {{{body}}}
-    </dashboard-content>
-  </dashboard-section>
+    </div>
+  </div>
 
 </body>
 
