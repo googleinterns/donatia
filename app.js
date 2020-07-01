@@ -17,7 +17,11 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
+// Routes.
+const discover = require('./routes/discover')
+
 app.get('/', (req, res) => res.render('index'));
+app.get('/discover', discover.view);
 
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);
