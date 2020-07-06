@@ -14,6 +14,7 @@ window.onload = function() {
 function updateResults() {
   // Clear out current page data.
   document.getElementById("search-list").innerHTML = "";
+  removeMarkers();
 
   // Requery and repopulate page data.
   let filter = document.getElementById("search-dropdown").value;
@@ -30,7 +31,7 @@ function updateResults() {
  */
 function createOrganizationCards(organizationsToRender) {
   let cardList = document.getElementById("search-list");
-  let template = document.getElementsByTagName("template")[0].content;
+  let template = document.getElementById("search-card-template").content;
 
   organizationsToRender.forEach(organization => {
     let card = document.importNode(template, true);

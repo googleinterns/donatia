@@ -2,6 +2,7 @@ const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
 let bounds;
+let markers = [];
 let openMarkerWindow;
 
 /** 
@@ -49,5 +50,16 @@ function createMarkers(data) {
 
     bounds.extend(marker.getPosition());
     map.fitBounds(bounds);
+    markers.push(marker);
   });
+}
+
+/*
+ * Removed all markers from the map and markers array.
+ */
+function removeMarkers() {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
 }

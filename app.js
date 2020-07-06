@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.get('/', (req, res) => res.render('index'));
 
 const discover = require('./routes/discover')
-app.get('/discover', discover.mapsKey);
+app.get('/discover', discover.view);
 app.get('/discover/:filter', discover.getOrganizations);
 
 const dashboard = require('./routes/dashboard');
