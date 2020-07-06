@@ -26,9 +26,9 @@ function initMap() {
 
 /**
  * Add markers to the map based on the data in the data array passed in.
- * @param {JSON object} data A json containing organzation data to generate markers for.
+ * @param {JSON object} data A json containing organzation data to create markers for.
  */
-function generateMarkers(data) {
+function createMarkers(data) {
   data.forEach(org => {
     let marker = new google.maps.Marker({
       position: new google.maps.LatLng(org.latitude, org.longitude),

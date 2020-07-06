@@ -9,7 +9,7 @@ window.onload = function() {
   fetchOrganizations("all").then(initalOrganizations => {
     organizations = initalOrganizations;
     createOrganizationCards(initalOrganizations);
-    generateMarkers(initalOrganizations);
+    createMarkers(initalOrganizations);
   })
 }
 
@@ -31,21 +31,21 @@ function createOrganizationCards(organizationsToRender) {
   let cardList = document.getElementById("search-list");
   let template = document.getElementsByTagName("template")[0].content;
 
-  organizationsToRender.forEach(org => {
+  organizationsToRender.forEach(organization => {
     let card = document.importNode(template, true);
 
     // Add general contact information.
-    card.querySelector(".search-title").textContent = org.title;
-    card.querySelector(".search-address").textContent = org.address;
-    card.querySelector(".search-phone").textContent = org.phone;
+    card.querySelector(".search-title").textContent = organization.title;
+    card.querySelector(".search-address").textContent = organization.address;
+    card.querySelector(".search-phone").textContent = organization.phone;
 
     // Add check/cross icons for delivery options.
-    createDeliverySupportIcon(card, org.supportsDropOff, /* parentClass = */ ".drop-off");
-    createDeliverySupportIcon(card, org.supportsMailIn, /* parentClass = */ ".mail-in");
-    createDeliverySupportIcon(card, org.supportsPickUp, /* parentClass = */ ".pick-up");
+    addDeliverySupportIcon(card, organization.supportsDropOff, /* parentClass = */ ".drop-off");
+    addDeliverySupportIcon(card, organization.supportsMailIn, /* parentClass = */ ".mail-in");
+    addDeliverySupportIcon(card, organization.supportsPickUp, /* parentClass = */ ".pick-up");
 
     // Add categories to the card.
-    org.categories.forEach(category => createCardCategory(card, category));
+    organization.categories.forEach(category => addCategory(card, category));
 
     cardList.appendChild(card);
   })
@@ -57,7 +57,7 @@ function createOrganizationCards(organizationsToRender) {
  * @param {boolean} isSupported The boolean for whether that delivery option is supported.
  * @param {string} parentClass The name of the parent class.
  */
-function createDeliverySupportIcon(card, isSupported, parentClass) {
+function addDeliverySupportIcon(card, isSupported, parentClass) {
   let supportIcon = document.createElement("span");
   supportIcon.className = isSupported ? "valid-symbol" : "invalid-symbol";
   supportIcon.innerText = isSupported ? "✓" : "✗";
@@ -70,7 +70,7 @@ function createDeliverySupportIcon(card, isSupported, parentClass) {
  * @param {div element} card The div of the card to add the categories to.
  * @param {string} category The name of the cateogry being added to the card.
  */
-function createCardCategory(card, category) {
+function addCategory(card, category) {
   let categoriesContainer = card.querySelector(".search-categories-contianer");
   let categoryComponent = document.createElement("p");
 
