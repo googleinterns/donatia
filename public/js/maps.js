@@ -1,4 +1,4 @@
-const HOUSTON_COORDS = { lat: 29.7604, lng: -95.3698 }
+const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
 let bounds;
@@ -17,27 +17,27 @@ function initMap() {
     styles: [
       {
         featureType: "poi",
-        stylers: [{ visibility: "off" }]
-      }
-    ]
+        stylers: [{ visibility: "off" }],
+      },
+    ],
   });
   bounds = new google.maps.LatLngBounds(HOUSTON_COORDS);
 }
 
 /**
- * Add markers to the map based on the data in the data array passed in. 
- * @param {JSON object} data The JSON object of all the organizations to make markers for.
+ * Add markers to the map based on the data in the data array passed in.
+ * @param {JSON object} data A json containing organzation data to generate markers for.
  */
 function generateMarkers(data) {
   data.forEach(org => {
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       position: new google.maps.LatLng(org.latitude, org.longitude),
       map: map,
-      title: org.title
+      title: org.title,
     });
 
-    var markerWindow = new google.maps.InfoWindow({
-      content: org.title
+    let markerWindow = new google.maps.InfoWindow({
+      content: org.title,
     });
 
     google.maps.event.addListener(marker, 'click', function () {

@@ -1,0 +1,55 @@
+<script src="/static/js/dashboardCategories.js"></script>
+
+<div>
+  <form class="category-card" onsubmit="addCategory()">
+    <h3>Add a category</h3>
+
+    <label for="categories">Choose a category:</label><br>
+    <select name="add-categories" id="add-categories">
+      <script type="text/x-handlebars" id="add-categories-template">
+        \{{#each categoryList}}
+            <option value="\{{this.ID}}">\{{this.name}}</option>
+        \{{/each}}
+      </script>
+    </select><br>
+
+    <label for="add-card-quality">Quality Check Instructions:</label><br>
+    <input type="text" id="add-card-quality" name="add-card-quality"><br>
+
+    <label for="add-card-instructions">Donation Instructions:</label><br>
+    <input type="text" id="add-card-instructions" name="add-card-instructions"><br>
+
+    <div class="category-card-buttons">
+      <button>Add</button>
+    </div>
+  </form>
+
+  <div id="existing-card-holder">
+    <script type="text/x-handlebars" id="existing-cards-template">
+      \{{#each cardList}}
+        <div class="category-card">
+          <h3>\{{this.name}}</h3>
+          <div class="quality-section">
+            <p>Quality Check Instructions:</p>
+            <ul>
+              \{{#each this.instructions}}
+                <li>\{{this}}</li>
+              \{{/each}}
+            </ul>
+          </div>
+          <div class="instructions-section">
+            <p>Donation Instructions:</p>
+            <ol>
+              \{{#each this.quality}}
+                  <li>\{{this}}</li>
+              \{{/each}}
+            </ol>
+          </div>
+          <div class="category-card-buttons">
+              <button onclick="deleteCategory('\{{this.ID}}')">Delete</button>
+          </div>
+        </div>
+      \{{/each}}
+    </script>
+  </div>
+</div>
