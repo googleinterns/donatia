@@ -6,10 +6,18 @@ let organizations;
  * in cards on the list.
  */
 window.onload = function() {
-  fetchOrganizations("all").then(initalOrganizations => {
+  updateResults()
+}
+
+/**
+ * Requery for organization data and refresh page data.
+ */
+function updateResults() {
+  let filter = document.getElementById("search-dropdown").value;
+  fetchOrganizations(filter).then(initalOrganizations => {
     organizations = initalOrganizations;
-    createOrganizationCards(initalOrganizations);
-    createMarkers(initalOrganizations);
+    createOrganizationCards(organizations);
+    createMarkers(organizations);
   })
 }
 
