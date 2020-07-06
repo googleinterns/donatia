@@ -21,15 +21,15 @@ window.onload = function() {
  */
 function infinityScroll() {
   let searchContainer = document.getElementById("search");
+
+  // If scrolled to the bottom, fetch more data.
   if (searchContainer.scrollTop + searchContainer.offsetHeight >= searchContainer.scrollHeight) {
+    // Don't make a fetch for data if a fetch is already being made.
     if (!fetchingNewOrganizations) {
       fetchingNewOrganizations = true;
-
-      console.log("getting new org data")
       fetchOrganizations("all", BATCH_SIZE, organizations.length)
       .then(newOrganizations => {
-        console.log("got new data", newOrganizations)
-        organizations.push(newOrganizations);
+        organizations = organizations.concat(newOrganizations);
         renderOrganizationCards(newOrganizations);
         generateMarkers(newOrganizations);
         fetchingNewOrganizations = false;
@@ -41,6 +41,7 @@ function infinityScroll() {
 /**
  * Fetches the organization data with the given filters from the server.
  * @param {string} filterText The selected item category with which to filer results for.
+ * @param {int} startIndex The index in the query results to start grabbing data at.
  */
 function fetchOrganizations(filterText, batchSize, startIndex = 0) {
   return fetch("/discover", {
@@ -56,9 +57,10 @@ function fetchOrganizations(filterText, batchSize, startIndex = 0) {
   }).then(data => data.json());
 }
 
-/* 
-* Renders the organization data into cards.
-*/
+/**
+ * Renders the organization data into cards.
+ * @param {JSON object} organizationsToRender The organizations to render cards for.
+ */
 function renderOrganizationCards(organizationsToRender) {
   let cardList = document.getElementById("search-list");
   let template = document.getElementsByTagName("template")[0].content;

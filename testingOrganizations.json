@@ -1,7 +1,7 @@
 {
   "organizations": [
     {
-      "title": "1Society of St. Vincent de Paul Archdiocese",
+      "title": "0Society of St. Vincent de Paul Archdiocese",
       "address": "2403 Holcombe Blvd, Houston, TX 77021",
       "phone": "(713) 741-8234",
       "email": "info@svdphouston.org",
@@ -15,7 +15,7 @@
       "longitude": -95.3847942
     },
     {
-      "title": "2Houston Food Bank",
+      "title": "1Houston Food Bank",
       "address": "535 Portwall St, Houston, TX 77029",
       "phone": "(713) 223-3700",
       "email": "info@houstonfoodbank.org",
@@ -29,7 +29,7 @@
       "longitude": -95.2747503
     },
     {
-      "title": "3Emergency Aid Coalition",
+      "title": "2Emergency Aid Coalition",
       "address": "5401 Fannin St, Houston, TX 77004",
       "phone": "(713) 528-3663",
       "email": "info@eachouston.org",
@@ -43,7 +43,7 @@
       "longitude": -95.3896933
     },
     {
-      "title": "4Houston Humane Society",
+      "title": "3Houston Humane Society",
       "address": "14700 Almeda Rd, Houston, TX 77053",
       "phone": "(713) 433-6421",
       "email": "info@houstonhumane.org",
@@ -57,7 +57,7 @@
       "longitude": -95.4309565
     },
     {
-      "title": "5Society of St. Vincent de Paul Archdiocese",
+      "title": "4Society of St. Vincent de Paul Archdiocese",
       "address": "2403 Holcombe Blvd, Houston, TX 77021",
       "phone": "(713) 741-8234",
       "email": "info@svdphouston.org",
@@ -71,7 +71,7 @@
       "longitude": -95.3847942
     },
     {
-      "title": "6Houston Food Bank",
+      "title": "5Houston Food Bank",
       "address": "535 Portwall St, Houston, TX 77029",
       "phone": "(713) 223-3700",
       "email": "info@houstonfoodbank.org",
@@ -85,7 +85,7 @@
       "longitude": -95.2747503
     },
     {
-      "title": "7Emergency Aid Coalition",
+      "title": "6Emergency Aid Coalition",
       "address": "5401 Fannin St, Houston, TX 77004",
       "phone": "(713) 528-3663",
       "email": "info@eachouston.org",
@@ -99,7 +99,7 @@
       "longitude": -95.3896933
     },
     {
-      "title": "8Houston Humane Society",
+      "title": "7Houston Humane Society",
       "address": "14700 Almeda Rd, Houston, TX 77053",
       "phone": "(713) 433-6421",
       "email": "info@houstonhumane.org",
@@ -113,7 +113,7 @@
       "longitude": -95.4309565
     },
     {
-      "title": "9Society of St. Vincent de Paul Archdiocese",
+      "title": "8Society of St. Vincent de Paul Archdiocese",
       "address": "2403 Holcombe Blvd, Houston, TX 77021",
       "phone": "(713) 741-8234",
       "email": "info@svdphouston.org",
@@ -127,7 +127,7 @@
       "longitude": -95.3847942
     },
     {
-      "title": "10Houston Food Bank",
+      "title": "9Houston Food Bank",
       "address": "535 Portwall St, Houston, TX 77029",
       "phone": "(713) 223-3700",
       "email": "info@houstonfoodbank.org",
@@ -141,7 +141,7 @@
       "longitude": -95.2747503
     },
     {
-      "title": "11Emergency Aid Coalition",
+      "title": "10Emergency Aid Coalition",
       "address": "5401 Fannin St, Houston, TX 77004",
       "phone": "(713) 528-3663",
       "email": "info@eachouston.org",
@@ -155,7 +155,7 @@
       "longitude": -95.3896933
     },
     {
-      "title": "12LAST",
+      "title": "11LAST",
       "address": "14700 Almeda Rd, Houston, TX 77053",
       "phone": "(713) 433-6421",
       "email": "info@houstonhumane.org",
