@@ -10,17 +10,10 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-// Handlebars helpers.
-var handlebarsConfig = handlebars.create({
-  helpers: {
-    json: function(data) { return JSON.stringify(data); }
-  }
-});
-
 // Environments configs. 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebarsConfig.engine);
+app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
@@ -35,7 +28,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.get('/', (req, res) => res.render('index'));
 
 const discover = require('./routes/discover')
-app.get('/discover', discover.mapsKey);
+app.get('/discover', discover.view);
 app.post('/discover', discover.getOrganizations);
 
 const dashboard = require('./routes/dashboard');

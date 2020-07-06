@@ -1,22 +1,52 @@
 const BATCH_SIZE = 10;
 
-let searchCardsTemplate;
-let organizations;
+let organizationCount = 0;
 let fetchingNewOrganizations = false;
 
-/**
+const searchCardTemplate = 
+    `
+      {{#each organizations}}
+        <div class="search-card">
+          <div class="search-left">
+            <div class="search-dropoff-info">
+              <h1 class="search-title">{{this.title}}</h1>
+              <h2 class="search-address">{{this.address}}</h2>
+              <h2 class="search-phone">{{this.phone}}</h2>
+            </div>
+            <div class="search-dropoff-options">
+              {{#*inline "acceptanceSymbol"}}
+                {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
+              {{/inline}}
+              <p>Drop off {{> acceptanceSymbol accepts=this.supportsDropOff}} </p>
+              <p>Mail in {{> acceptanceSymbol accepts=this.supportsMailIn}} </p>
+              <p>Pick up {{> acceptanceSymbol accepts=this.supportsPickUp}} </p>
+            </div>
+          </div>
+          <div class="search-right">
+            <h2>Accepts</h2>
+            <div class="search-categories-contianer">
+              {{#each this.categories}}
+                <p class="search-category">{{this}}</p>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    `;
+
+/*
  * When the page loads, fetch initial organization data and render it
  * in cards on the list.
  */
 window.onload = function() {
-  fetchOrganizations("all", BATCH_SIZE).then(initalOrganizations => {
-    organizations = initalOrganizations;
-    renderOrganizationCards(initalOrganizations);
-    generateMarkers(initalOrganizations);
+  fetchOrganizations("all", BATCH_SIZE).then(organizations => {
+    createOrganizationCards(organizations);
+    createMarkers(organizations);
+    organizationCount += organizations.length;
   })
 }
 
-/**
+/*
  * Load more organization data as the user scrolls to the bottom of the list.
  */
 function infinityScroll() {
@@ -27,23 +57,23 @@ function infinityScroll() {
     // Don't make a fetch for data if a fetch is already being made.
     if (!fetchingNewOrganizations) {
       fetchingNewOrganizations = true;
-      fetchOrganizations("all", BATCH_SIZE, organizations.length)
-      .then(newOrganizations => {
-        organizations = organizations.concat(newOrganizations);
-        renderOrganizationCards(newOrganizations);
-        generateMarkers(newOrganizations);
+      fetchOrganizations("all", BATCH_SIZE, organizationCount)
+      .then(organizations => {
+        createOrganizationCards(organizations);
+        createMarkers(organizations);
+        organizationCount += organizations.length;
         fetchingNewOrganizations = false;
       })
     }
   }
 };
 
-/**
+/*
  * Fetches the organization data with the given filters from the server.
  * @param {string} filterText The selected item category with which to filer results for.
  * @param {int} startIndex The index in the query results to start grabbing data at.
  */
-function fetchOrganizations(filterText, batchSize, startIndex = 0) {
+function fetchOrganizations(filterText, batchSize) {
   return fetch("/discover", {
     method: 'POST',
     headers: {
@@ -51,64 +81,17 @@ function fetchOrganizations(filterText, batchSize, startIndex = 0) {
     },
     body: JSON.stringify({
       filter: filterText,
-      start: startIndex,
+      start: organizationCount,
       batchSize: batchSize,
     })
   }).then(data => data.json());
 }
 
-/**
+/*
  * Renders the organization data into cards.
- * @param {JSON object} organizationsToRender The organizations to render cards for.
+ * @param {JSON object} organizations The JSON of organization data to add to the page.
  */
-function renderOrganizationCards(organizationsToRender) {
-  let cardList = document.getElementById("search-list");
-  let template = document.getElementsByTagName("template")[0].content;
-
-  organizationsToRender.forEach(org => {
-    let card = document.importNode(template, true);
-
-    // Add general contact information.
-    card.querySelector(".search-title").textContent = org.title;
-    card.querySelector(".search-address").textContent = org.address;
-    card.querySelector(".search-phone").textContent = org.phone;
-
-    // Add check/cross icons for delivery options.
-    createDeliverySupportIcon(card, org.supportsDropOff, /* parentClass = */ ".drop-off");
-    createDeliverySupportIcon(card, org.supportsMailIn, /* parentClass = */ ".mail-in");
-    createDeliverySupportIcon(card, org.supportsPickUp, /* parentClass = */ ".pick-up");
-
-    // Add categories to the card.
-    org.categories.forEach(category => createCardCategory(card, category));
-
-    cardList.appendChild(card);
-  })
-}
-
-/**
- * Adds a check or a cross icon to the card for a given devliery option.
- * @param {div element} card The div of the card to add the icons to.
- * @param {boolean} isSupported The boolean for whether that delivery option is supported.
- * @param {string} parentClass The name of the parent class.
- */
-function createDeliverySupportIcon(card, isSupported, parentClass) {
-  let supportIcon = document.createElement("span");
-  supportIcon.className = isSupported ? "valid-symbol" : "invalid-symbol";
-  supportIcon.innerText = isSupported ? "✓" : "✗";
-
-  card.querySelector(parentClass).appendChild(supportIcon);
-}
-
-/**
- * Adds a category bubble to the card.
- * @param {div element} card The div of the card to add the categories to.
- * @param {string} category The name of the cateogry being added to the card.
- */
-function createCardCategory(card, category) {
-  let categoriesContainer = card.querySelector(".search-categories-contianer");
-  let categoryComponent = document.createElement("p");
-
-  categoryComponent.className = "search-category";
-  categoryComponent.innerText = category;
-  categoriesContainer.appendChild(categoryComponent);
+function createOrganizationCards(organizations) {
+  const renderCards = Handlebars.compile(searchCardTemplate);
+  document.getElementById("search-list").innerHTML += renderCards({organizations: organizations});
 }
