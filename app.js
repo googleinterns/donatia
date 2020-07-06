@@ -6,7 +6,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars')
-const {Firestore} = require('@google-cloud/firestore');
+
 
 var app = express();
 
@@ -30,9 +30,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-// Database Initialization
-const firestore = new Firestore();
-
 // Routes.
 app.get('/', (req, res) => res.render('index'));
 
@@ -41,6 +38,9 @@ app.get('/discover', discover.view);
 
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);
+
+const data = require('./routes/data');
+app.get('/data', data.view);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
