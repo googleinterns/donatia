@@ -1,6 +1,6 @@
 var data = require('../testingOrganizations.json');
 
-exports.mapsKey = function(req, res) {
+exports.view = function(req, res) {
   res.render('discover', { 
     MAPS_KEY: process.env.MAPS_KEY
   });
