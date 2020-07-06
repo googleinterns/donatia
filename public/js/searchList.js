@@ -12,6 +12,10 @@ window.onload = function() {
  * Requery for organization data and refresh page data.
  */
 function updateResults() {
+  // Clear out current page data.
+  document.getElementById("search-list").innerHTML = "";
+
+  // Requery and repopulate page data.
   let filter = document.getElementById("search-dropdown").value;
   fetch("/discover/" + filter).then(data => data.json())
   .then(organizations => {
