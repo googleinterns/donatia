@@ -25,18 +25,18 @@ function initMap() {
 }
 
 /**
- * Add markers to the map based on the data in the data array passed in. 
- * @param {JSON object} data The JSON object of all the organizations to make markers for.
+ * Add markers to the map based on the data in the data array passed in.
+ * @param {JSON object} data A json containing organzation data to generate markers for.
  */
 function generateMarkers(data) {
   data.forEach(org => {
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       position: new google.maps.LatLng(org.latitude, org.longitude),
       map: map,
       title: org.title,
     });
 
-    var markerWindow = new google.maps.InfoWindow({
+    let markerWindow = new google.maps.InfoWindow({
       content: org.title,
     });
 
