@@ -8,7 +8,7 @@ let organizations;
 window.onload = function() {
   fetchOrganizations("all").then(initalOrganizations => {
     organizations = initalOrganizations;
-    renderOrganizationCards(initalOrganizations);
+    createOrganizationCards(initalOrganizations);
     generateMarkers(initalOrganizations);
   })
 }
@@ -27,7 +27,7 @@ function fetchOrganizations(filterText) {
 /* 
 * Renders the organization data into cards.
 */
-function renderOrganizationCards(organizationsToRender) {
+function createOrganizationCards(organizationsToRender) {
   let cardList = document.getElementById("search-list");
   let template = document.getElementsByTagName("template")[0].content;
 
@@ -66,7 +66,7 @@ function createDeliverySupportIcon(card, isSupported, parentClass) {
 }
 
 /**
- * Adds a category bubble to the card.
+ * Adds a search category to the card.
  * @param {div element} card The div of the card to add the categories to.
  * @param {string} category The name of the cateogry being added to the card.
  */
