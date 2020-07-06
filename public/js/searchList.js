@@ -1,4 +1,33 @@
-let searchCardsTemplate;
+const searchCardTemplate = 
+    `
+      {{#each organizations}}
+        <div class="search-card">
+          <div class="search-left">
+            <div class="search-dropoff-info">
+              <h1 class="search-title">{{this.title}}</h1>
+              <h2 class="search-address">{{this.address}}</h2>
+              <h2 class="search-phone">{{this.phone}}</h2>
+            </div>
+            <div class="search-dropoff-options">
+              {{#*inline "acceptanceSymbol"}}
+                {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
+              {{/inline}}
+              <p>Drop off {{> acceptanceSymbol accepts=this.supportsDropOff}} </p>
+              <p>Mail in {{> acceptanceSymbol accepts=this.supportsMailIn}} </p>
+              <p>Pick up {{> acceptanceSymbol accepts=this.supportsPickUp}} </p>
+            </div>
+          </div>
+          <div class="search-right">
+            <h2>Accepts</h2>
+            <div class="search-categories-contianer">
+              {{#each this.categories}}
+                <p class="search-category">{{this}}</p>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    `;
 
 /*
  * When the page loads, fetch initial organization data and render it
@@ -24,56 +53,9 @@ function fetchOrganizations(filterText) {
 
 /*
  * Renders the organization data into cards.
- * @param {JSON object} organizationsToRender The JSON of organization data to add to the page.
+ * @param {JSON object} organizations The JSON of organization data to add to the page.
  */
-function createOrganizationCards(organizationsToRender) {
-  let cardList = document.getElementById("search-list");
-  let template = document.getElementById("search-card-template").content;
-
-  organizationsToRender.forEach(organization => {
-    let card = document.importNode(template, true);
-
-    // Add general contact information.
-    card.querySelector(".search-title").textContent = organization.title;
-    card.querySelector(".search-address").textContent = organization.address;
-    card.querySelector(".search-phone").textContent = organization.phone;
-
-    // Add check/cross icons for delivery options.
-    addDeliverySupportIcon(card, organization.supportsDropOff, /* parentClass = */ ".drop-off");
-    addDeliverySupportIcon(card, organization.supportsMailIn, /* parentClass = */ ".mail-in");
-    addDeliverySupportIcon(card, organization.supportsPickUp, /* parentClass = */ ".pick-up");
-
-    // Add categories to the card.
-    organization.categories.forEach(category => addCategory(card, category));
-
-    cardList.appendChild(card);
-  })
-}
-
-/*
- * Adds a check or a cross icon to the card for a given devliery option.
- * @param {div element} card The div of the card to add the icons to.
- * @param {boolean} isSupported The boolean for whether that delivery option is supported.
- * @param {string} parentClass The name of the parent class.
- */
-function addDeliverySupportIcon(card, isSupported, parentClass) {
-  let supportIcon = document.createElement("span");
-  supportIcon.className = isSupported ? "valid-symbol" : "invalid-symbol";
-  supportIcon.innerText = isSupported ? "✓" : "✗";
-
-  card.querySelector(parentClass).appendChild(supportIcon);
-}
-
-/*
- * Adds a search category to the card.
- * @param {div element} card The div of the card to add the categories to.
- * @param {string} category The name of the cateogry being added to the card.
- */
-function addCategory(card, category) {
-  let categoriesContainer = card.querySelector(".search-categories-contianer");
-  let categoryComponent = document.createElement("p");
-
-  categoryComponent.className = "search-category";
-  categoryComponent.innerText = category;
-  categoriesContainer.appendChild(categoryComponent);
+function createOrganizationCards(organizations) {
+  const renderCards = Handlebars.compile(searchCardTemplate);
+  document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
 }
