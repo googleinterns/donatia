@@ -6,6 +6,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars')
+const {Firestore} = require('@google-cloud/firestore');
 
 var app = express();
 
@@ -28,6 +29,9 @@ app.use('/static', express.static('public'));
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+
+// Database Initialization
+const firestore = new Firestore();
 
 // Routes.
 app.get('/', (req, res) => res.render('index'));
