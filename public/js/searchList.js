@@ -28,7 +28,7 @@ function fetchOrganizations(filterText) {
  */
 function createOrganizationCards(organizationsToRender) {
   let cardList = document.getElementById("search-list");
-  let template = document.getElementsByTagName("template")[0].content;
+  let template = document.getElementById("search-card-template").content;
 
   organizationsToRender.forEach(organization => {
     let card = document.importNode(template, true);
