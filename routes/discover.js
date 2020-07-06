@@ -7,5 +7,14 @@ exports.mapsKey = function(req, res) {
 };
 
 exports.getOrganizations = function(req, res) {
-  res.send(data.organizations)
+  let filter = req.params.filter
+
+  if (filter === 'all') {
+    res.send(data.organizations)
+  } else {
+    let filtered = data.organizations.filter(function (organization) {
+      return organization.categories.includes(filter);
+    });
+    res.send(filtered);
+  }
 };

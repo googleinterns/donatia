@@ -27,7 +27,7 @@ app.get('/', (req, res) => res.render('index'));
 
 const discover = require('./routes/discover')
 app.get('/discover', discover.mapsKey);
-app.post('/discover', discover.getOrganizations);
+app.get('/discover/:filter', discover.getOrganizations);
 
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);

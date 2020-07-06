@@ -85,11 +85,9 @@
 .valid-symbol {
   color: #32a852; 
   font-weight: bold;
-  content: "✓";
 }
 
 .invalid-symbol {
   color: #a83234;
   font-weight: bold;
-  content: "✗";
 }
