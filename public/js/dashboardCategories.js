@@ -15,8 +15,8 @@ function getAllCategories() {
     {
       "ID": "house-supplies",
       "name": "Household Supplies",
-    }
-  ]
+    },
+  ];
   return allCategories;
 }
 
@@ -38,7 +38,7 @@ function getAllAcceptedCategories(organizationID) {
       "instructions": ["review quality checklist", "place in plastic/paper bag", "bring inside during open hours"],
       "quality": ["expiration date > 6 months from current date", "no holes", "labels on cans"],
     },
-  ]
+  ];
   return allAcceptedCategories;
 }
 
@@ -61,10 +61,10 @@ window.onload = async function () {
   const addCategoriesTemplate = document.getElementById('add-categories-template').innerHTML;
   const renderAddCategories = Handlebars.compile(addCategoriesTemplate);
   const allAvailableCategories = await this.getAllCategories();
-  document.getElementById('add-categories').innerHTML = renderAddCategories({ categoryList: allAvailableCategories });
+  document.getElementById('add-categories').innerHTML = renderAddCategories({categoryList: allAvailableCategories});
 
   const existingCategoriesTemplate = document.getElementById('existing-cards-template').innerHTML;
   const renderExistingCards = Handlebars.compile(existingCategoriesTemplate);
   const allExistingCards = await this.getAllAcceptedCategories();
-  this.document.getElementById('existing-card-holder').innerHTML = renderExistingCards({ cardList: allExistingCards });
+  this.document.getElementById('existing-card-holder').innerHTML = renderExistingCards({cardList: allExistingCards});
 }
