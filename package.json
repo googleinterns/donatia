@@ -4,7 +4,7 @@
   "description": "Skeleton app for Node.js based STEP capstone project. ",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --exit",
+    "test": "NODE_ENV=development ./node_modules/.bin/mocha --exit",
     "start": "NODE_ENV=production node app.js",
     "dev": "NODE_ENV=development node app.js"
   },
