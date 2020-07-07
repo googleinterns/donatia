@@ -1,7 +1,9 @@
+let selectedOrganization;
+
 const searchCardTemplate = 
     `
       {{#each organizations}}
-        <div class="search-card">
+        <div class="search-card" id="{{this.id}}" onmouseover='selectCard("{{this.id}}")'>
           <div class="search-left">
             <div class="search-dropoff-info">
               <h1 class="search-title">{{this.title}}</h1>
@@ -35,6 +37,15 @@ const searchCardTemplate =
  */
 window.onload = function() {
   updateResults();
+}
+
+
+function selectCard(id) {
+  if (selectedOrganization) {
+    document.getElementById(selectedOrganization).classList.remove("selected")
+  }
+  selectedOrganization = id;
+  document.getElementById(selectedOrganization).classList.add("selected");
 }
 
 /*

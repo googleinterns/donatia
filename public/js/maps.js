@@ -3,7 +3,7 @@ const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 let map;
 let bounds;
 let markers = [];
-let openMarkerWindow;
+let selectedMarker;
 
 /* 
  * Initializes the Google Map to be centerd in Houston and to add 
@@ -35,6 +35,7 @@ function createMarkers(data) {
       position: new google.maps.LatLng(org.latitude, org.longitude),
       map: map,
       title: org.title,
+      id: org.id,
     });
 
     let markerWindow = new google.maps.InfoWindow({
@@ -43,11 +44,11 @@ function createMarkers(data) {
 
     google.maps.event.addListener(marker, 'click', function () {
       // Close current marker window if there is one open.
-      if (openMarkerWindow) { 
-        openMarkerWindow.close(); 
+      if (selectedMarker) { 
+        selectedMarker.close(); 
       }
-      openMarkerWindow = markerWindow;
-      openMarkerWindow.open(map, marker);
+      selectedMarker = markerWindow;
+      selectedMarker.open(map, marker);
     });
 
     bounds.extend(marker.getPosition());
