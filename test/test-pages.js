@@ -17,27 +17,22 @@ it('Landing page status', function (done) {
 });
 
 it('Dashboard categories page', function (done) {
-  request('http://localhost:3000/dashboard/testorg/categories', function (error, response, body) {
-    expect(response.statusCode).to.equal(200);
-    expect(body).to.contain("testorg's Dashboard");
-    expect(body).to.contain("Add a category");
+  request('http://localhost:3000/dashboard/categories', function (error, response, body) {
+    expect(response.statusCode).to.equal(401);
     done();
   });
 });
 
 it('Dashboard view page', function (done) {
-  request('http://localhost:3000/dashboard/testorg', function (error, response, body) {
-    expect(response.statusCode).to.equal(200);
-    expect(body).to.contain("testorg's Dashboard");
-    expect(body).to.contain('<input disabled type="text"');
+  request('http://localhost:3000/dashboard', function (error, response, body) {
+    expect(response.statusCode).to.equal(401);
     done();
   });
 });
 
 it('Dashboard edit page', function (done) {
-  request('http://localhost:3000/dashboard/organization/edit', function (error, response, body) {
-    expect(response.statusCode).to.equal(200);
-    expect(body).to.contain("organization's Dashboard");
+  request('http://localhost:3000/dashboard/edit', function (error, response, body) {
+    expect(response.statusCode).to.equal(401);
     done();
   });
 });
