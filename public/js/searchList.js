@@ -1,9 +1,8 @@
-let selectedOrganization;
 
 const searchCardTemplate = 
     `
       {{#each organizations}}
-        <div class="search-card" id="{{this.id}}" onmouseover='selectCard("{{this.id}}")'>
+        <div class="search-card" data-organization="{{this.id}}">
           <div class="search-left">
             <div class="search-dropoff-info">
               <h1 class="search-title">{{this.title}}</h1>
@@ -39,15 +38,6 @@ window.onload = function() {
   updateResults();
 }
 
-
-function selectCard(id) {
-  if (selectedOrganization) {
-    document.getElementById(selectedOrganization).classList.remove("selected")
-  }
-  selectedOrganization = id;
-  document.getElementById(selectedOrganization).classList.add("selected");
-}
-
 /*
  * Requerys for organization data and refreshes page data.
  */
@@ -70,6 +60,23 @@ function updateResults() {
  * @param {JSON object} organizations The JSON of organization data to add to the page.
  */
 function createOrganizationCards(organizations) {
+  // Generate the cards.
   const renderCards = Handlebars.compile(searchCardTemplate);
   document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
+
+  // Add event listeners to the cards.
+  searchCards = document.getElementsByClassName("search-card");
+  for (let i = 0; i < searchCards.length; i++) {
+    let card = searchCards[i];
+
+    card.addEventListener("mouseover", function (e) {
+      card.classList.add("selected");
+      openMarker(card.dataset.organization);
+    });
+
+    card.addEventListener("mouseout", function (e) {
+      card.classList.remove("selected");
+      openMarker("");
+    });
+  }
 }

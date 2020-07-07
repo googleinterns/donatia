@@ -3,6 +3,7 @@ const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 let map;
 let bounds;
 let markers = [];
+let markerWindows = [];
 let selectedMarker;
 
 /* 
@@ -30,20 +31,23 @@ function initMap() {
  * @param {JSON object} data A json containing organzation data to create markers for.
  */
 function createMarkers(data) {
-  data.forEach(org => {
+  data.forEach(organization => {
+    // Create the markers and attach to the map.
     let marker = new google.maps.Marker({
-      position: new google.maps.LatLng(org.latitude, org.longitude),
+      position: new google.maps.LatLng(organization.latitude, organization.longitude),
       map: map,
-      title: org.title,
-      id: org.id,
+      title: organization.title,
+      id: organization.id
     });
 
+    // Create the marker info window.
     let markerWindow = new google.maps.InfoWindow({
-      content: org.title,
+      content: organization.title,
+      id: organization.id
     });
 
+    // Open the marker windows when clicked.
     google.maps.event.addListener(marker, 'click', function () {
-      // Close current marker window if there is one open.
       if (selectedMarker) { 
         selectedMarker.close(); 
       }
@@ -54,7 +58,22 @@ function createMarkers(data) {
     bounds.extend(marker.getPosition());
     map.fitBounds(bounds);
     markers.push(marker);
+    markerWindows.push(markerWindow);
   });
+}
+
+/*
+ * Opens the marker with the given id.
+ */
+function openMarker(id) {
+  for (let i = 0; i < markerWindows.length; i++) {
+    console.log(markerWindows[i].id, id, markerWindows[i].id === id)
+    if (markerWindows[i].id === id) {
+      markerWindows[i].open(map, markers[i]);
+    } else {
+      markerWindows[i].close();
+    }
+  }
 }
 
 /*
