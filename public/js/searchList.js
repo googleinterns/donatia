@@ -30,7 +30,7 @@ const searchCardTemplate =
     `;
 
 /*
- * When the page loads, fetch initial organization data and render it
+ * When the page loads, fetches initial organization data and render it
  * in cards on the list.
  */
 window.onload = function() {
@@ -38,7 +38,7 @@ window.onload = function() {
 }
 
 /*
- * Requery for organization data and refresh page data.
+ * Requerys for organization data and refreshes page data.
  */
 function updateResults() {
   // Clear out current page data.

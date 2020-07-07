@@ -6,7 +6,7 @@ let markers = [];
 let openMarkerWindow;
 
 /* 
- * Initialize the Google Map to be centerd in Houston and to add 
+ * Initializes the Google Map to be centerd in Houston and to add 
  * initial organization markers.
  */
 function initMap() {
@@ -57,7 +57,7 @@ function createMarkers(data) {
 }
 
 /*
- * Removed all markers from the map and markers array.
+ * Removes all markers from the map and markers array.
  */
 function removeMarkers() {
   for (let i = 0; i < markers.length; i++) {
