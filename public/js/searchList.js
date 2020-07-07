@@ -37,7 +37,7 @@ window.onload = function() {
   updateResults()
 }
 
-/**
+/*
  * Requery for organization data and refresh page data.
  */
 function updateResults() {

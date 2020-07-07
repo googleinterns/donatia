@@ -43,7 +43,9 @@ function createMarkers(data) {
 
     google.maps.event.addListener(marker, 'click', function () {
       // Close current marker window if there is one open.
-      if (openMarkerWindow) openMarkerWindow.close();
+      if (openMarkerWindow) { 
+        openMarkerWindow.close(); 
+      }
       openMarkerWindow = markerWindow;
       openMarkerWindow.open(map, marker);
     });
