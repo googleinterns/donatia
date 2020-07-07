@@ -48,3 +48,15 @@ a {
 #login-button:hover {
   background-color: #409726;
 }
+
+#logout-button {
+  font-weight: bold;
+  padding: 6px 20px;
+  border-radius: 15px;
+  background-color: #ff5144;
+  color: white;
+}
+
+#logout-button:hover {
+  background-color: #d63e33;
+}

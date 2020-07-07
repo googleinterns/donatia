@@ -1,11 +1,18 @@
-/**
- * Module dependencies.
- */
+// Load API keys.
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+} else {
+  console.log(PROD_WARNING_MESSAGE);
+}
 
+// Module dependencies.
 var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars')
+var passport = require('passport');
+var cookieSession = require('cookie-session');
+require('./passport-auth');
 
 var app = express();
 const PROD_WARNING_MESSAGE = `
@@ -27,12 +34,20 @@ app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use('/static', express.static('public'));
+app.use(cookieSession({
+  name: 'auth-session',
+  keys: ['key1', 'key2']
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Load API keys.
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-} else {
-  console.log(PROD_WARNING_MESSAGE);
+// Authentication middleware
+const isLoggedIn = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.sendStatus(401);
+  }
 }
 
 // Routes.
@@ -43,7 +58,22 @@ app.get('/discover', discover.view);
 app.post('/discover', discover.getOrganizations);
 
 const dashboard = require('./routes/dashboard');
-app.get('/dashboard/:id/:page?', dashboard.view);
+app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function (req, res) {
+    res.redirect('/dashboard');
+  });
+
+app.get('/auth/logout', (req, res) => {
+  req.session = null;
+  req.logout();
+  res.redirect('/');
+});
 
 const data = require('./routes/data');
 app.get('/data', data.view);
