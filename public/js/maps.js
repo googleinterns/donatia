@@ -5,7 +5,7 @@ let bounds;
 let markers = [];
 let openMarkerWindow;
 
-/** 
+/* 
  * Initialize the Google Map to be centerd in Houston and to add 
  * initial organization markers.
  */

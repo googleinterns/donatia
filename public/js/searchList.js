@@ -34,7 +34,7 @@ const searchCardTemplate =
  * in cards on the list.
  */
 window.onload = function() {
-  updateResults()
+  updateResults();
 }
 
 /*
@@ -54,7 +54,7 @@ function updateResults() {
   })
 }
 
-/*
+/**
  * Renders the organization data into cards.
  * @param {JSON object} organizations The JSON of organization data to add to the page.
  */
