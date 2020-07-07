@@ -4,13 +4,8 @@
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap">
 </script>
-
-<script> 
-  // Store handlebars organization data for javascript files.
-  let organizations = {{{json organizations}}}; 
-</script>
-
 <script src="static/js/maps.js"></script>
+<script src="static/js/searchList.js"></script>
 
 <div id="discover">
   <div id="search">
@@ -19,13 +14,7 @@
       <option value="clothing">Clothing</option>
       <option value="furniture">Furniture</option>
     </select>
-    
-    <div id="search-list">
-      {{#each organizations}}
-        {{> searchCard organization = this}}
-      {{/each}}
-    </div>
+    <div id="search-list"></div>
   </div>
-
   <div id="map"></div>
 </div>
