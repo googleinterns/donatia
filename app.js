@@ -32,6 +32,9 @@ app.get('/discover/:filter', discover.getOrganizations);
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);
 
+const data = require('./routes/data');
+app.get('/data', data.view);
+
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
   app.emit("app_started");

@@ -26,7 +26,7 @@ function initMap() {
 }
 
 /**
- * Add markers to the map based on the data in the data array passed in.
+ * Adds markers to the map based on the data in the data array passed in.
  * @param {JSON object} data A json containing organzation data to create markers for.
  */
 function createMarkers(data) {
