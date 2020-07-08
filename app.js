@@ -48,8 +48,7 @@ app.get('/dashboard/:id/:page?', dashboard.view);
 
 const data = require('./routes/data');
 app.get('/data/acceptedcategories/:id', data.acceptedCategoriesResponse);
-app.get('/data/acceptedcategories/organization/:id', data.acceptedCategoriesByOrganizationResponse);
-app.get('/data/acceptedcategories/category/:id', data.acceptedCategoriesByCategoryResponse);
+app.get('/data/acceptedcategories/:field(organization|category)/:id', data.acceptedCategoriesByFieldResponse)
 app.get('/data/categories', data.categoriesResponse);
 
 
