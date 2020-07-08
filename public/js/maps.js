@@ -4,8 +4,8 @@ let map;
 let bounds;
 let openMarkerWindow;
 
-/** 
- * Initialize the Google Map to be centerd in Houston and to add 
+/**
+ * Initialize the Google Map to be centerd in Houston and to add
  * initial organization markers.
  */
 function initMap() {
@@ -17,7 +17,7 @@ function initMap() {
     styles: [
       {
         featureType: "poi",
-        stylers: [{ visibility: "off" }],
+        stylers: [{visibility: "off"}],
       },
     ],
   });
@@ -29,7 +29,7 @@ function initMap() {
  * @param {JSON object} data A json containing organzation data to create markers for.
  */
 function createMarkers(data) {
-  data.forEach(org => {
+  data.forEach((org) => {
     let marker = new google.maps.Marker({
       position: new google.maps.LatLng(org.latitude, org.longitude),
       map: map,
@@ -40,7 +40,7 @@ function createMarkers(data) {
       content: org.title,
     });
 
-    google.maps.event.addListener(marker, 'click', function () {
+    google.maps.event.addListener(marker, "click", function () {
       // Close current marker window if there is one open.
       if (openMarkerWindow) openMarkerWindow.close();
       openMarkerWindow = markerWindow;

@@ -1,18 +1,19 @@
-const {Firestore} = require('@google-cloud/firestore');
+const {Firestore} = require("@google-cloud/firestore");
 
 // Database Initialization
 const firestore = new Firestore();
-const DB_COLLECTION_NAME = (process.env.NODE_ENV == "production") ? 'movies' : 'dev-movies';
+const DB_COLLECTION_NAME =
+  process.env.NODE_ENV == "production" ? "movies" : "dev-movies";
 
-exports.view = function(req, res) {
+exports.view = function (req, res) {
   createMovies();
   const movies = readMovies();
   movies.then((data) => {
     res.send(data);
-  })
+  });
 };
 
-// Inserts 3 new documents into the 'movies' collection with hard-coded data 
+// Inserts 3 new documents into the 'movies' collection with hard-coded data
 async function createMovies() {
   // Dummy data to insert into the database
   const movieData = [
@@ -27,9 +28,9 @@ async function createMovies() {
     {
       title: "Iron Man",
       year: 2008,
-    }
+    },
   ];
-  
+
   movieData.forEach((movie) => {
     let document = firestore.collection(DB_COLLECTION_NAME).doc();
     document.set(movie);
