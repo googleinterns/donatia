@@ -1,7 +1,7 @@
 import { createOrganizationCards, selectCard } from './searchList.js';
 import { initMap, createMarkers, selectMarker, removeAllMarkers } from './maps.js';
 
-/*
+/**
  * When the page loads, fetches initial organization data and render it
  * in cards on the list.
  */
@@ -11,7 +11,7 @@ window.onload = function() {
   setPageEventListeners();
 }
 
-/* 
+/**
  * Add event listeners to the page to select the matching marker on a card
  * hover and vice versa.
  */
@@ -21,11 +21,10 @@ function setPageEventListeners() {
   discoverPage.addEventListener('markerHover', e => selectCard(e.detail, /* scroll = */ true));
 }
 
-/*
- * Requerys for organization data and refreshes page data.
+/**
+ * Requeries for organization data and refreshes page data.
  */
 window.updateSearchResults = function() {
-  // Clear out current page data.
   document.getElementById("search-list").innerHTML = "";
   removeAllMarkers();
 

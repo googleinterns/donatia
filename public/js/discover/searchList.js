@@ -58,6 +58,11 @@ export function createOrganizationCards(organizations) {
   }
 }
 
+/**
+ * Selects and highlights an organization's card in the search list.
+ * @param {string} id The id of the organization whose card to select.
+ * @param {booolean} scroll Whether or not to scroll to the card.
+ */
 export function selectCard(id = null, scroll = false) {
   if (selectedCard) selectedCard.classList.remove("selected");
   

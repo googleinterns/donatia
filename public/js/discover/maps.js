@@ -5,7 +5,7 @@ let bounds;
 let selectedMarker;
 let markers = [];
 
-/* 
+/**
  * Initializes the Google Map to be centerd in Houston and to add 
  * initial organization markers.
  */
@@ -66,7 +66,7 @@ export function createMarkers(data) {
   });
 }
 
-/*
+/**
  * Select and open the info window for the marker with the 
  * given id. Close all other marker windows.
  */
@@ -76,10 +76,10 @@ export function selectMarker(id = null) {
   if (selectedMarker) selectedMarker.markerWindow.open(map, selectedMarker.marker);
 }
 
-/*
+/**
  * Removes all markers from the map and markers array.
  */
 export function removeAllMarkers() {
-  markers.forEach(marker => marker.marker.setMap(null))
+  for (let marker of markers) marker.marker.setMap(null);
   markers = [];
 }
