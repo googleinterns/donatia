@@ -46,7 +46,7 @@ function updateResults() {
   removeMarkers();
 
   // Requery and repopulate page data.
-  let filter = document.getElementById("search-dropdown").value;
+  const filter = document.getElementById("search-dropdown").value;
   fetch("/discover/" + filter).then(data => data.json())
   .then(organizations => {
     createOrganizationCards(organizations);
