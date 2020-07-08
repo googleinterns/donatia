@@ -7,14 +7,14 @@ exports.view = function(req, res) {
 };
 
 exports.getOrganizations = function(req, res) {
-  let filter = req.params.filter
+  const filter = req.params.filter
 
   if (filter === 'all') {
     res.send(data.organizations)
   } else {
-    let filtered = data.organizations.filter(function (organization) {
-      return organization.categories.includes(filter);
-    });
+    const filtered = data.organizations.filter((organization)  =>
+      organization.categories.includes(filter)
+    );
     res.send(filtered);
   }
 };
