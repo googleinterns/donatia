@@ -8,7 +8,6 @@ import { initMap, createMarkers, selectMarker, removeMarkers } from './maps.js';
 window.onload = function() {
   initMap();
   updateSearchResults();
-  document.getElementById("search-dropdown").onchange = updateSearchResults;
   setPageEventListeners();
 }
 
