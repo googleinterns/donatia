@@ -38,7 +38,7 @@ window.onload = function() {
 }
 
 /**
- * Requerys for organization data and refreshes page data.
+ * Requeries for organization data and refreshes page data.
  */
 function updateResults() {
   document.getElementById("search-list").innerHTML = "";
