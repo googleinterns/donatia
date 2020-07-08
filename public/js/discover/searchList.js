@@ -2,7 +2,7 @@
 const searchCardTemplate = 
     `
       {{#each organizations}}
-        <div class="search-card" data-organization="{{this.id}}">
+        <div class="search-card" id="{{this.id}}">
           <div class="search-left">
             <div class="search-dropoff-info">
               <h1 class="search-title">{{this.title}}</h1>
@@ -30,53 +30,41 @@ const searchCardTemplate =
       {{/each}}
     `;
 
-/*
- * When the page loads, fetches initial organization data and render it
- * in cards on the list.
- */
-window.onload = function() {
-  updateResults();
-}
-
-/*
- * Requerys for organization data and refreshes page data.
- */
-function updateResults() {
-  // Clear out current page data.
-  document.getElementById("search-list").innerHTML = "";
-  removeMarkers();
-
-  // Requery and repopulate page data.
-  const filter = document.getElementById("search-dropdown").value;
-  fetch("/discover/" + filter).then(data => data.json())
-  .then(organizations => {
-    createOrganizationCards(organizations);
-    createMarkers(organizations);
-  })
-}
-
 /**
  * Renders the organization data into cards.
  * @param {JSON object} organizations The JSON of organization data to add to the page.
  */
-function createOrganizationCards(organizations) {
+export function createOrganizationCards(organizations) {
   // Generate the cards.
   const renderCards = Handlebars.compile(searchCardTemplate);
   document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
 
   // Add event listeners to the cards.
-  searchCards = document.getElementsByClassName("search-card");
+  const searchCards = document.getElementsByClassName("search-card");
   for (let i = 0; i < searchCards.length; i++) {
-    let card = searchCards[i];
+    const card = searchCards[i];
 
     card.addEventListener("mouseover", function (e) {
       card.classList.add("selected");
-      openMarker(card.dataset.organization);
+      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.dataset.organization}))
     });
 
     card.addEventListener("mouseout", function (e) {
       card.classList.remove("selected");
-      openMarker("");
+      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: ""}))
     });
+  }
+}
+
+export function selectCard(id) {
+  const cards = document.getElementsByClassName('search-card');
+  console.log("id", id)
+  for (let i = 0; i < cards.length; i++) {
+    console.log("card id", cards[i].id)
+    if (cards[i].id === id) {
+      cards[i].classList.add("selected");
+    } else {
+      cards[i].classList.remove("selected");
+    }
   }
 }
