@@ -5,6 +5,11 @@ steps:
 - name: node
   entrypoint: npm
   args: ['test']
+- name: node
+  entrypoint: npm
+  args: ["run", "create-env"]
+  env:
+    - 'MAPS_KEY=${_MAPS_PROD_KEY}'
 - name: "gcr.io/cloud-builders/gcloud"  
   args: ["app", "deploy"]
   timeout: 1800s
