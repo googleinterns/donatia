@@ -79,9 +79,7 @@ export function selectMarker(id = null) {
 /*
  * Removes all markers from the map and markers array.
  */
-export function removeMarkers() {
-  for (let i = 0; i < markers.length; i++) {
-    markers[i].marker.setMap(null);
-  }
+export function removeAllMarkers() {
+  markers.forEach(marker => marker.marker.setMap(null))
   markers = [];
 }

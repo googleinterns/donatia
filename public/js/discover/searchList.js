@@ -58,8 +58,10 @@ export function createOrganizationCards(organizations) {
   }
 }
 
-export function selectCard(id = null) {
+export function selectCard(id = null, scroll = false) {
   if (selectedCard) selectedCard.classList.remove("selected");
+  
   selectedCard = document.getElementById(id);
   if (selectedCard) selectedCard.classList.add("selected");
+  if(selectedCard && scroll) selectedCard.scrollIntoView();
 }

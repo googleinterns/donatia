@@ -16,6 +16,7 @@ body {
   padding: 20px;
   border-right: 1px solid #ececec;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 #map {

@@ -1,5 +1,5 @@
 import { createOrganizationCards, selectCard } from './searchList.js';
-import { initMap, createMarkers, selectMarker, removeMarkers } from './maps.js';
+import { initMap, createMarkers, selectMarker, removeAllMarkers } from './maps.js';
 
 /*
  * When the page loads, fetches initial organization data and render it
@@ -9,6 +9,7 @@ window.onload = function() {
   initMap();
   updateSearchResults();
   setPageEventListeners();
+  document.getElementById('search-dropdown').onchange = updateSearchResults;
 }
 
 /* 
@@ -18,7 +19,7 @@ window.onload = function() {
 function setPageEventListeners() {
   const discoverPage = document.getElementById("discover");
   discoverPage.addEventListener('cardHover', e => selectMarker(e.detail));
-  discoverPage.addEventListener('markerHover', e => selectCard(e.detail));
+  discoverPage.addEventListener('markerHover', e => selectCard(e.detail, /* scroll = */ true));
 }
 
 /*
@@ -27,7 +28,7 @@ function setPageEventListeners() {
 function updateSearchResults() {
   // Clear out current page data.
   document.getElementById("search-list").innerHTML = "";
-  removeMarkers();
+  removeAllMarkers();
 
   // Requery and repopulate page data.
   let filter = document.getElementById("search-dropdown").value;
