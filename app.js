@@ -29,9 +29,9 @@ app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 
 // Load API keys.
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-} else {
+require('dotenv').config();
+
+if (process.env.NODE_ENV === 'production') {
   console.log(PROD_WARNING_MESSAGE);
 }
 
