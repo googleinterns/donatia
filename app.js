@@ -8,7 +8,18 @@ var path = require('path');
 var handlebars = require('express-handlebars')
 
 var app = express();
+const PROD_WARNING_MESSAGE = `
+██     ██  █████  ██████  ███    ██ ██ ███    ██  ██████      ██ 
+██     ██ ██   ██ ██   ██ ████   ██ ██ ████   ██ ██           ██ 
+██  █  ██ ███████ ██████  ██ ██  ██ ██ ██ ██  ██ ██   ███     ██ 
+██ ███ ██ ██   ██ ██   ██ ██  ██ ██ ██ ██  ██ ██ ██    ██        
+ ███ ███  ██   ██ ██   ██ ██   ████ ██ ██   ████  ██████      ██ 
 
+
+You are running the app using production config (Firestore Database, Map API keys, etc).
+
+If you are developing the app locally, please use "npm run dev" to start the app.
+`;
 // Environments configs. 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +31,8 @@ app.use('/static', express.static('public'));
 // Load API keys.
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
+} else {
+  console.log(PROD_WARNING_MESSAGE);
 }
 
 // Routes.
