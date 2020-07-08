@@ -1,4 +1,6 @@
 
+let selectedCard;
+
 const searchCardTemplate = 
     `
       {{#each organizations}}
@@ -39,32 +41,25 @@ export function createOrganizationCards(organizations) {
   const renderCards = Handlebars.compile(searchCardTemplate);
   document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
 
-  // Add event listeners to the cards.
+  // Add event listeners to the cards for hovering.
   const searchCards = document.getElementsByClassName("search-card");
   for (let i = 0; i < searchCards.length; i++) {
     const card = searchCards[i];
 
     card.addEventListener("mouseover", function (e) {
-      card.classList.add("selected");
+      selectCard(card.id);
       card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.id}))
     });
 
     card.addEventListener("mouseout", function (e) {
-      card.classList.remove("selected");
+      selectCard();
       card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: ""}))
     });
   }
 }
 
-export function selectCard(id) {
-  const cards = document.getElementsByClassName('search-card');
-  console.log("id", id)
-  for (let i = 0; i < cards.length; i++) {
-    console.log("card id", cards[i].id)
-    if (cards[i].id === id) {
-      cards[i].classList.add("selected");
-    } else {
-      cards[i].classList.remove("selected");
-    }
-  }
+export function selectCard(id = null) {
+  if (selectedCard) selectedCard.classList.remove("selected");
+  selectedCard = document.getElementById(id);
+  if (selectedCard) selectedCard.classList.add("selected");
 }

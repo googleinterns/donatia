@@ -2,8 +2,8 @@ const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
 let bounds;
+let selectedMarker;
 let markers = [];
-let markerWindows = [];
 
 /* 
  * Initializes the Google Map to be centerd in Houston and to add 
@@ -42,11 +42,9 @@ export function createMarkers(data) {
     // Create the marker info window.
     let markerWindow = new google.maps.InfoWindow({
       content: organization.title,
-      id: organization.id
     });
-    markerWindows.push(markerWindow);
 
-    // Add event listeners to the cards.
+    // Add event listeners to the map for marker hovering.
     const mapContainer = document.getElementById("map");
 
     google.maps.event.addListener(marker, 'mouseover', function () {
@@ -56,26 +54,26 @@ export function createMarkers(data) {
 
     google.maps.event.addListener(marker, 'mouseout', function () {
       selectMarker("")
-      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: ""}))
+      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: null}))
     });
 
     bounds.extend(marker.getPosition());
     map.fitBounds(bounds);
-    markers.push(marker);
+    markers.push({
+      marker: marker,
+      markerWindow: markerWindow,
+    });
   });
 }
 
 /*
- * Select the marker with the given id.
+ * Select and open the info window for the marker with the 
+ * given id. Close all other marker windows.
  */
-export function selectMarker(id) {
-  for (let i = 0; i < markerWindows.length; i++) {
-    if (markerWindows[i].id === id) {
-      markerWindows[i].open(map, markers[i]);
-    } else {
-      markerWindows[i].close();
-    }
-  }
+export function selectMarker(id = null) {
+  if (selectedMarker) selectedMarker.markerWindow.close();
+  selectedMarker = markers.find(marker => marker.marker.id == id);
+  if (selectedMarker) selectedMarker.markerWindow.open(map, selectedMarker.marker);
 }
 
 /*
@@ -83,7 +81,7 @@ export function selectMarker(id) {
  */
 export function removeMarkers() {
   for (let i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
+    markers[i].marker.setMap(null);
   }
   markers = [];
 }

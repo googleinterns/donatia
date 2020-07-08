@@ -12,6 +12,16 @@ window.onload = function() {
   setPageEventListeners();
 }
 
+/* 
+ * Add event listeners to the page to select the matching marker on a card
+ * hover and vice versa.
+ */
+function setPageEventListeners() {
+  const discoverPage = document.getElementById("discover");
+  discoverPage.addEventListener('cardHover', e => selectMarker(e.detail));
+  discoverPage.addEventListener('markerHover', e => selectCard(e.detail));
+}
+
 /*
  * Requerys for organization data and refreshes page data.
  */
@@ -27,10 +37,4 @@ function updateSearchResults() {
     createOrganizationCards(organizations);
     createMarkers(organizations);
   })
-}
-
-function setPageEventListeners() {
-  const discoverPage = document.getElementById("discover");
-  discoverPage.addEventListener('cardHover', e => selectMarker(e.detail));
-  discoverPage.addEventListener('markerHover', e => selectCard(e.detail));
 }
