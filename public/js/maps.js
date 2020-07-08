@@ -60,6 +60,6 @@ function createMarkers(data) {
  * Removes all markers from the map and markers array.
  */
 function removeMarkers() {
-  for (let marker of markers) markers[i].setMap(null);
+  for (let marker of markers) marker.setMap(null);
   markers = [];
 }
