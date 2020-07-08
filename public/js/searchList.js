@@ -29,29 +29,29 @@ const searchCardTemplate =
       {{/each}}
     `;
 
-/*
- * When the page loads, fetches initial organization data and render it
+/**
+ * When the page loads, fetches initial organization data on page load
  * in cards on the list.
  */
 window.onload = function() {
   updateResults();
 }
 
-/*
+/**
  * Requerys for organization data and refreshes page data.
  */
 function updateResults() {
-  // Clear out current page data.
   document.getElementById("search-list").innerHTML = "";
   removeMarkers();
 
   // Requery and repopulate page data.
   const filter = document.getElementById("search-dropdown").value;
-  fetch("/discover/" + filter).then(data => data.json())
-  .then(organizations => {
-    createOrganizationCards(organizations);
-    createMarkers(organizations);
-  })
+  fetch("/discover/" + filter)
+      .then(data => data.json())
+      .then(organizations => {
+        createOrganizationCards(organizations);
+        createMarkers(organizations);
+      })
 }
 
 /**

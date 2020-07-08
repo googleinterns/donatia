@@ -13,8 +13,7 @@ exports.getOrganizations = function(req, res) {
     res.send(data.organizations)
   } else {
     const filtered = data.organizations.filter((organization)  =>
-      organization.categories.includes(filter)
-    );
+      organization.categories.includes(filter));
     res.send(filtered);
   }
 };
