@@ -1,5 +1,5 @@
 /**
- * @return JSON of all category entry information
+ * @return {JSON} All category entry information.
  */
 function getAllCategories() {
   // TODO: Get all categories from database.
@@ -21,7 +21,8 @@ function getAllCategories() {
 }
 
 /**
- * @param {string} organizationID ID of organization requesting categories
+ * @param {string} organizationID ID of organization requesting categories.
+ * @return {JSON} Object containing all categories used by an organization.
  */
 function getAllAcceptedCategories(organizationID) {
   // TODO: Get an organizations accepted cagtegories from database
@@ -44,17 +45,13 @@ function getAllAcceptedCategories(organizationID) {
         "place in plastic/paper bag",
         "bring inside during open hours",
       ],
-      quality: [
-        "expiration date > 6 months from current date",
-        "no holes",
-        "labels on cans",
-      ],
+      quality: ["expiration date > 6 months from current date", "no holes", "labels on cans"],
     },
   ];
   return allAcceptedCategories;
 }
 
-/*
+/**
  * Retrieves values from form and adds to database.
  */
 function addCategory() {
@@ -70,21 +67,17 @@ function deleteCategory(categoryID) {
 }
 
 window.onload = async function () {
-  const addCategoriesTemplate = document.getElementById(
-    "add-categories-template"
-  ).innerHTML;
-  const renderAddCategories = Handlebars.compile(addCategoriesTemplate);
-  const allAvailableCategories = await this.getAllCategories();
+  const addCategoriesTemplate = document.getElementById("add-categories-template").innerHTML;
+  const renderAddCategories = Handlebars.compile(addCategoriesTemplate); // eslint-disable-line no-undef
+  const allAvailableCategories = await getAllCategories();
   document.getElementById("add-categories").innerHTML = renderAddCategories({
     categoryList: allAvailableCategories,
   });
 
-  const existingCategoriesTemplate = document.getElementById(
-    "existing-cards-template"
-  ).innerHTML;
-  const renderExistingCards = Handlebars.compile(existingCategoriesTemplate);
-  const allExistingCards = await this.getAllAcceptedCategories();
-  this.document.getElementById(
-    "existing-card-holder"
-  ).innerHTML = renderExistingCards({cardList: allExistingCards});
+  const existingCategoriesTemplate = document.getElementById("existing-cards-template").innerHTML;
+  const renderExistingCards = Handlebars.compile(existingCategoriesTemplate); // eslint-disable-line no-undef
+  const allExistingCards = await getAllAcceptedCategories();
+  this.document.getElementById("existing-card-holder").innerHTML = renderExistingCards({
+    cardList: allExistingCards,
+  });
 };

@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 const request = require("request");
-const app = require("../app");
+require("../app");
 
 it("Discover page content", function (done) {
   request("http://localhost:3000/discover", function (error, response, body) {

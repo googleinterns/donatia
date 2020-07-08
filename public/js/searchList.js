@@ -35,13 +35,14 @@ const searchCardTemplate = `
 window.onload = function () {
   fetchOrganizations("all").then((organizations) => {
     createOrganizationCards(organizations);
-    createMarkers(organizations);
+    createMarkers(organizations); // eslint-disable-line no-undef
   });
 };
 
-/*
+/**
  * Fetches the organization data with the given filters from the server.
  * @param {string} filterText The selected item category with which to filer results for.
+ * @return {JSON} Organization data.
  */
 function fetchOrganizations(filterText) {
   return fetch("/discover", {
@@ -50,12 +51,12 @@ function fetchOrganizations(filterText) {
   }).then((data) => data.json());
 }
 
-/*
+/**
  * Renders the organization data into cards.
- * @param {JSON object} organizations The JSON of organization data to add to the page.
+ * @param {JSON} organizations The JSON of organization data to add to the page.
  */
 function createOrganizationCards(organizations) {
-  const renderCards = Handlebars.compile(searchCardTemplate);
+  const renderCards = Handlebars.compile(searchCardTemplate); // eslint-disable-line no-undef
   document.getElementById("search-list").innerHTML = renderCards({
     organizations: organizations,
   });

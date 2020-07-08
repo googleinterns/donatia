@@ -1,4 +1,4 @@
-var data = require("../testingOrganizations.json");
+const data = require("../testingOrganizations.json");
 
 exports.view = function (req, res) {
   res.render("discover", {

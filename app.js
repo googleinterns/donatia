@@ -2,12 +2,14 @@
  * Module dependencies.
  */
 
-var express = require("express");
-var http = require("http");
-var path = require("path");
-var handlebars = require("express-handlebars");
+const express = require("express");
+const http = require("http");
+const path = require("path");
+const handlebars = require("express-handlebars");
 
-var app = express();
+const app = express();
+
+/* eslint-disable */
 const PROD_WARNING_MESSAGE = `
 ██     ██  █████  ██████  ███    ██ ██ ███    ██  ██████      ██ 
 ██     ██ ██   ██ ██   ██ ████   ██ ██ ████   ██ ██           ██ 
@@ -20,6 +22,8 @@ You are running the app using production config (Firestore Database, Map API key
 
 If you are developing the app locally, please use "npm run dev" to start the app.
 `;
+/* eslint-enable */
+
 // Environments configs.
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "views"));

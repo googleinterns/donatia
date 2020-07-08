@@ -1,3 +1,13 @@
 {
-  "bracketSpacing": false
+  "bracketSpacing": false,
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": "*.handlebars",
+      "options": {
+        "parser": "html",
+        "printWidth": 100
+      }
+    }
+  ]
 }

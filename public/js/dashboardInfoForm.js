@@ -1,6 +1,6 @@
 /**
  * @param {string} id Organization's unique database ID
- * @return JSON of organization's information
+ * @return {JSON} An organization's information
  */
 function getFormInfo(id) {
   // TODO: Get organization's information from database
@@ -22,8 +22,7 @@ function getFormInfo(id) {
 window.onload = async function populateForm() {
   const formJSON = await getFormInfo("{{id}}");
   document.getElementById("organization-name").value = formJSON.name;
-  document.getElementById("organization-description").value =
-    formJSON.description;
+  document.getElementById("organization-description").value = formJSON.description;
   document.getElementById("organization-address").value = formJSON.placesID;
   document.getElementById("organization-phone").value = formJSON.phone;
   document.getElementById("organization-website").value = formJSON.websiteURL;

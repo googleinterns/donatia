@@ -2,8 +2,7 @@ const {Firestore} = require("@google-cloud/firestore");
 
 // Database Initialization
 const firestore = new Firestore();
-const DB_COLLECTION_NAME =
-  process.env.NODE_ENV == "production" ? "movies" : "dev-movies";
+const DB_COLLECTION_NAME = process.env.NODE_ENV == "production" ? "movies" : "dev-movies";
 
 exports.view = function (req, res) {
   createMovies();
@@ -13,7 +12,9 @@ exports.view = function (req, res) {
   });
 };
 
-// Inserts 3 new documents into the 'movies' collection with hard-coded data
+/**
+ * Inserts 3 new documents into the 'movies' collection with hard-coded data.
+ */
 async function createMovies() {
   // Dummy data to insert into the database
   const movieData = [
@@ -32,27 +33,20 @@ async function createMovies() {
   ];
 
   movieData.forEach((movie) => {
-    let document = firestore.collection(DB_COLLECTION_NAME).doc();
+    const document = firestore.collection(DB_COLLECTION_NAME).doc();
     document.set(movie);
   });
 }
 
-// Read all documents in the 'movies' collection
+/**
+ * Read all documents in the 'movies' collection
+ */
 async function readMovies() {
-  let movieList = [];
+  const movieList = [];
   const moviesRef = firestore.collection(DB_COLLECTION_NAME);
   const snapshot = await moviesRef.get();
   snapshot.forEach((movie) => {
     movieList.push(movie.data());
   });
   return movieList;
-}
-
-// Deletes all documents in the 'movies' collection
-async function deleteAllMovies() {
-  const moviesRef = firestore.collection(DB_COLLECTION_NAME);
-  const snapshot = await moviesRef.get();
-  snapshot.forEach((movie) => {
-    movie.ref.delete();
-  });
 }
