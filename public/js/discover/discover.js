@@ -9,7 +9,6 @@ window.onload = function() {
   initMap();
   updateSearchResults();
   setPageEventListeners();
-  document.getElementById('search-dropdown').onchange = updateSearchResults;
 }
 
 /* 
@@ -25,7 +24,7 @@ function setPageEventListeners() {
 /*
  * Requerys for organization data and refreshes page data.
  */
-function updateSearchResults() {
+window.updateSearchResults = function() {
   // Clear out current page data.
   document.getElementById("search-list").innerHTML = "";
   removeAllMarkers();
