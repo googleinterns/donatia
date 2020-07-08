@@ -46,7 +46,7 @@ export function createOrganizationCards(organizations) {
 
     card.addEventListener("mouseover", function (e) {
       card.classList.add("selected");
-      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.dataset.organization}))
+      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.id}))
     });
 
     card.addEventListener("mouseout", function (e) {
