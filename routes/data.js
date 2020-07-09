@@ -46,6 +46,11 @@ exports.acceptedCategoriesGet = function (req, res) {
     });
 };
 
+exports.acceptedCategoriesDelete = async function (req, res) {
+  const results = await firestore.doc(`/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`).delete();
+  res.sendStatus(200);
+};
+
 exports.acceptedCategoriesByFieldGet = async function (req, res) {
   let fieldReference;
   if (req.params.field == 'organization') {
