@@ -14,9 +14,9 @@ If you are developing the app locally, please use "npm run dev" to start the app
 // Show production warning message and load API keys.
 if (process.env.NODE_ENV === 'production') {
   console.log(PROD_WARNING_MESSAGE);
-  require('dotenv').config({ path: ".env.production" });
+  require('dotenv').config({path: ".env.prod"});
 } else {
-  require('dotenv').config({ path: ".env.dev" });
+  require('dotenv').config({path: ".env.dev"});
 }
 
 // Module dependencies.
@@ -65,10 +65,10 @@ const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
 
 app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile'] }));
+    passport.authenticate('google', {scope: ['profile']}));
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/' }),
+    passport.authenticate('google', {failureRedirect: '/'}),
     (req, res) => res.redirect('/dashboard'));
 
 app.get('/auth/logout', (req, res) => {

@@ -4,7 +4,7 @@ steps:
   args: ['install']
 - name: node
   entrypoint: npm
-  args: ["run", "create-env-production"]
+  args: ["run", "create-env-prod"]
   env:
     - 'MAPS_KEY=${_MAPS_PROD_KEY}'
     - 'PASSPORT_CLIENT_ID=${_PASSPORT_PROD_CLIENT_ID}'
