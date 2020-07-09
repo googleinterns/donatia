@@ -1,5 +1,5 @@
-import { createOrganizationCards, selectCard } from './searchList.js';
-import { initMap, createMarkers, selectMarker, removeAllMarkers } from './maps.js';
+import {createOrganizationCards, selectCard} from './searchList.js';
+import {initMap, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
 
 /**
  * When the page loads, fetches initial organization data and render it
