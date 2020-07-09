@@ -35,7 +35,7 @@ export function createMarkers(data) {
       position: new google.maps.LatLng(organization.latitude, organization.longitude),
       map: map,
       title: organization.title,
-      id: organization.id
+      id: organization.id,
     });
 
     // Create the marker info window.
@@ -43,17 +43,17 @@ export function createMarkers(data) {
       content: organization.title,
     });
 
-    // Add event listeners to the map for marker hovering.
+    // Select a marker and dispatch an event when a marker is hovered on/off.
     const mapContainer = document.getElementById("map");
 
     google.maps.event.addListener(marker, 'mouseover', function () {
-      selectMarker(marker.id)
-      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: marker.id}))
+      selectMarker(marker.id);
+      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: marker.id}));
     });
 
     google.maps.event.addListener(marker, 'mouseout', function () {
-      selectMarker("")
-      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: null}))
+      selectMarker(null);
+      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: null}));
     });
 
     bounds.extend(marker.getPosition());
@@ -70,11 +70,11 @@ export function createMarkers(data) {
  * given id. Close all other marker windows.
  */
 export function selectMarker(id = null) {
-  for(let markerData of markers) {
-    if (markerData.marker.id === id) {
-      markerData.markerWindow.open(map, markerData.marker);
+  for(let marker of markers) {
+    if (marker.marker.id === id) {
+      marker.markerWindow.open(map, marker.marker);
     } else {
-      markerData.markerWindow.close();
+      marker.markerWindow.close();
     }
   }
 }

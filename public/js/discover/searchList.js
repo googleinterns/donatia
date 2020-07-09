@@ -46,12 +46,12 @@ export function createOrganizationCards(organizations) {
 
     card.addEventListener("mouseover", function (e) {
       selectCard(card.id);
-      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.id}))
+      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.id}));
     });
 
     card.addEventListener("mouseout", function (e) {
       selectCard();
-      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: ""}))
+      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: null}));
     });
   }
 }

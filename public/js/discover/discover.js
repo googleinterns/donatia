@@ -17,8 +17,8 @@ window.onload = function() {
  */
 function setPageEventListeners() {
   const discoverPage = document.getElementById("discover");
-  discoverPage.addEventListener('cardHover', e => selectMarker(e.detail));
-  discoverPage.addEventListener('markerHover', e => selectCard(e.detail, /* scroll = */ true));
+  discoverPage.addEventListener('cardHover', e => selectMarker(/* id = */ e.detail));
+  discoverPage.addEventListener('markerHover', e => selectCard(/* id = */ e.detail, /* scroll = */ true));
 }
 
 /**
@@ -30,9 +30,10 @@ window.updateSearchResults = function() {
 
   // Requery and repopulate page data.
   let filter = document.getElementById("search-dropdown").value;
-  fetch("/discover/" + filter).then(data => data.json())
-  .then(organizations => {
-    createOrganizationCards(organizations);
-    createMarkers(organizations);
-  })
+  fetch("/discover/" + filter)
+      .then(data => data.json())
+      .then(organizations => {
+        createOrganizationCards(organizations);
+        createMarkers(organizations);
+      });
 }
