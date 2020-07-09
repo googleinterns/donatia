@@ -1,6 +1,8 @@
 {
   "bracketSpacing": false,
   "printWidth": 100,
+  "singleQuote": true,
+  "jsxBracketSameLine": true,
   "overrides": [
     {
       "files": "*.handlebars",

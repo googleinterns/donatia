@@ -28,14 +28,16 @@ const searchCardTemplate = `
       {{/each}}
     `;
 
+/* global createMarkers, Handlebars*/
+
 /*
  * When the page loads, fetch initial organization data and render it
  * in cards on the list.
  */
 window.onload = function () {
-  fetchOrganizations("all").then((organizations) => {
+  fetchOrganizations('all').then((organizations) => {
     createOrganizationCards(organizations);
-    createMarkers(organizations); // eslint-disable-line no-undef
+    createMarkers(organizations);
   });
 };
 
@@ -45,8 +47,8 @@ window.onload = function () {
  * @return {JSON} Organization data.
  */
 function fetchOrganizations(filterText) {
-  return fetch("/discover", {
-    method: "POST",
+  return fetch('/discover', {
+    method: 'POST',
     body: JSON.stringify({filter: filterText}),
   }).then((data) => data.json());
 }
@@ -56,8 +58,8 @@ function fetchOrganizations(filterText) {
  * @param {JSON} organizations The JSON of organization data to add to the page.
  */
 function createOrganizationCards(organizations) {
-  const renderCards = Handlebars.compile(searchCardTemplate); // eslint-disable-line no-undef
-  document.getElementById("search-list").innerHTML = renderCards({
+  const renderCards = Handlebars.compile(searchCardTemplate);
+  document.getElementById('search-list').innerHTML = renderCards({
     organizations: organizations,
   });
 }

@@ -5,13 +5,13 @@ module.exports = {
     node: true,
     mocha: true,
   },
-  extends: ["eslint:recommended", "google", "prettier"],
+  extends: ['eslint:recommended', 'google', 'prettier'],
   parserOptions: {
     ecmaVersion: 11,
-    sourceType: "module",
+    sourceType: 'module',
   },
-  plugins: ["hbs"],
+  plugins: ['hbs'],
   rules: {
-    "hbs/check-hbs-template-literals": 2,
+    'hbs/check-hbs-template-literals': 2,
   },
 };

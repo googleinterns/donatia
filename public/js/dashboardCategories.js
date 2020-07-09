@@ -1,3 +1,5 @@
+/* global Handlebars*/
+
 /**
  * @return {JSON} All category entry information.
  */
@@ -5,16 +7,16 @@ function getAllCategories() {
   // TODO: Get all categories from database.
   const allCategories = [
     {
-      ID: "clothing",
-      name: "Clothing",
+      ID: 'clothing',
+      name: 'Clothing',
     },
     {
-      ID: "food",
-      name: "Food",
+      ID: 'food',
+      name: 'Food',
     },
     {
-      ID: "house-supplies",
-      name: "Household Supplies",
+      ID: 'house-supplies',
+      name: 'Household Supplies',
     },
   ];
   return allCategories;
@@ -28,24 +30,24 @@ function getAllAcceptedCategories(organizationID) {
   // TODO: Get an organizations accepted cagtegories from database
   const allAcceptedCategories = [
     {
-      name: "Clothes",
-      ID: "org-name-clothes",
+      name: 'Clothes',
+      ID: 'org-name-clothes',
       instructions: [
-        "review quality checklist",
-        "unlock donation locker (code: 5248)",
-        "place in donation locker",
+        'review quality checklist',
+        'unlock donation locker (code: 5248)',
+        'place in donation locker',
       ],
-      quality: ["no holes", "gently used", "washed recently"],
+      quality: ['no holes', 'gently used', 'washed recently'],
     },
     {
-      name: "Food",
-      ID: "org-name-food",
+      name: 'Food',
+      ID: 'org-name-food',
       instructions: [
-        "review quality checklist",
-        "place in plastic/paper bag",
-        "bring inside during open hours",
+        'review quality checklist',
+        'place in plastic/paper bag',
+        'bring inside during open hours',
       ],
-      quality: ["expiration date > 6 months from current date", "no holes", "labels on cans"],
+      quality: ['expiration date > 6 months from current date', 'no holes', 'labels on cans'],
     },
   ];
   return allAcceptedCategories;
@@ -54,30 +56,30 @@ function getAllAcceptedCategories(organizationID) {
 /**
  * Retrieves values from form and adds to database.
  */
-function addCategory() {
+window.addCategory = function addCategory() {
   // TODO: Add category to database.
-  console.log("added a category");
-}
+  console.log('added a category');
+};
 
 /**
  * @param {string} categoryID ID of the category to be deleted.
  */
-function deleteCategory(categoryID) {
-  console.log("deleted" + categoryID);
-}
+window.deleteCategory = function deleteCategory(categoryID) {
+  console.log('deleted' + categoryID);
+};
 
 window.onload = async function () {
-  const addCategoriesTemplate = document.getElementById("add-categories-template").innerHTML;
-  const renderAddCategories = Handlebars.compile(addCategoriesTemplate); // eslint-disable-line no-undef
+  const addCategoriesTemplate = document.getElementById('add-categories-template').innerHTML;
+  const renderAddCategories = Handlebars.compile(addCategoriesTemplate);
   const allAvailableCategories = await getAllCategories();
-  document.getElementById("add-categories").innerHTML = renderAddCategories({
+  document.getElementById('add-categories').innerHTML = renderAddCategories({
     categoryList: allAvailableCategories,
   });
 
-  const existingCategoriesTemplate = document.getElementById("existing-cards-template").innerHTML;
-  const renderExistingCards = Handlebars.compile(existingCategoriesTemplate); // eslint-disable-line no-undef
+  const existingCategoriesTemplate = document.getElementById('existing-cards-template').innerHTML;
+  const renderExistingCards = Handlebars.compile(existingCategoriesTemplate);
   const allExistingCards = await getAllAcceptedCategories();
-  this.document.getElementById("existing-card-holder").innerHTML = renderExistingCards({
+  this.document.getElementById('existing-card-holder').innerHTML = renderExistingCards({
     cardList: allExistingCards,
   });
 };

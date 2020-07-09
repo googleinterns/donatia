@@ -1,8 +1,8 @@
-const {Firestore} = require("@google-cloud/firestore");
+const {Firestore} = require('@google-cloud/firestore');
 
 // Database Initialization
 const firestore = new Firestore();
-const DB_COLLECTION_NAME = process.env.NODE_ENV == "production" ? "movies" : "dev-movies";
+const DB_COLLECTION_NAME = process.env.NODE_ENV == 'production' ? 'movies' : 'dev-movies';
 
 exports.view = function (req, res) {
   createMovies();
@@ -19,15 +19,15 @@ async function createMovies() {
   // Dummy data to insert into the database
   const movieData = [
     {
-      title: "Black Panther",
+      title: 'Black Panther',
       year: 2018,
     },
     {
-      title: "Avengers: Endgame",
+      title: 'Avengers: Endgame',
       year: 2019,
     },
     {
-      title: "Iron Man",
+      title: 'Iron Man',
       year: 2008,
     },
   ];

@@ -1,25 +1,17 @@
-name: Format Check
+name: Code Quality Check
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
-    branches:
-      - master
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
-  lint:
+  quality-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Node 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.x"
-      - name: "Install Dependancies"
-        run: npm ci
-      - name: "Run Linter"
+      - name: 'Run Linter'
         run: npm run lint-check
-      - name: "Run Formatter"
+      - name: 'Run Formatter'
         run: npm run format-check
