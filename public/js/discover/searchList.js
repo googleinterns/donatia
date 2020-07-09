@@ -38,7 +38,7 @@ const searchCardTemplate =
 export function createOrganizationCards(organizations) {
   // Generate the cards.
   const renderCards = Handlebars.compile(searchCardTemplate);
-  document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
+  document.getElementById("search-list").innerHTML += renderCards({organizations: organizations});
 
   // Add event listeners to the cards for hovering.
   const searchCards = document.getElementsByClassName("search-card");
