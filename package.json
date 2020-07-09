@@ -4,8 +4,10 @@
   "description": "Skeleton app for Node.js based STEP capstone project. ",
   "main": "index.js",
   "scripts": {
+    "create-env": "printenv > .env",
     "test": "./node_modules/.bin/mocha --exit",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "NODE_ENV=development node app.js"
   },
   "repository": {
     "type": "git",

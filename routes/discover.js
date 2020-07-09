@@ -7,8 +7,19 @@ exports.view = function(req, res) {
 };
 
 exports.getOrganizations = function(req, res) {
-  let startIndex = req.body.start;
-  let batchSize = req.body.batchSize;
-  let batch = data.organizations.slice(startIndex, startIndex + batchSize);
-  res.send(batch)
+  const startIndex = req.body.start;
+  const batchSize = req.body.batchSize;
+  const filter = req.body.filter;
+
+  let queried;
+
+  if (filter === 'all') {
+    queried = data.organizations;
+  } else {
+    queried = data.organizations.filter((organization)  =>
+      organization.categories.includes(filter));
+  }
+
+  let batch = queried.slice(startIndex, startIndex + batchSize);
+  res.send(batch);
 };

@@ -9,7 +9,18 @@ var handlebars = require('express-handlebars');
 var bodyParser = require('body-parser');
 
 var app = express();
+const PROD_WARNING_MESSAGE = `
+██     ██  █████  ██████  ███    ██ ██ ███    ██  ██████      ██ 
+██     ██ ██   ██ ██   ██ ████   ██ ██ ████   ██ ██           ██ 
+██  █  ██ ███████ ██████  ██ ██  ██ ██ ██ ██  ██ ██   ███     ██ 
+██ ███ ██ ██   ██ ██   ██ ██  ██ ██ ██ ██  ██ ██ ██    ██        
+ ███ ███  ██   ██ ██   ██ ██   ████ ██ ██   ████  ██████      ██ 
 
+
+You are running the app using production config (Firestore Database, Map API keys, etc).
+
+If you are developing the app locally, please use "npm run dev" to start the app.
+`;
 // Environments configs. 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -20,8 +31,11 @@ app.use('/static', express.static('public'));
 app.use(bodyParser.json())
 
 // Load API keys.
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+require('dotenv').config();
+
+// Show production warning message.
+if (process.env.NODE_ENV === 'production') {
+  console.log(PROD_WARNING_MESSAGE);
 }
 
 // Routes.
@@ -33,6 +47,9 @@ app.post('/discover', discover.getOrganizations);
 
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);
+
+const data = require('./routes/data');
+app.get('/data', data.view);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
