@@ -44,6 +44,22 @@ exports.acceptedCategoriesGet = async function (req, res) {
   res.send(doc.data());
 };
 
+exports.acceptedCategoriesPost = async function (req, res) {
+  const updatedAcceptedCategoryData = req.body;
+
+  // If there is an update to the category field then change string into DocumentReference
+  if (updatedAcceptedCategoryData.hasOwnProperty('category')) {
+    updatedAcceptedCategoryData.category = await firestore.doc(
+      `/${resolveCollectionName('Categories')}/${req.body.category}`
+    );
+  }
+
+  const result = await firestore.doc(
+    `/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`
+  ).update(updatedAcceptedCategoryData);
+  res.sendStatus(201);
+};
+
 exports.acceptedCategoriesDelete = async function (req, res) {
   const results = await firestore
     .doc(`/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`)
@@ -72,16 +88,14 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
 };
 
 exports.acceptedCategoriesOrganizationPost = async function (req, res) {
-  const newAcceptedCategoryData = {
-    organization: await firestore.doc(
-      `/${resolveCollectionName('Organization')}/${req.params.id}`
-    ),
-    category: await firestore.doc(
-      `/${resolveCollectionName('Categories')}/${req.body.category}`
-    ),
-    instructions: req.body.instructions,
-    qualityGuidelines: req.body.qualityGuidelines,
-  };
+  const newAcceptedCategoryData = req.body;
+  newAcceptedCategoryData.organization = await firestore.doc(
+    `/${resolveCollectionName('Organization')}/${req.params.id}`
+  );
+  newAcceptedCategoryData.category = await firestore.doc(
+    `/${resolveCollectionName('Categories')}/${req.body.category}`
+  );
+
   const result = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .doc()

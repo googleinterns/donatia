@@ -49,6 +49,7 @@ app.get('/dashboard/:id/:page?', dashboard.view);
 
 const data = require('./routes/data');
 app.get('/data/acceptedcategories/:id', data.acceptedCategoriesGet);
+app.post('/data/acceptedcategories/:id', data.acceptedCategoriesPost);
 app.delete('/data/acceptedcategories/:id', data.acceptedCategoriesDelete)
 app.get('/data/acceptedcategories/:field(organization|category)/:id', data.acceptedCategoriesByFieldGet);
 app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
