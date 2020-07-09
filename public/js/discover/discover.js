@@ -2,9 +2,7 @@ import { createOrganizationCards, selectCard } from './searchList.js';
 import { initMap, createMarkers, selectMarker, removeAllMarkers } from './maps.js';
 
 const BATCH_SIZE = 5;
-
 let organizationCount = 0;
-let isFetchingData = false;
 
 /**
  * When the page loads, fetches initial organization data and render it
@@ -66,19 +64,14 @@ window.updateSearchResults = function() {
  */
 window.infinityScroll = function() {
   let searchContainer = document.getElementById("search");
-  
+
   // If scrolled to the bottom, fetch more data.
   if (searchContainer.scrollTop + searchContainer.offsetHeight >= searchContainer.scrollHeight - .5) {
-    // Don't make a fetch for data if a fetch is already being made.
-    if (!isFetchingData) {
-      isFetchingData = true;
-      fetchOrganizations()
-          .then(organizations => {
-            createOrganizationCards(organizations);
-            createMarkers(organizations);
-            organizationCount += organizations.length;
-            isFetchingData = false;
-          })
-    }
+    fetchOrganizations()
+        .then(organizations => {
+          createOrganizationCards(organizations);
+          createMarkers(organizations);
+          organizationCount += organizations.length;
+        })
   }
 };
