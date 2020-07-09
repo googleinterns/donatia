@@ -51,7 +51,7 @@ function updateResults() {
       .then(organizations => {
         createOrganizationCards(organizations);
         createMarkers(organizations);
-      })
+      });
 }
 
 /**
