@@ -4,7 +4,7 @@ import { initMap, createMarkers, selectMarker, removeAllMarkers } from './maps.j
 const BATCH_SIZE = 5;
 
 let organizationCount = 0;
-let fetchingNewOrganizations = false;
+let isFetchingData = false;
 
 /**
  * When the page loads, fetches initial organization data and render it
@@ -51,14 +51,14 @@ window.infinityScroll = function() {
   // If scrolled to the bottom, fetch more data.
   if (searchContainer.scrollTop + searchContainer.offsetHeight >= searchContainer.scrollHeight - 1) {
     // Don't make a fetch for data if a fetch is already being made.
-    if (!fetchingNewOrganizations) {
-      fetchingNewOrganizations = true;
+    if (!isFetchingData) {
+      isFetchingData = true;
       fetchOrganizations()
           .then(organizations => {
             createOrganizationCards(organizations);
             createMarkers(organizations);
             organizationCount += organizations.length;
-            fetchingNewOrganizations = false;
+            isFetchingData = false;
           })
     }
   }
