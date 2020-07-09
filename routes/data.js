@@ -36,18 +36,18 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
 
 /******** Response Handlers **************/
 
-exports.acceptedCategoriesGet = function (req, res) {
-  firestore
+exports.acceptedCategoriesGet = async function (req, res) {
+  const doc = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .doc(req.params['id'])
-    .get()
-    .then((doc) => {
-      res.send(doc.data());
-    });
+    .get();
+  res.send(doc.data());
 };
 
 exports.acceptedCategoriesDelete = async function (req, res) {
-  const results = await firestore.doc(`/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`).delete();
+  const results = await firestore
+    .doc(`/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`)
+    .delete();
   res.sendStatus(200);
 };
 
@@ -89,15 +89,13 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   res.sendStatus(201);
 };
 
-exports.categoriesGet = function (req, res) {
-  firestore
+exports.categoriesGet = async function (req, res) {
+  const snapshot = await firestore
     .collection(resolveCollectionName('Categories'))
-    .get()
-    .then((snapshot) => {
-      const categories = [];
-      snapshot.forEach((doc) => {
-        categories.push(doc.id);
-      });
-      res.send(categories);
-    });
+    .get();
+  const categories = [];
+  snapshot.forEach((doc) => {
+    categories.push(doc.id);
+  });
+  res.send(categories);
 };
