@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: 'Install Dependancies'
+        run: npm ci
       - name: 'Run Linter'
         run: npm run lint-check
       - name: 'Run Formatter'

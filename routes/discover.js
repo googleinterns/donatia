@@ -12,8 +12,9 @@ exports.getOrganizations = function (req, res) {
   if (filter === 'all') {
     res.send(data.organizations);
   } else {
-    const filtered = data.organizations.filter((organization)  =>
-      organization.categories.includes(filter));
+    const filtered = data.organizations.filter((organization) =>
+      organization.categories.includes(filter)
+    );
     res.send(filtered);
   }
 };

@@ -28,31 +28,31 @@ const searchCardTemplate = `
       {{/each}}
     `;
 
-/* global createMarkers, Handlebars*/
+/* global createMarkers, Handlebars, removeMarkers*/
 
 /**
  * When the page loads, fetches initial organization data on page load
  * in cards on the list.
  */
-window.onload = function() {
+window.onload = function () {
   updateResults();
-}
+};
 
 /**
  * Requeries for organization data and refreshes page data.
  */
 function updateResults() {
-  document.getElementById("search-list").innerHTML = "";
+  document.getElementById('search-list').innerHTML = '';
   removeMarkers();
 
   // Requery and repopulate page data.
-  const filter = document.getElementById("search-dropdown").value;
-  fetch("/discover/" + filter)
-      .then(data => data.json())
-      .then(organizations => {
-        createOrganizationCards(organizations);
-        createMarkers(organizations);
-      });
+  const filter = document.getElementById('search-dropdown').value;
+  fetch('/discover/' + filter)
+    .then((data) => data.json())
+    .then((organizations) => {
+      createOrganizationCards(organizations);
+      createMarkers(organizations);
+    });
 }
 
 /**
