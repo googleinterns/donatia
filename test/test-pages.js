@@ -4,7 +4,7 @@ require('../app');
 
 it('Landing page content', function (done) {
   request('http://localhost:3000', function (error, response, body) {
-    expect(body).to.contain('Google STEP App');
+    expect(body).to.contain("Find the best organizations to donate your items to");
     done();
   });
 });

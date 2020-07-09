@@ -7,5 +7,13 @@ exports.view = function (req, res) {
 };
 
 exports.getOrganizations = function (req, res) {
-  res.send(data.organizations);
+  const filter = req.params.filter;
+
+  if (filter === 'all') {
+    res.send(data.organizations);
+  } else {
+    const filtered = data.organizations.filter((organization)  =>
+      organization.categories.includes(filter));
+    res.send(filtered);
+  }
 };
