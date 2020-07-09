@@ -55,11 +55,11 @@ const isLoggedIn = (req, res, next) => {
 }
 
 // Routes.
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => res.render('landing'));
 
 const discover = require('./routes/discover')
 app.get('/discover', discover.view);
-app.post('/discover', discover.getOrganizations);
+app.get('/discover/:filter', discover.getOrganizations);
 
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
