@@ -1,5 +1,3 @@
-let selectedCard;
-
 const searchCardTemplate = 
     `
       {{#each organizations}}
@@ -63,9 +61,14 @@ export function createOrganizationCards(organizations) {
  * @param {booolean} scroll Whether or not to scroll to the card.
  */
 export function selectCard(id = null, scroll = false) {
-  if (selectedCard) selectedCard.classList.remove("selected");
-  
-  selectedCard = document.getElementById(id);
-  if (selectedCard) selectedCard.classList.add("selected");
-  if(selectedCard && scroll) selectedCard.scrollIntoView();
+  const cards = document.getElementsByClassName("search-card");
+
+  for(let card of cards) {
+    if (card.id === id) {
+      card.classList.add("selected");
+      if (scroll) card.scrollIntoView(false);
+    } else {
+      card.classList.remove("selected");
+    }
+  }
 }

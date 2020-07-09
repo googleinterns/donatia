@@ -27,6 +27,25 @@ function setPageEventListeners() {
 }
 
 /**
+ * Fetches the organization data with the given filters from the server.
+ */
+function fetchOrganizations() {
+  let filter = document.getElementById("search-dropdown").value;
+
+  return fetch("/discover", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      filter: filter,
+      start: organizationCount,
+      batchSize: BATCH_SIZE,
+    })
+  }).then(data => data.json());
+}
+
+/**
  * Requeries for organization data and refreshes page data.
  */
 window.updateSearchResults = function() {
@@ -47,9 +66,9 @@ window.updateSearchResults = function() {
  */
 window.infinityScroll = function() {
   let searchContainer = document.getElementById("search");
-
+  
   // If scrolled to the bottom, fetch more data.
-  if (searchContainer.scrollTop + searchContainer.offsetHeight >= searchContainer.scrollHeight - 1) {
+  if (searchContainer.scrollTop + searchContainer.offsetHeight >= searchContainer.scrollHeight - .5) {
     // Don't make a fetch for data if a fetch is already being made.
     if (!isFetchingData) {
       isFetchingData = true;
@@ -63,22 +82,3 @@ window.infinityScroll = function() {
     }
   }
 };
-
-/**
- * Fetches the organization data with the given filters from the server.
- */
-function fetchOrganizations() {
-  let filter = document.getElementById("search-dropdown").value;
-
-  return fetch("/discover", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      filter: filter,
-      start: organizationCount,
-      batchSize: BATCH_SIZE,
-    })
-  }).then(data => data.json());
-}
