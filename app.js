@@ -26,6 +26,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
+app.use(express.json());
 app.use('/static', express.static('public'));
 
 // Load API keys.
@@ -47,9 +48,10 @@ const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:id/:page?', dashboard.view);
 
 const data = require('./routes/data');
-app.get('/data/acceptedcategories/:id', data.acceptedCategoriesResponse);
-app.get('/data/acceptedcategories/:field(organization|category)/:id', data.acceptedCategoriesByFieldResponse)
-app.get('/data/categories', data.categoriesResponse);
+app.get('/data/acceptedcategories/:id', data.acceptedCategoriesGet);
+app.get('/data/acceptedcategories/:field(organization|category)/:id', data.acceptedCategoriesByFieldGet);
+app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
+app.get('/data/categories', data.categoriesGet);
 
 
 http.createServer(app).listen(app.get('port'), function () {
