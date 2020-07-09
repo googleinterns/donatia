@@ -11,21 +11,21 @@ You are running the app using production config (Firestore Database, Map API key
 If you are developing the app locally, please use "npm run dev" to start the app.
 `;
 
-// Load API keys.
-require('dotenv').config();
-
-// Show production warning message.
+// Show production warning message and load API keys.
 if (process.env.NODE_ENV === 'production') {
   console.log(PROD_WARNING_MESSAGE);
+  require('dotenv').config({ path: ".env.production" });
+} else {
+  require('dotenv').config({ path: ".env.dev" });
 }
 
 // Module dependencies.
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var handlebars = require('express-handlebars')
-var passport = require('passport');
-var cookieSession = require('cookie-session');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const handlebars = require('express-handlebars')
+const passport = require('passport');
+const cookieSession = require('cookie-session');
 require('./passport-auth');
 
 var app = express();
@@ -39,7 +39,7 @@ app.use(express.urlencoded());
 app.use('/static', express.static('public'));
 app.use(cookieSession({
   name: 'auth-session',
-  keys: ['key1', 'key2']
+  keys: ['key1', 'key2'],
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -49,6 +49,7 @@ const isLoggedIn = (req, res, next) => {
   if (req.user) {
     next();
   } else {
+    // TODO: Redirect users back to login page.
     res.sendStatus(401);
   }
 }
@@ -64,13 +65,11 @@ const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+    passport.authenticate('google', { scope: ['profile'] }));
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  function (req, res) {
-    res.redirect('/dashboard');
-  });
+    passport.authenticate('google', { failureRedirect: '/' }),
+    (req, res) => res.redirect('/dashboard'));
 
 app.get('/auth/logout', (req, res) => {
   req.session = null;
