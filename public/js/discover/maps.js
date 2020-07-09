@@ -2,7 +2,6 @@ const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
 let bounds;
-let selectedMarker;
 let markers = [];
 
 /**
@@ -71,9 +70,13 @@ export function createMarkers(data) {
  * given id. Close all other marker windows.
  */
 export function selectMarker(id = null) {
-  if (selectedMarker) selectedMarker.markerWindow.close();
-  selectedMarker = markers.find(marker => marker.marker.id == id);
-  if (selectedMarker) selectedMarker.markerWindow.open(map, selectedMarker.marker);
+  for(let markerData of markers) {
+    if (markerData.marker.id === id) {
+      markerData.markerWindow.open(map, markerData.marker);
+    } else {
+      markerData.markerWindow.close();
+    }
+  }
 }
 
 /**
