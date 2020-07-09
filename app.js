@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Routes.
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => res.render('landing'));
 
 const discover = require('./routes/discover')
 app.get('/discover', discover.view);
