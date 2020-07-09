@@ -1,0 +1,34 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#landing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #104fad;
+}
+
+#landing-text {
+  color: white;
+  font-size: 3.5rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+#landing-search-button {
+  background-color: #04c39a;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+}
+
+#landing-search-button:hover {
+  background-color: #03b38d;
+}
