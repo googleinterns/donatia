@@ -7,6 +7,7 @@
     "create-env-dev": "printenv > .env.dev",
     "create-env-prod": "printenv > .env.prod",
     "test": "./node_modules/.bin/mocha --exit",
+    "test-prod": "NODE_ENV=production ./node_modules/.bin/mocha --exit",
     "start": "NODE_ENV=production node app.js",
     "dev": "NODE_ENV=development node app.js"
   },
