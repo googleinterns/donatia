@@ -1,7 +1,13 @@
 # Donatia
-Researching the best nonprofit organization to donate to can be tedious. There are roughly 1.5 million nonprofit organizations in the United States, each with their own mission, acceptable donation items, and methods for donating. With so much variety, it can be difficult to find a good organization that seeks your type of donation and whose donation process is convient for you.
+Researching nonprofit organization to donate to can be tedious. There are roughly 1.5 million nonprofit organizations in the United States, each with their own mission, acceptable donation items, and methods for donating. With so much variety, it can be difficult to find the best organization that seeks your donation item and whose donation process is convient for you.
 
-Donatia simplifies this process by providing an online donation platform to let donors filter through find organizations easily. By creating a streamlined way to discover nonprofit organizations, we hope to reduce waste and increase donations. 
+Donatia simplifies this process by providing an online platform to let donors filter through find nonprofit organizations easily. By creating a streamlined way to discover nonprofit organizations, we hope to reduce waste and increase donations.
+
+![image](https://user-images.githubusercontent.com/10712922/87168036-e707f800-c29b-11ea-8d43-698253bdef57.png)
+
+![image](https://user-images.githubusercontent.com/10712922/87168160-1159b580-c29c-11ea-8e95-333a9945adc6.png)
+
+![image](https://user-images.githubusercontent.com/10712922/87168250-32220b00-c29c-11ea-81bc-e63f0a46c705.png)
 
 ## Built With
 - [Handlebars](https://handlebarsjs.com/)
