@@ -1,5 +1,4 @@
-const searchCardTemplate = 
-    `
+const searchCardTemplate = `
       {{#each organizations}}
         <div class="search-card">
           <div class="search-left">
@@ -29,36 +28,40 @@ const searchCardTemplate =
       {{/each}}
     `;
 
+/* global createMarkers, Handlebars, removeMarkers*/
+
 /**
  * When the page loads, fetches initial organization data on page load
  * in cards on the list.
  */
-window.onload = function() {
+window.onload = function () {
   updateResults();
-}
+};
 
 /**
  * Requeries for organization data and refreshes page data.
  */
 function updateResults() {
-  document.getElementById("search-list").innerHTML = "";
+  document.getElementById('search-list').innerHTML = '';
   removeMarkers();
 
   // Requery and repopulate page data.
-  const filter = document.getElementById("search-dropdown").value;
-  fetch("/discover/" + filter)
-      .then(data => data.json())
-      .then(organizations => {
-        createOrganizationCards(organizations);
-        createMarkers(organizations);
-      });
+  const filter = document.getElementById('search-dropdown').value;
+  fetch('/discover/' + filter)
+    .then((data) => data.json())
+    .then((organizations) => {
+      createOrganizationCards(organizations);
+      createMarkers(organizations);
+    });
 }
 
 /**
  * Renders the organization data into cards.
- * @param {JSON object} organizations The JSON of organization data to add to the page.
+ * @param {JSON} organizations The JSON of organization data to add to the page.
  */
 function createOrganizationCards(organizations) {
   const renderCards = Handlebars.compile(searchCardTemplate);
-  document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
+  document.getElementById('search-list').innerHTML = renderCards({
+    organizations: organizations,
+  });
 }
