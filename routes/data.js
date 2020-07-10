@@ -13,9 +13,13 @@ function resolveCollectionName(collectionName) {
     : 'dev-' + collectionName;
 }
 
-function setDatabase(firestoreInstance) {
+exports.setDatabase = function (firestoreInstance) {
   firestore = firestoreInstance;
-}
+};
+
+exports.getDatabase = function (firestoreInstance) {
+  return firestore;
+};
 
 /**
  * Queries for all AcceptedCategories by either organization or category depending on the  document reference and fieldName
@@ -41,7 +45,12 @@ exports.acceptedCategoriesGet = async function (req, res) {
     .collection(resolveCollectionName('AcceptedCategories'))
     .doc(req.params['id'])
     .get();
-  res.send(doc.data());
+
+  if (doc.exists) {
+    res.send(doc.data());
+  } else {
+    res.sendStatus(404);
+  }
 };
 
 exports.acceptedCategoriesPost = async function (req, res) {
@@ -54,21 +63,24 @@ exports.acceptedCategoriesPost = async function (req, res) {
     );
   }
 
-  const result = await firestore.doc(
-    `/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`
-  ).update(updatedAcceptedCategoryData);
+  const result = await firestore
+    .collection(`${resolveCollectionName('AcceptedCategories')}`)
+    .doc(`${req.params.id}`)
+    .update(updatedAcceptedCategoryData);
   res.sendStatus(201);
 };
 
 exports.acceptedCategoriesDelete = async function (req, res) {
   const results = await firestore
-    .doc(`/${resolveCollectionName('AcceptedCategories')}/${req.params.id}`)
+    .collection(`${resolveCollectionName('AcceptedCategories')}`)
+    .doc(`${req.params.id}`)
     .delete();
   res.sendStatus(200);
 };
 
 exports.acceptedCategoriesByFieldGet = async function (req, res) {
   let fieldReference;
+
   if (req.params.field == 'organization') {
     fieldReference = firestore
       .collection(resolveCollectionName('Organizations'))
@@ -89,12 +101,12 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
 
 exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   const newAcceptedCategoryData = req.body;
-  newAcceptedCategoryData.organization = await firestore.doc(
-    `/${resolveCollectionName('Organization')}/${req.params.id}`
-  );
-  newAcceptedCategoryData.category = await firestore.doc(
-    `/${resolveCollectionName('Categories')}/${req.body.category}`
-  );
+  newAcceptedCategoryData.organization = await firestore
+    .collection(`${resolveCollectionName('Organization')}`)
+    .doc(`${req.params.id}`);
+  newAcceptedCategoryData.category = await firestore
+    .collection(`${resolveCollectionName('Categories')}`)
+    .doc(`${req.body.category}`);
 
   const result = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
