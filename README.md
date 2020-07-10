@@ -13,7 +13,7 @@ Donatia simplifies this process by providing an online platform to let donors fi
 - [Handlebars](https://handlebarsjs.com/)
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
-- [Firebase](https://firebase.google.com/)
+- [Google Cloud Firestore](https://cloud.google.com/firestore)
 
 ## Installation
 ### Node.js
