@@ -17,7 +17,7 @@ export function initMap() {
     styles: [
       {
         featureType: "poi",
-        stylers: [{ visibility: "off" }],
+        stylers: [{visibility: "off"}],
       },
     ],
   });
