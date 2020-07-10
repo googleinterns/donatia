@@ -12,7 +12,7 @@ steps:
     - 'BASE_URL=${_BASE_URL}'
 - name: node
   entrypoint: npm
-  args: ['test-prod']
+  args: ["run", "test-prod"]
 - name: "gcr.io/cloud-builders/gcloud"  
   args: ["app", "deploy"]
   timeout: 1800s
