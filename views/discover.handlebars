@@ -5,15 +5,20 @@
   src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}">
 </script>
 <script src="static/js/discover/discover.js" type="module"></script>
+<script src="static/js/discover/autocomplete.js"></script>
 
 <div id="discover">
   <div id="search">
-    <select id="search-dropdown" onchange="updateSearchResults()">
-      <option value="all">All</option>
-      <option value="clothing">Clothing</option>
-      <option value="furniture">Furniture</option>
-      <option value="food">Food</option>
-    </select>
+    {{!-- onchange="updateSearchResults()" --}}
+    <div id="autocomplete">
+      <input 
+        id="autocomplete-input" 
+        class="autocomplete" 
+        type="text" 
+        placeholder="Search for an item category"
+        oninput="showAutocompleteOptions(this.value)">
+      <div id="autocomplete-list"></div>
+    </div>
     <div id="search-list"></div>
   </div>
   <div id="map"></div>

@@ -12,8 +12,8 @@ window.onload = function() {
 }
 
 /**
- * Add event listeners to the page to select the matching marker on a card
- * hover and vice versa.
+ * Add event listeners to the page to link map markers with cards and
+ * for input autocomplete.
  */
 function setPageEventListeners() {
   const discoverPage = document.getElementById("discover");
