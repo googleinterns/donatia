@@ -9,14 +9,15 @@
 
 <div id="discover">
   <div id="search">
-    {{!-- onchange="updateSearchResults()" --}}
-    <div id="autocomplete">
-      <input 
-        id="autocomplete-input" 
-        class="autocomplete" 
-        type="text" 
-        placeholder="Search for an item category"
-        oninput="showAutocompleteOptions(this.value)">
+    <div id="filter-container">
+      <div id="filters">
+        <input 
+          id="autocomplete-input"
+          type="text" 
+          placeholder="Search for an item category"
+          oninput="showAutocompleteOptions(this.value)">
+        <a onclick="updateSearchResults()">submit</a>
+      </div>
       <div id="autocomplete-list"></div>
     </div>
     <div id="search-list"></div>

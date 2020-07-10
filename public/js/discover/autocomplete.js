@@ -1,9 +1,9 @@
-const options = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina"]
+const options = ["clothing", "furniture", "food"]
 
 const autocompleteOptionTemplate = 
     `
       {{#each matches}}
-        <div class="autocomplete-option">
+        <div class="autocomplete-option" onclick="setValueOnClick('{{this}}')">
           {{this}}
         </div>
       {{/each}}
@@ -23,4 +23,9 @@ function showAutocompleteOptions(input) {
   // Render options on page.
   const renderCards = Handlebars.compile(autocompleteOptionTemplate);
   document.getElementById("autocomplete-list").innerHTML = renderCards({matches: matches});
+}
+
+function setValueOnClick(value) {
+  document.getElementById("autocomplete-input").value = value;
+  document.getElementById("autocomplete-list").innerHTML = "";
 }
