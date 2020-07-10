@@ -40,7 +40,7 @@ After few seconds, your local instance of the project should be available at `ht
 
 This project integrates multiple Google APIs. To get these services to work, a google cloud project must be set up with API credentials. See https://console.cloud.google.com/ for more information.
 
-API keys are stored in the Google Cloud Project setting or the local computer's environmental variables for remote and local deployment, respectively.
+API keys are stored in the Google Cloud Project setting or local environmental variables for remote and local deployment, respectively.
 
 ## Authors
 
