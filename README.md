@@ -3,6 +3,8 @@ Researching nonprofit organization to donate to can be tedious. There are roughl
 
 Donatia simplifies this process by providing an online platform to let donors filter through find organizations easily. By creating a streamlined way to discover nonprofit organizations, we hope to reduce waste and increase donations.
 
+[Donatia App](https://gsi-step-capstone.wl.r.appspot.com/)
+
 ![image](https://user-images.githubusercontent.com/10712922/87168036-e707f800-c29b-11ea-8d43-698253bdef57.png)
 
 ![image](https://user-images.githubusercontent.com/10712922/87168160-1159b580-c29c-11ea-8e95-333a9945adc6.png)
