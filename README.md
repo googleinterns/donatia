@@ -1,7 +1,14 @@
-# Node.js skeleton repo for Google STEP Intern Program
+# Donatia
 
-## Get started 
-You need to have an active Node.js installation on your laptop before startup this skeleton Node.js server. We recommend to install `nvm` [(Node Version Manager)](https://github.com/nvm-sh/nvm) to manage your local Node.js builds.
+## Built With
+- [Handlebars](https://handlebarsjs.com/)
+- [Node.js](https://nodejs.org/en/)
+- [Express.js](https://expressjs.com/)
+- [Firebase](https://firebase.google.com/)
+
+## Installation
+### Node.js
+You need to have an active Node.js installation on your laptop to run the server. We recommend to install `nvm` [(Node Version Manager)](https://github.com/nvm-sh/nvm) to manage your local Node.js builds.
 
 To install `nvm`: 
 ```
@@ -18,12 +25,27 @@ To verify the LTS version is successfully installed:
 node -v
 ```
 
-## Install and Launch
-To install and launch this skeleton server on your local instance, first run  
-```npm install``` 
+After installing Node.js, install this project's Node packages using:
+```
+npm install
+```
 
-then run 
+Finally, to run the project, use: 
 
 ```npm start``` 
 
-After few seconds, your local instance of this skeleton server should be available at `http://localhost:3000`.
+After few seconds, your local instance of the project should be available at `http://localhost:3000`.
+
+### Google APIs
+
+This project integrates multiple Google APIs. To get these services to work, a google cloud project must be set up with API credentials. See https://console.cloud.google.com/ for more information.
+
+API keys are stored in the Google Cloud Project setting or the local computer's environmental variables for remote and local deployment, respectively.
+
+## Authors
+
+- [Daniel Abreo](https://github.com/danielabreo)
+- [Sabrina Snider](https://github.com/SabrinaSnider)
+- [Malcolm Jones](https://github.com/malcolmrjones)
+- [Bruce Zheng](https://github.com/brucezheng)
+- [Chen Yang](https://github.com/ccyang314)
