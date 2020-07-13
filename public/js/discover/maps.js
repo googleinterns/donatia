@@ -4,6 +4,8 @@ let map;
 let bounds;
 let markers = [];
 
+/* global google */
+
 /**
  * Initializes the Google Map to be centerd in Houston and to add 
  * initial organization markers.
@@ -26,12 +28,12 @@ export function initMap() {
 
 /**
  * Adds markers to the map based on the data in the data array passed in.
- * @param {JSON object} data A json containing organzation data to create markers for.
+ * @param {JSON} data A json containing organzation data to create markers for.
  */
 export function createMarkers(data) {
   data.forEach(organization => {
     // Create the markers and attach to the map.
-    let marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: new google.maps.LatLng(organization.latitude, organization.longitude),
       map: map,
       title: organization.title,
@@ -39,7 +41,7 @@ export function createMarkers(data) {
     });
 
     // Create the marker info window.
-    let markerWindow = new google.maps.InfoWindow({
+    const markerWindow = new google.maps.InfoWindow({
       content: organization.title,
     });
 
@@ -66,11 +68,12 @@ export function createMarkers(data) {
 }
 
 /**
- * Select and open the info window for the marker with the 
- * given id. Close all other marker windows.
+ * Selects and opens the info window for the marker with the given 
+ * id. Closes all other marker windows.
+ * @param {String} id the id of the organization's marker to select 
  */
 export function selectMarker(id = null) {
-  for(let marker of markers) {
+  for(const marker of markers) {
     if (marker.marker.id === id) {
       marker.markerWindow.open(map, marker.marker);
     } else {
@@ -83,6 +86,6 @@ export function selectMarker(id = null) {
  * Removes all markers from the map and markers array.
  */
 export function removeAllMarkers() {
-  for (let marker of markers) marker.marker.setMap(null);
+  for (const marker of markers) marker.marker.setMap(null);
   markers = [];
 }

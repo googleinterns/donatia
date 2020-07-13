@@ -30,11 +30,11 @@ const searchCardTemplate =
       {{/each}}
     `;
 
-/* global createMarkers, Handlebars, removeMarkers*/
+/* global Handlebars */
 
 /**
  * Renders the organization data into cards.
- * @param {JSON object} organizations The JSON of organization data to add to the page.
+ * @param {JSON} organizations The JSON of organization data to add to the page.
  */
 export function createOrganizationCards(organizations) {
   // Generate the cards.
@@ -66,7 +66,7 @@ export function createOrganizationCards(organizations) {
 export function selectCard(id = null, scroll = false) {
   const cards = document.getElementsByClassName("search-card");
 
-  for(let card of cards) {
+  for(const card of cards) {
     if (card.id === id) {
       card.classList.add("selected");
       if (scroll) card.scrollIntoView();

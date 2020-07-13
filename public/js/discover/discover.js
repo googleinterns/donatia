@@ -24,12 +24,12 @@ function setPageEventListeners() {
 /**
  * Requeries for organization data and refreshes page data.
  */
-window.updateSearchResults = function() {
+function updateSearchResults() {
   document.getElementById("search-list").innerHTML = "";
   removeAllMarkers();
 
   // Requery and repopulate page data.
-  let filter = document.getElementById("search-dropdown").value;
+  const filter = document.getElementById("search-dropdown").value;
   fetch("/discover/" + filter)
       .then(data => data.json())
       .then(organizations => {
@@ -37,3 +37,5 @@ window.updateSearchResults = function() {
         createMarkers(organizations);
       });
 }
+
+window.updateSearchResults = () => updateSearchResults();
