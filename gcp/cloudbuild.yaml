@@ -1,15 +1,15 @@
 steps:
-- name: node
-  entrypoint: npm
-  args: ['install']
-- name: node
-  entrypoint: npm
-  args: ["run", "create-env-dev"]
-  env:
-    - 'MAPS_KEY=${_MAPS_PROD_KEY}'
-    - 'PASSPORT_CLIENT_ID=${_PASSPORT_DEV_CLIENT_ID}'
-    - 'PASSPORT_CLIENT_SECRET=${_PASSPORT_DEV_CLIENT_SECRET}'
-    - 'BASE_URL=${_BASE_URL}'
-- name: node
-  entrypoint: npm
-  args: ['test']
+  - name: node
+    entrypoint: npm
+    args: ['install']
+  - name: node
+    entrypoint: npm
+    args: ['run', 'create-env-dev']
+    env:
+      - 'MAPS_KEY=${_MAPS_PROD_KEY}'
+      - 'PASSPORT_CLIENT_ID=${_PASSPORT_DEV_CLIENT_ID}'
+      - 'PASSPORT_CLIENT_SECRET=${_PASSPORT_DEV_CLIENT_SECRET}'
+      - 'BASE_URL=${_BASE_URL}'
+  - name: node
+    entrypoint: npm
+    args: ['test']

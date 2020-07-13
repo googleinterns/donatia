@@ -4,20 +4,20 @@
   <form class="category-card" onsubmit="addCategory()">
     <h3>Add a category</h3>
 
-    <label for="categories">Choose a category:</label><br>
+    <label for="categories">Choose a category:</label><br />
     <select name="add-categories" id="add-categories">
       <script type="text/x-handlebars" id="add-categories-template">
         \{{#each categoryList}}
             <option value="\{{this.ID}}">\{{this.name}}</option>
         \{{/each}}
-      </script>
-    </select><br>
+      </script> </select
+    ><br />
 
-    <label for="add-card-quality">Quality Check Instructions:</label><br>
-    <input type="text" id="add-card-quality" name="add-card-quality"><br>
+    <label for="add-card-quality">Quality Check Instructions:</label><br />
+    <input type="text" id="add-card-quality" name="add-card-quality" /><br />
 
-    <label for="add-card-instructions">Donation Instructions:</label><br>
-    <input type="text" id="add-card-instructions" name="add-card-instructions"><br>
+    <label for="add-card-instructions">Donation Instructions:</label><br />
+    <input type="text" id="add-card-instructions" name="add-card-instructions" /><br />
 
     <div class="category-card-buttons">
       <button>Add</button>

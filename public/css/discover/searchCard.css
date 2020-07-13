@@ -35,7 +35,7 @@
 .search-title,
 .search-address,
 .search-phone,
-.search-right h2 { 
+.search-right h2 {
   margin: 0px;
   padding: 2px;
 }
@@ -82,11 +82,11 @@
   padding: 3px 8px;
   border-radius: 15px;
   border: 1px solid #d4d4d4;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .valid-symbol {
-  color: #32a852; 
+  color: #32a852;
   font-weight: bold;
 }
 

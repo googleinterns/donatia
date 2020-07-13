@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
 const request = require('request');
-const app = require('../app');
+require('../app');
 
 it('Landing page content', function (done) {
   request(process.env.BASE_URL, function (error, response, body) {
-    expect(body).to.contain("Find the best organizations to donate your items to");
+    expect(body).to.contain('Find the best organizations to donate your items to');
     done();
   });
 });

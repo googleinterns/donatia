@@ -30,6 +30,8 @@ const searchCardTemplate =
       {{/each}}
     `;
 
+/* global createMarkers, Handlebars, removeMarkers*/
+
 /**
  * Renders the organization data into cards.
  * @param {JSON object} organizations The JSON of organization data to add to the page.
