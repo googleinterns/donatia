@@ -21,9 +21,10 @@ exports.getDatabase = function (firestoreInstance) {
 };
 
 /**
- * Queries for all AcceptedCategories by either organization or category depending on the  document reference and fieldName
+ * Queries for all AcceptedCategories by either organization or category depending on the document reference and fieldName
  * @param {FirebaseFirestore.DocumentReference} ref
  * @param {String} fieldName
+ * @returns {Array} array of all AcceptedCategories that match the reference
  */
 async function getAcceptedGategoriesByRef(ref, fieldName) {
   const snapshot = await firestore
