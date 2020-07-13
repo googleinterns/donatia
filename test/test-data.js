@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const request = require('request');
 const data = require('../routes/data');
 const FirestoreMock = require('firestore-mock');
-const { Firestore } = require('@google-cloud/firestore');
+const {Firestore} = require('@google-cloud/firestore');
 
 const firestoreMock = new FirestoreMock();
 
@@ -66,32 +66,20 @@ const ACCCTG_FURNITURE_BANK_CTG_FOOD = {
 
 /**
  * Populates mock database with sample data
- * @param {FirestoreMock} firestore 
+ * @param {FirestoreMock} firestore
  */
 function populateMockDatabase(firestore) {
   // Organizations Collection
-  firestore
-    .collection('dev-Organizations')
-    .doc(ORG_FURNITURE_BANK_ID)
-    .set(ORG_FURNITURE_BANK);
+  firestore.collection('dev-Organizations').doc(ORG_FURNITURE_BANK_ID).set(ORG_FURNITURE_BANK);
 
   // Categories Collection
-  firestore
-    .collection('dev-Categories')
-    .doc(CTG_FURNITURE_ID)
-    .set({ name: CTG_FURNITURE_ID });
-  firestore
-    .collection('dev-Categories')
-    .doc(CTG_FOOD_ID)
-    .set({ name: CTG_FOOD_ID });
-  firestore
-    .collection('dev-Categories')
-    .doc(CTG_CLOTHES_ID)
-    .set({ name: CTG_CLOTHES_ID });
+  firestore.collection('dev-Categories').doc(CTG_FURNITURE_ID).set({name: CTG_FURNITURE_ID});
+  firestore.collection('dev-Categories').doc(CTG_FOOD_ID).set({name: CTG_FOOD_ID});
+  firestore.collection('dev-Categories').doc(CTG_CLOTHES_ID).set({name: CTG_CLOTHES_ID});
   firestore
     .collection('dev-Categories')
     .doc(CTG_HOUSEHOLD_ITEMS_ID)
-    .set({ name: CTG_HOUSEHOLD_ITEMS_ID });
+    .set({name: CTG_HOUSEHOLD_ITEMS_ID});
 
   // AcceptedCategories Collection
   firestore
@@ -118,18 +106,9 @@ before(function () {
 });
 
 it('GET Request /data/categories : Get all categories', function (done) {
-  request('http://localhost:3000/data/categories', function (
-    error,
-    response,
-    body
-  ) {
+  request('http://localhost:3000/data/categories', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
-    const expectedBody = [
-      CTG_FURNITURE_ID,
-      CTG_FOOD_ID,
-      CTG_CLOTHES_ID,
-      CTG_HOUSEHOLD_ITEMS_ID,
-    ];
+    const expectedBody = [CTG_FURNITURE_ID, CTG_FOOD_ID, CTG_CLOTHES_ID, CTG_HOUSEHOLD_ITEMS_ID];
     expect(JSON.parse(body)).to.deep.equal(expectedBody);
     done();
   });
@@ -140,9 +119,7 @@ it('GET Request /data/acceptedcategories/:id : get an AcceptedCategory', functio
     `http://localhost:3000/data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FURNITURE_ID}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(200);
-      expect(JSON.parse(response.body)).to.deep.equal(
-        ACCCTG_FURNITURE_BANK_CTG_FURNITURE
-      );
+      expect(JSON.parse(response.body)).to.deep.equal(ACCCTG_FURNITURE_BANK_CTG_FURNITURE);
       done();
     }
   );
@@ -151,9 +128,9 @@ it('GET Request /data/acceptedcategories/:id : get an AcceptedCategory', functio
 it('POST Request /data/acceptedcategories/:id : update qualityGuidelines field', function (done) {
   request.post(
     {
-      headers: { 'content-type': 'application/json' },
+      headers: {'content-type': 'application/json'},
       url: `http://localhost:3000/data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_HOUSEHOLD_ITEMS_ID}`,
-      body: JSON.stringify({ qualityGuidelines: ['gently used', 'no damage'] }),
+      body: JSON.stringify({qualityGuidelines: ['gently used', 'no damage']}),
     },
     function (error, response, body) {
       expect(response.statusCode).to.equal(201);
@@ -188,29 +165,25 @@ it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', f
 });
 
 it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCategory', function (done) {
-
-  const oldCollectionLength = Object.keys(firestoreMock._db._collections['dev-AcceptedCategories']).length;
+  const oldCollectionLength = Object.keys(firestoreMock._db._collections['dev-AcceptedCategories'])
+    .length;
   const newAcceptedCategory = {
     category: `dev-Categories/${CTG_CLOTHES_ID}`,
-    qualityGuidelines: [
-      'Gently used',
-      'No tears',
-      'No holes',
-    ],
-    instructions: [
-      'Dop off your donation for free at our location',
-    ],
-  }
+    qualityGuidelines: ['Gently used', 'No tears', 'No holes'],
+    instructions: ['Dop off your donation for free at our location'],
+  };
 
   request.post(
     {
-      headers: { 'content-type': 'application/json' },
+      headers: {'content-type': 'application/json'},
       url: `http://localhost:3000/data/acceptedcategories/organization/${ORG_FURNITURE_BANK_ID}`,
       body: JSON.stringify(newAcceptedCategory),
     },
     function (error, response, body) {
       expect(response.statusCode).to.equal(201);
-      const currentCollectionLength = Object.keys(firestoreMock._db._collections['dev-AcceptedCategories']).length;
+      const currentCollectionLength = Object.keys(
+        firestoreMock._db._collections['dev-AcceptedCategories']
+      ).length;
       expect(currentCollectionLength - oldCollectionLength).to.equal(1);
       done();
     }
