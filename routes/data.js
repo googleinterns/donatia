@@ -6,19 +6,15 @@ let firestore = new Firestore();
 /**
  * Utility function that returns the correct collection name depending on whther the environment is PRODUCTION or DEVELOPMENT.
  * @param {String} collectionName
- * @return {string}
+ * @return {string} the collection name under the current node environment
  */
 function resolveCollectionName(collectionName) {
   return process.env.NODE_ENV == 'production' ? collectionName : 'dev-' + collectionName;
 }
 
-exports.setDatabase = function (firestoreInstance) {
-  firestore = firestoreInstance;
-};
+exports.setDatabase = (firestoreInstance) => firestore = firestoreInstance;
 
-exports.getDatabase = function (firestoreInstance) {
-  return firestore;
-};
+exports.getDatabase = () => firestore;
 
 /**
  * Queries for all AcceptedCategories by either organization or category depending on the document reference and fieldName
@@ -38,7 +34,7 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
   return results;
 }
 
-/** ****** Response Handlers **************/
+/* Response Handlers */
 
 exports.acceptedCategoriesGet = async function (req, res) {
   const doc = await firestore

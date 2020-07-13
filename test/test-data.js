@@ -98,11 +98,8 @@ function populateMockDatabase(firestore) {
 
 before(function () {
   // Initialize mock Firestore database
-  console.log('Initializing Mock Firestore...');
-  console.log('Populating Mock Firestore...');
   populateMockDatabase(firestoreMock);
   data.setDatabase(firestoreMock);
-  console.log('Mock Database is Set!');
 });
 
 it('GET Request /data/categories : Get all categories', function (done) {
@@ -165,8 +162,8 @@ it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', f
 });
 
 it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCategory', function (done) {
-  const oldCollectionLength = Object.keys(firestoreMock._db._collections['dev-AcceptedCategories'])
-    .length;
+  const oldCollectionLength = 
+    Object.keys(firestoreMock._db._collections['dev-AcceptedCategories']).length;
   const newAcceptedCategory = {
     category: `dev-Categories/${CTG_CLOTHES_ID}`,
     qualityGuidelines: ['Gently used', 'No tears', 'No holes'],
