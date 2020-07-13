@@ -4,10 +4,15 @@
   "description": "Skeleton app for Node.js based STEP capstone project. ",
   "main": "index.js",
   "scripts": {
-    "create-env": "printenv > .env",
-    "test": "./node_modules/.bin/mocha --exit",
+    "create-env-dev": "printenv > .env.dev",
+    "create-env-prod": "printenv > .env.prod",
+    "test": "NODE_ENV=development ./node_modules/.bin/mocha --exit",
     "start": "NODE_ENV=production node app.js",
-    "dev": "NODE_ENV=development node app.js"
+    "dev": "NODE_ENV=development node app.js",
+    "lint": "eslint --fix .",
+    "format": "prettier --write .",
+    "lint-check": "eslint .",
+    "format-check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -21,14 +26,23 @@
   "homepage": "https://github.com/ccyang314/step-node-starter#readme",
   "dependencies": {
     "@google-cloud/firestore": "^4.0.0",
+    "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-handlebars": "^4.0.4"
+    "express-handlebars": "^4.0.4",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "firestore-mock": "^1.0.4",
+    "ember-template-lint": "^2.9.0",
+    "eslint": "^7.4.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-hbs": "^1.0.0",
     "mocha": "^8.0.1",
+    "prettier": "2.0.5",
     "request": "^2.88.2"
   }
 }
