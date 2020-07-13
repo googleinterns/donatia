@@ -1,5 +1,4 @@
-const searchCardTemplate = 
-    `
+const searchCardTemplate = `
       {{#each organizations}}
         <div class="search-card">
           <div class="search-left">
@@ -29,33 +28,40 @@ const searchCardTemplate =
       {{/each}}
     `;
 
-/*
- * When the page loads, fetch initial organization data and render it
+/* global createMarkers, Handlebars, removeMarkers*/
+
+/**
+ * When the page loads, fetches initial organization data on page load
  * in cards on the list.
  */
-window.onload = function() {
-  fetchOrganizations("all").then(organizations => {
-    createOrganizationCards(organizations);
-    createMarkers(organizations);
-  })
-}
+window.onload = function () {
+  updateResults();
+};
 
-/*
- * Fetches the organization data with the given filters from the server.
- * @param {string} filterText The selected item category with which to filer results for.
+/**
+ * Requeries for organization data and refreshes page data.
  */
-function fetchOrganizations(filterText) {
-  return fetch("/discover", {
-    method: 'POST',
-    body: JSON.stringify({filter: filterText})
-  }).then(data => data.json());
+function updateResults() {
+  document.getElementById('search-list').innerHTML = '';
+  removeMarkers();
+
+  // Requery and repopulate page data.
+  const filter = document.getElementById('search-dropdown').value;
+  fetch('/discover/' + filter)
+    .then((data) => data.json())
+    .then((organizations) => {
+      createOrganizationCards(organizations);
+      createMarkers(organizations);
+    });
 }
 
-/*
+/**
  * Renders the organization data into cards.
- * @param {JSON object} organizations The JSON of organization data to add to the page.
+ * @param {JSON} organizations The JSON of organization data to add to the page.
  */
 function createOrganizationCards(organizations) {
   const renderCards = Handlebars.compile(searchCardTemplate);
-  document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
+  document.getElementById('search-list').innerHTML = renderCards({
+    organizations: organizations,
+  });
 }

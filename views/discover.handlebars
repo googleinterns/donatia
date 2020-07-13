@@ -1,18 +1,21 @@
-<link rel="stylesheet" href="static/css/discover.css">
-<link rel="stylesheet" href="static/css/searchCard.css">
+<link rel="stylesheet" href="static/css/discover.css" />
+<link rel="stylesheet" href="static/css/searchCard.css" />
 
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap">
-</script>
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap"
+></script>
 <script src="static/js/maps.js"></script>
 <script src="static/js/searchList.js"></script>
 
 <div id="discover">
   <div id="search">
-    <select id="search-dropdown">
+    <select id="search-dropdown" onchange="updateResults()">
       <option value="all">All</option>
       <option value="clothing">Clothing</option>
       <option value="furniture">Furniture</option>
+      <option value="food">Food</option>
     </select>
     <div id="search-list"></div>
   </div>
