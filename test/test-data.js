@@ -1,5 +1,4 @@
 const expect = require('chai').expect;
-const assert = require('assert');
 const request = require('request');
 const data = require('../routes/data');
 const FirestoreMock = require('firestore-mock');
