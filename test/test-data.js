@@ -162,8 +162,8 @@ it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', f
 });
 
 it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCategory', function (done) {
-  const oldCollectionLength = 
-    Object.keys(firestoreMock._db._collections['dev-AcceptedCategories']).length;
+  const oldCollectionLength = Object.keys(firestoreMock._db._collections['dev-AcceptedCategories'])
+    .length;
   const newAcceptedCategory = {
     category: `dev-Categories/${CTG_CLOTHES_ID}`,
     qualityGuidelines: ['Gently used', 'No tears', 'No holes'],

@@ -12,7 +12,7 @@ function resolveCollectionName(collectionName) {
   return process.env.NODE_ENV == 'production' ? collectionName : 'dev-' + collectionName;
 }
 
-exports.setDatabase = (firestoreInstance) => firestore = firestoreInstance;
+exports.setDatabase = (firestoreInstance) => (firestore = firestoreInstance);
 
 exports.getDatabase = () => firestore;
 
