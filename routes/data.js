@@ -1,4 +1,4 @@
-const { Firestore } = require('@google-cloud/firestore');
+const {Firestore} = require('@google-cloud/firestore');
 
 // Database Initialization
 let firestore = new Firestore();
@@ -6,11 +6,10 @@ let firestore = new Firestore();
 /**
  * Utility function that returns the correct collection name depending on whther the environment is PRODUCTION or DEVELOPMENT.
  * @param {String} collectionName
+ * @return {string}
  */
 function resolveCollectionName(collectionName) {
-  return process.env.NODE_ENV == 'production'
-    ? collectionName
-    : 'dev-' + collectionName;
+  return process.env.NODE_ENV == 'production' ? collectionName : 'dev-' + collectionName;
 }
 
 exports.setDatabase = function (firestoreInstance) {
@@ -31,14 +30,14 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
     .collection(resolveCollectionName('AcceptedCategories'))
     .where(fieldName, '==', ref)
     .get();
-  let results = {};
+  const results = {};
   snapshot.docs.forEach((doc) => {
     results[doc.id] = doc.data();
   });
   return results;
 }
 
-/******** Response Handlers **************/
+/** ****** Response Handlers **************/
 
 exports.acceptedCategoriesGet = async function (req, res) {
   const doc = await firestore
@@ -57,13 +56,13 @@ exports.acceptedCategoriesPost = async function (req, res) {
   const updatedAcceptedCategoryData = req.body;
 
   // If there is an update to the category field then change string into DocumentReference
-  if (updatedAcceptedCategoryData.hasOwnProperty('category')) {
+  if ('category' in updatedAcceptedCategoryData) {
     updatedAcceptedCategoryData.category = await firestore.doc(
       `/${resolveCollectionName('Categories')}/${req.body.category}`
     );
   }
 
-  const result = await firestore
+  await firestore
     .collection(`${resolveCollectionName('AcceptedCategories')}`)
     .doc(`${req.params.id}`)
     .update(updatedAcceptedCategoryData);
@@ -71,7 +70,7 @@ exports.acceptedCategoriesPost = async function (req, res) {
 };
 
 exports.acceptedCategoriesDelete = async function (req, res) {
-  const results = await firestore
+  await firestore
     .collection(`${resolveCollectionName('AcceptedCategories')}`)
     .doc(`${req.params.id}`)
     .delete();
@@ -86,15 +85,10 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
       .collection(resolveCollectionName('Organizations'))
       .doc(req.params.id);
   } else if (req.params.field == 'category') {
-    fieldReference = firestore
-      .collection(resolveCollectionName('Categories'))
-      .doc(req.params.id);
+    fieldReference = firestore.collection(resolveCollectionName('Categories')).doc(req.params.id);
   }
 
-  let results = await getAcceptedGategoriesByRef(
-    fieldReference,
-    req.params.field
-  );
+  const results = await getAcceptedGategoriesByRef(fieldReference, req.params.field);
 
   res.send(results);
 };
@@ -108,7 +102,7 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
     .collection(`${resolveCollectionName('Categories')}`)
     .doc(`${req.body.category}`);
 
-  const result = await firestore
+  await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .doc()
     .set(newAcceptedCategoryData);
@@ -116,9 +110,7 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
 };
 
 exports.categoriesGet = async function (req, res) {
-  const snapshot = await firestore
-    .collection(resolveCollectionName('Categories'))
-    .get();
+  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
   const categories = [];
   snapshot.forEach((doc) => {
     categories.push(doc.id);

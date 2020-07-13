@@ -64,6 +64,10 @@ const ACCCTG_FURNITURE_BANK_CTG_FOOD = {
   instructions: ['Put items in bag and drop off'],
 };
 
+/**
+ * Populates mock database with sample data
+ * @param {FirestoreMock} firestore 
+ */
 function populateMockDatabase(firestore) {
   // Organizations Collection
   firestore
