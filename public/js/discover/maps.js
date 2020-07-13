@@ -51,13 +51,13 @@ export function createMarkers(data) {
     google.maps.event.addListener(marker, 'mouseover', function () {
       selectMarker(marker.id);
       mapContainer.dispatchEvent(
-        new CustomEvent('markerHover', {bubbles: true, detail: marker.id})
+        new CustomEvent('markerChange', {bubbles: true, detail: marker.id})
       );
     });
 
     google.maps.event.addListener(marker, 'mouseout', function () {
       selectMarker(null);
-      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: null}));
+      mapContainer.dispatchEvent(new CustomEvent('markerChange', {bubbles: true, detail: null}));
     });
 
     bounds.extend(marker.getPosition());

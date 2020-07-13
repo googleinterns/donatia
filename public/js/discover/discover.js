@@ -17,9 +17,9 @@ window.onload = function () {
  */
 function setPageEventListeners() {
   const discoverPage = document.getElementById('discover');
-  discoverPage.addEventListener('cardHover', (e) => selectMarker(/* id = */ e.detail));
-  discoverPage.addEventListener('markerHover', (e) =>
-    selectCard(/* id = */ e.detail, /* scroll = */ true)
+  discoverPage.addEventListener('cardChange', (event) => selectMarker(/* id= */ event.detail));
+  discoverPage.addEventListener('markerChange', (event) =>
+    selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
 }
 

@@ -41,17 +41,15 @@ export function createOrganizationCards(organizations) {
 
   // Add event listeners to the cards for hovering.
   const searchCards = document.getElementsByClassName('search-card');
-  for (let i = 0; i < searchCards.length; i++) {
-    const card = searchCards[i];
-
+  for (const card of searchCards) {
     card.addEventListener('mouseover', function (e) {
       selectCard(card.id);
-      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.id}));
+      card.dispatchEvent(new CustomEvent('cardChange', {bubbles: true, detail: card.id}));
     });
 
     card.addEventListener('mouseout', function (e) {
       selectCard();
-      card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: null}));
+      card.dispatchEvent(new CustomEvent('cardChange', {bubbles: true, detail: null}));
     });
   }
 }
@@ -62,9 +60,9 @@ export function createOrganizationCards(organizations) {
  * @param {booolean} scroll Whether or not to scroll to the card.
  */
 export function selectCard(id = null, scroll = false) {
-  const cards = document.getElementsByClassName('search-card');
+  const searchcards = document.getElementsByClassName('search-card');
 
-  for (const card of cards) {
+  for (const card of searchcards) {
     if (card.id === id) {
       card.classList.add('selected');
       if (scroll) card.scrollIntoView();
