@@ -34,7 +34,7 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
   let results = {};
   snapshot.docs.forEach((doc) => {
     results[doc.id] = doc.data();
-  }
+  });
   return results;
 }
 
