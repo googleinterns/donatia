@@ -69,53 +69,50 @@ window.deleteCategory = function deleteCategory(categoryID) {
 };
 
 /**
+ * Extracts the type and index of a properly formatted
+ * HTML element ID: [type]-function-[index].
+ * @param {string} elementID ID of an element in the instruction section.
+ */
+function InstructionTokens(elementID) {
+  this.type = elementID.split('-')[0];
+  this.index = parseInt(elementID.split('-')[2]);
+}
+
+const inputBoxTemplate = `
+  <div id="{{type}}-container-{{index}}">
+    <input id="{{type}}-input-{{index}}" name="{{type}}-input-{{index}}" type="text"></input>
+    <button id="{{type}}-remove-{{index}}" onclick="removeInstructionInput(this.id)" hidden>-</button>
+    <button id="{{type}}-add-{{index}}" onclick="addInstructionInput(this.id)">+</button><br>
+  </div>
+`;
+
+/**
  * Adds an input box to the correct section of the page.
  * @param {string} prevInstructionID ID of the previous input
  * box's add button [instructionType]-add-[instructionIndex].
  */
 function addInstructionInput(prevInstructionID) {
-  const prevInstructionIdArr = prevInstructionID.split('-');
-  const instructionType = prevInstructionIdArr[0];
-  const currInstructionIndex = parseInt(prevInstructionIdArr[2]) + 1;
+  const prevInstructionTokens = new InstructionTokens(prevInstructionID);
+  const instructionType = prevInstructionTokens.type;
+  const prevInstructionIndex = prevInstructionTokens.index;
+  const currInstructionIndex = prevInstructionIndex + 1;
 
   const prevRemoveButton = document.getElementById(
-    instructionType + '-remove-' + prevInstructionIdArr[2]
+    `${instructionType}-remove-${prevInstructionIndex}`
   );
   if (prevRemoveButton) prevRemoveButton.hidden = false;
 
-  const prevAddButton = document.getElementById(
-    instructionType + '-add-' + prevInstructionIdArr[2]
-  );
+  const prevAddButton = document.getElementById(`${instructionType}-add-${prevInstructionIndex}`);
   if (prevAddButton) prevAddButton.hidden = true;
 
-  const currInstructionDiv = document.createElement('div');
-  currInstructionDiv.setAttribute('id', instructionType + '-container-' + currInstructionIndex);
-
-  const inputBox = document.createElement('input');
-  inputBox.setAttribute('id', instructionType + '-input-' + currInstructionIndex);
-  inputBox.setAttribute('type', 'text');
-  inputBox.setAttribute('name', instructionType + '-input-' + currInstructionIndex);
-
-  const removeButton = document.createElement('button');
-  removeButton.innerHTML = '-';
-  removeButton.setAttribute('id', instructionType + '-remove-' + currInstructionIndex);
-  removeButton.setAttribute('onclick', 'removeInstructionInput(this.id)');
-  removeButton.hidden = true;
-
-  const addButton = document.createElement('button');
-  addButton.innerHTML = '+';
-  addButton.setAttribute('id', instructionType + '-add-' + currInstructionIndex);
-  addButton.setAttribute('onclick', 'addInstructionInput(this.id)');
-
-  const breakElement = document.createElement('br');
-
-  currInstructionDiv.append(inputBox);
-  currInstructionDiv.append(removeButton);
-  currInstructionDiv.append(addButton);
-  currInstructionDiv.append(breakElement);
-
-  const instructionContainer = document.getElementById(instructionType + '-container');
-  instructionContainer.append(currInstructionDiv);
+  const renderInputBox = Handlebars.compile(inputBoxTemplate);
+  document.getElementById(`${instructionType}-container`).insertAdjacentHTML(
+    'beforeend',
+    renderInputBox({
+      type: instructionType,
+      index: currInstructionIndex,
+    })
+  );
 }
 
 /**
@@ -124,9 +121,9 @@ function addInstructionInput(prevInstructionID) {
  * remove button [instructionType]-add-[instructionIndex].
  */
 window.removeInstructionInput = function removeInstructionInput(instructionID) {
-  const instructionIdArr = instructionID.split('-');
+  const instructionTokens = new InstructionTokens(instructionID);
   const instructionContainer = document.getElementById(
-    instructionIdArr[0] + '-container-' + instructionIdArr[2]
+    instructionTokens.type + '-container-' + instructionTokens.index
   );
   instructionContainer.remove();
 };
