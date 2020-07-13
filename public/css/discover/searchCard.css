@@ -10,12 +10,12 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.search-card:hover { 
+.search-card:hover {
   cursor: pointer;
 }
 
 .selected {
-  background-color: #f1f1f1; 
+  background-color: #f1f1f1;
 }
 
 .search-left {

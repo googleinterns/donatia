@@ -7,19 +7,19 @@ let markers = [];
 /* global google */
 
 /**
- * Initializes the Google Map to be centerd in Houston and to add 
+ * Initializes the Google Map to be centerd in Houston and to add
  * initial organization markers.
  */
 export function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: HOUSTON_COORDS,
     zoom: 13,
     disableDefaultUI: true,
     zoomControl: true,
     styles: [
       {
-        featureType: "poi",
-        stylers: [{visibility: "off"}],
+        featureType: 'poi',
+        stylers: [{visibility: 'off'}],
       },
     ],
   });
@@ -31,7 +31,7 @@ export function initMap() {
  * @param {JSON} data A json containing organzation data to create markers for.
  */
 export function createMarkers(data) {
-  data.forEach(organization => {
+  data.forEach((organization) => {
     // Create the markers and attach to the map.
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(organization.latitude, organization.longitude),
@@ -46,11 +46,13 @@ export function createMarkers(data) {
     });
 
     // Select a marker and dispatch an event when a marker is hovered on/off.
-    const mapContainer = document.getElementById("map");
+    const mapContainer = document.getElementById('map');
 
     google.maps.event.addListener(marker, 'mouseover', function () {
       selectMarker(marker.id);
-      mapContainer.dispatchEvent(new CustomEvent('markerHover', {bubbles: true, detail: marker.id}));
+      mapContainer.dispatchEvent(
+        new CustomEvent('markerHover', {bubbles: true, detail: marker.id})
+      );
     });
 
     google.maps.event.addListener(marker, 'mouseout', function () {
@@ -68,12 +70,12 @@ export function createMarkers(data) {
 }
 
 /**
- * Selects and opens the info window for the marker with the given 
+ * Selects and opens the info window for the marker with the given
  * id. Closes all other marker windows.
- * @param {String} id the id of the organization's marker to select 
+ * @param {String} id the id of the organization's marker to select
  */
 export function selectMarker(id = null) {
-  for(const marker of markers) {
+  for (const marker of markers) {
     if (marker.marker.id === id) {
       marker.markerWindow.open(map, marker.marker);
     } else {

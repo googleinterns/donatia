@@ -1,6 +1,4 @@
-
-const searchCardTemplate = 
-    `
+const searchCardTemplate = `
       {{#each organizations}}
         <div class="search-card" id="{{this.id}}">
           <div class="search-left">
@@ -39,19 +37,19 @@ const searchCardTemplate =
 export function createOrganizationCards(organizations) {
   // Generate the cards.
   const renderCards = Handlebars.compile(searchCardTemplate);
-  document.getElementById("search-list").innerHTML = renderCards({organizations: organizations});
+  document.getElementById('search-list').innerHTML = renderCards({organizations: organizations});
 
   // Add event listeners to the cards for hovering.
-  const searchCards = document.getElementsByClassName("search-card");
+  const searchCards = document.getElementsByClassName('search-card');
   for (let i = 0; i < searchCards.length; i++) {
     const card = searchCards[i];
 
-    card.addEventListener("mouseover", function (e) {
+    card.addEventListener('mouseover', function (e) {
       selectCard(card.id);
       card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: card.id}));
     });
 
-    card.addEventListener("mouseout", function (e) {
+    card.addEventListener('mouseout', function (e) {
       selectCard();
       card.dispatchEvent(new CustomEvent('cardHover', {bubbles: true, detail: null}));
     });
@@ -64,14 +62,14 @@ export function createOrganizationCards(organizations) {
  * @param {booolean} scroll Whether or not to scroll to the card.
  */
 export function selectCard(id = null, scroll = false) {
-  const cards = document.getElementsByClassName("search-card");
+  const cards = document.getElementsByClassName('search-card');
 
-  for(const card of cards) {
+  for (const card of cards) {
     if (card.id === id) {
-      card.classList.add("selected");
+      card.classList.add('selected');
       if (scroll) card.scrollIntoView();
     } else {
-      card.classList.remove("selected");
+      card.classList.remove('selected');
     }
   }
 }
