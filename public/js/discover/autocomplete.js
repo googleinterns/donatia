@@ -15,10 +15,9 @@ function showAutocompleteOptions(input) {
     return;
   }
 
-  let matches = [];
-  for (let option of options) {
-    if (option.toLowerCase().includes(input.toLowerCase())) matches.push(option);
-  }
+  const matches = options.filter(option => {
+    return option.toLowerCase().includes(input.toLowerCase());
+  });
 
   // Render options on page.
   const renderCards = Handlebars.compile(autocompleteOptionTemplate);
