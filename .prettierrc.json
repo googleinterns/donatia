@@ -1,0 +1,15 @@
+{
+  "bracketSpacing": false,
+  "printWidth": 100,
+  "singleQuote": true,
+  "jsxBracketSameLine": true,
+  "overrides": [
+    {
+      "files": "*.handlebars",
+      "options": {
+        "parser": "html",
+        "printWidth": 100
+      }
+    }
+  ]
+}
