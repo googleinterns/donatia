@@ -1,5 +1,25 @@
 /* eslint-disable no-unused-vars */
-const categoryTrie = new Trie();
+
+const categories = [
+  'canned food',
+  'produce',
+  'cleaning supplies',
+  'blankets',
+  'clothes',
+  'pet food',
+  'plastic bags',
+  'books',
+  'school supplies',
+  'children\'s toys',
+  'hair products',
+  'deoderant',
+  'soap',
+  'bottled drinks',
+  'computers',
+  'cars',
+]
+
+const categoryTrie = new Trie(categories);
 
 /**
  * Gives autocomplete suggestions for item categories.
@@ -70,7 +90,8 @@ class Trie {
 
     // Get the prefix's node in the tree.
     for (let level = 0; level < prefix.length; level++) {
-      const index = prefix.charCodeAt(level) - 97;
+      // Store the ascii value of a character or, if it's a space, set index to 26.
+      const index = (prefix.charAt(index) === " ") ? prefix.charCodeAt(level) - 97 : 26;
 
       if (currentNode.children[index]) {
         currentNode = currentNode.children[index];
