@@ -59,9 +59,9 @@ class Trie {
 
     if (parent.isWord) words.push(parent.prefix);
     
-    for (const child of parent.children) {
-      console.log(child)
-      words.push(this.getChildWords(child))
+    for (const key in parent.children) {
+      const childWords = this.getChildWords(parent.children[key])
+      words = words.concat(childWords)
     }
     return words;
   }
@@ -72,27 +72,27 @@ const testList = [
   'singh',
   'sign',
   'sinus',
-  // 'sit',
-  // 'silly',
-  // 'side',
-  // 'son',
-  // 'soda',
-  // 'sauce',
-  // 'sand',
-  // 'soap',
-  // 'sar',
-  // 'solo',
-  // 'sour',
-  // 'sun',
-  // 'sure',
-  // 'an',
-  // 'ant',
-  // 'aunt',
-  // 'hell',
-  // 'hello',
-  // 'help',
-  // 'helps',
-  // 'hellish',
+  'sit',
+  'silly',
+  'side',
+  'son',
+  'soda',
+  'sauce',
+  'sand',
+  'soap',
+  'sar',
+  'solo',
+  'sour',
+  'sun',
+  'sure',
+  'an',
+  'ant',
+  'aunt',
+  'hell',
+  'hello',
+  'help',
+  'helps',
+  'hellish',
   ]
 
 const wordTrie = new Trie(testList);
