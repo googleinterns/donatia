@@ -1,6 +1,23 @@
-/* eslint-disable */ 
+/* eslint-disable no-unused-vars */
+const categoryTrie = new Trie();
 
+/**
+ * Gives autocomplete suggestions for item categories.
+ * @param {string} input The prefix to base autocomplete suggestions on.
+ * @return {array} The list of autocomplete suggestions.
+ */
+function getAutocompleteCategories(input) {
+  return categoryTrie.autocomplete(input);
+}
+
+/**
+ * The individual nodes that make up the Trie.
+ */
 class TrieNode {
+  /**
+   * Creates a node storing the given prefix.
+   * @param {string} prefix The string value at this node.
+   */
   constructor(prefix = '') {
     this.children = {};
     this.isWord = false;
@@ -8,16 +25,23 @@ class TrieNode {
   }
 }
 
+/**
+ * A 26-ary tree for storing word prefixes and searching words.
+ */
 class Trie {
-  constructor(words = undefined) {
+  /**
+   * Creates a Trie based on the given words.
+   * @param {array} words The list of words to build the Trie with.
+   */
+  constructor(words) {
     this.root = new TrieNode('');
-    if (words) this.createTree(words);
-  }
-
-  createTree(words) {
     for(const word of words) this.insert(word);
   }
 
+  /**
+   * Adds the word to the Trie, creating new nodes for its prefixes if needed.
+   * @param {string} word The word to insert into the tree.
+   */
   insert(word) {
     word = word.toLowerCase();
     let currentNode = this.root;
@@ -26,7 +50,7 @@ class Trie {
     for (let level = 0; level < word.length; level++) {
       const index = word.charCodeAt(level) - 97;
 
-      // Insert the node for that letter into the trie if it doesn't exist.
+      // Insert the node for that prefix into the trie if it doesn't exist.
       if (!currentNode.children[index]) { 
         currentNode.children[index] = new TrieNode(word.substring(0, level + 1));
       }
@@ -35,6 +59,11 @@ class Trie {
     currentNode.isWord = true; 
   }
 
+  /**
+   * Gets the list of possible autocompleted words for a given prefix. 
+   * @param {string} prefix The prefix to find autcomplete suggestions for.
+   * @return {array} The list of autocomplete suggestions.
+   */
   autocomplete(prefix) {
     prefix = prefix.toLowerCase();
     let currentNode = this.root;
@@ -53,88 +82,21 @@ class Trie {
     return this.getChildWords(currentNode);
   }
 
-  getChildWords(parent) {
+  /**
+   * Gets all complete words in a subtree originating from node.
+   * @param {TrieNode} node The node used to look at words beneath.
+   * @return {array} The the complete words in the Trie under node.
+   */
+  getChildWords(node) {
     let words = [];
 
-    if (parent.isWord) words.push(parent.prefix);
-    
-    for (const key in parent.children) {
-      const childWords = this.getChildWords(parent.children[key])
+    if (node.isWord) words.push(node.prefix);
+
+    for (let key = 0; key < node.children.length; key++) {
+      const childWords = this.getChildWords(node.children[key])
       words = words.concat(childWords)
     }
+
     return words;
   }
-}
-
-const testList = [
-  'sin',
-  'singh',
-  'sign',
-  'sinus',
-  'sit',
-  'silly',
-  'side',
-  'son',
-  'soda',
-  'sauce',
-  'sand',
-  'soap',
-  'sar',
-  'solo',
-  'sour',
-  'sun',
-  'sure',
-  'an',
-  'ant',
-  'aunt',
-  'hell',
-  'hello',
-  'help',
-  'helps',
-  'hellish',
-  'hair',
-  'ingenius',
-  'icicle',
-  'introductory',
-  'inner',
-  'input',
-  'just',
-  'jeer',
-  'jive',
-  'joking',
-  'lime',
-  'lemon',
-  'lawful',
-  'long',
-  'lobe',
-  'leap',
-  'looking',
-  'mother',
-  'morning',
-  'maple',
-  'mask',
-  'near',
-  'nostrils',
-  'next',
-  'night',
-  'opportunity',
-  'optional',
-  'optics',
-  'ocean',
-  'personal',
-  'peanut',
-  'poke',
-  'peer',
-  'pry',
-  'pursue',
-  'punish',
-  'poignant',
-  ]
-
-const wordTrie = new Trie(testList);
-console.log(wordTrie)
-console.log("results for 'so'", wordTrie.autocomplete("so"));
-
-function getAutocompleteSuggestions(input) {
-  return wordTrie.autocomplete(input);
 }
