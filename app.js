@@ -38,6 +38,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
+app.use(express.json());
 app.use('/static', express.static('public'));
 app.use(
   cookieSession({
@@ -78,7 +79,15 @@ app.get('/auth/logout', (req, res) => {
 });
 
 const data = require('./routes/data');
-app.get('/data', data.view);
+app.get('/data/acceptedcategories/:id', data.acceptedCategoriesGet);
+app.post('/data/acceptedcategories/:id', data.acceptedCategoriesPost);
+app.delete('/data/acceptedcategories/:id', data.acceptedCategoriesDelete);
+app.get(
+  '/data/acceptedcategories/:field(organization|category)/:id',
+  data.acceptedCategoriesByFieldGet
+);
+app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
+app.get('/data/categories', data.categoriesGet);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
