@@ -68,14 +68,17 @@ window.deleteCategory = function deleteCategory(categoryID) {
   console.log('deleted' + categoryID);
 };
 
-/**
- * Extracts the type and index of a properly formatted
- * HTML element ID: [type]-function-[index].
- * @param {string} elementID ID of an element in the instruction section.
- */
-function InstructionTokens(elementID) {
-  this.type = elementID.split('-')[0];
-  this.index = parseInt(elementID.split('-')[2]);
+/** Class representing the parts of an instruction element. */
+class InstructionTokens {
+  /**
+   * Extracts the type and index of a properly formatted
+   * HTML element ID: [type]-function-[index].
+   * @param {string} elementID ID of an element in the instruction section.
+   */
+  constructor(elementID) {
+    this.type = elementID.split('-')[0];
+    this.index = parseInt(elementID.split('-')[2]);
+  }
 }
 
 const inputBoxTemplate = `
