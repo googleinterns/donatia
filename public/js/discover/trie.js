@@ -50,7 +50,6 @@ class Trie {
         return [];
       }
     }
-    console.log("autcomplete node", currentNode)
     return this.getChildWords(currentNode);
   }
 
@@ -93,7 +92,49 @@ const testList = [
   'help',
   'helps',
   'hellish',
+  'hair',
+  'ingenius',
+  'icicle',
+  'introductory',
+  'inner',
+  'input',
+  'just',
+  'jeer',
+  'jive',
+  'joking',
+  'lime',
+  'lemon',
+  'lawful',
+  'long',
+  'lobe',
+  'leap',
+  'looking',
+  'mother',
+  'morning',
+  'maple',
+  'mask',
+  'near',
+  'nostrils',
+  'next',
+  'night',
+  'opportunity',
+  'optional',
+  'optics',
+  'ocean',
+  'personal',
+  'peanut',
+  'poke',
+  'peer',
+  'pry',
+  'pursue',
+  'punish',
+  'poignant',
   ]
 
 const wordTrie = new Trie(testList);
-console.log("results for 'sin'", wordTrie.autocomplete("sin"));
+console.log(wordTrie)
+console.log("results for 'so'", wordTrie.autocomplete("so"));
+
+function getAutocompleteSuggestions(input) {
+  return wordTrie.autocomplete(input);
+}
