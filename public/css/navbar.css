@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  
+
   /* Border shadow */
   -webkit-box-shadow: 0px 0px 3px 0px #929292;
   -moz-box-shadow: 0px 0px 3px 0px #929292;
@@ -47,4 +47,16 @@ a {
 
 #login-button:hover {
   background-color: #409726;
+}
+
+#logout-button {
+  font-weight: bold;
+  padding: 6px 20px;
+  border-radius: 15px;
+  background-color: #ff5144;
+  color: white;
+}
+
+#logout-button:hover {
+  background-color: #d63e33;
 }

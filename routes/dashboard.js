@@ -4,15 +4,17 @@
 
 exports.view = function (req, res) {
   const pageParam = req.params.page;
-  var pageName = 'dashboardProfile';
+  let pageName = 'dashboardProfile';
   if (pageParam === 'categories') pageName = 'dashboardCategories';
 
-  res.render(
-    pageName,
-    {
-      layout: 'dashboard',
-      id: req.params.id,
-      editable: pageParam === 'edit',
-    }
-  )
-}
+  let orgName = 'Organization';
+
+  // Simulation of database retrieving known user's information.
+  if (req.user.id === '101861107470846011638') orgName = 'Google';
+
+  res.render(pageName, {
+    layout: 'dashboard',
+    id: orgName,
+    editable: pageParam === 'edit',
+  });
+};
