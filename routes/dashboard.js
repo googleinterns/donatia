@@ -16,5 +16,6 @@ exports.view = function (req, res) {
     layout: 'dashboard',
     id: orgName,
     editable: pageParam === 'edit',
+    authenticated: req.user ? true : false,
   });
 };

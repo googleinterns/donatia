@@ -7,9 +7,17 @@
 
   <div id="navbar-links">
     <a class="underline" href="/discover">Discover</a>
-    <a class="underline" href="/dashboard">My Dashboard</a>
+
+    {{#if authenticated}}
+    <div class="navbar-dropdown">
+      <a id="login-button" href="/dashboard">My Account</a>
+      <div class="navbar-dropdown-content">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/auth/logout">Log Out</a>
+      </div>
+    </div>
+    {{else}}
     <a id="login-button" href="/auth/google">Log In</a>
-    {{!-- TODO: Only show log out if user is logged in. --}}
-    <a id="logout-button" href="/auth/logout">Log Out</a>
+    {{/if}}
   </div>
 </nav>

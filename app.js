@@ -50,16 +50,11 @@ app.use(passport.session());
 
 // Authentication middleware
 const isLoggedIn = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    // TODO: Redirect users back to login page.
-    res.sendStatus(401);
-  }
+  req.user ? next() : res.redirect('/auth/google');
 };
 
 // Routes.
-app.get('/', (req, res) => res.render('landing'));
+app.get('/', (req, res) => res.render('landing', {authenticated: req.user ? true : false}));
 
 const discover = require('./routes/discover');
 app.get('/discover', discover.view);
