@@ -17,5 +17,6 @@ exports.view = function (req, res) {
     id: orgName,
     editable: pageParam === 'edit',
     user: req.user,
+    MAPS_KEY: process.env.MAPS_KEY,
   });
 };

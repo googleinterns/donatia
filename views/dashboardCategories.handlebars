@@ -1,7 +1,7 @@
 <script src="/static/js/dashboardCategories.js"></script>
 
 <div>
-  <form class="category-card" onsubmit="addCategory()">
+  <div class="category-card">
     <h3>Add a category</h3>
 
     <label for="categories">Choose a category:</label><br />
@@ -14,15 +14,15 @@
     ><br />
 
     <label for="add-card-quality">Quality Check Instructions:</label><br />
-    <input type="text" id="add-card-quality" name="add-card-quality" /><br />
+    <div id="quality-container"></div>
 
     <label for="add-card-instructions">Donation Instructions:</label><br />
-    <input type="text" id="add-card-instructions" name="add-card-instructions" /><br />
+    <div id="donation-container"></div>
 
     <div class="category-card-buttons">
-      <button>Add</button>
+      <button onclick="addCategory()">Add</button>
     </div>
-  </form>
+  </div>
 
   <div id="existing-card-holder">
     <script type="text/x-handlebars" id="existing-cards-template">
