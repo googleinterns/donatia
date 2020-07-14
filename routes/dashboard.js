@@ -16,5 +16,6 @@ exports.view = function (req, res) {
     layout: 'dashboard',
     id: orgName,
     editable: pageParam === 'edit',
+    MAPS_KEY: process.env.MAPS_KEY,
   });
 };
