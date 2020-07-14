@@ -55,7 +55,7 @@ const isLoggedIn = (req, res, next) => {
 };
 
 // Routes.
-app.get('/', (req, res) => res.render('landing', {authenticated: req.user ? true : false}));
+app.get('/', (req, res) => res.render('landing', {user: req.user}));
 
 const discover = require('./routes/discover');
 app.get('/discover', discover.view);
