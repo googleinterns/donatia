@@ -1,32 +1,44 @@
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&libraries=places&callback=initAutocomplete"
+></script>
+<script src="/static/js/dashboardInfoForm.js"></script>
+
 <form method="post">
   <div id="form-container">
     <label for="organization-name">Name</label><br />
-    <input disabled type="text" id="organization-name" name="organization-name" /><br />
+    <input disabled required type="text" id="organization-name" name="organization-name" /><br />
 
     <label for="organization-description">Description</label><br />
     <input
       disabled
+      required
       type="text"
       id="organization-description"
       name="organization-description"
     /><br />
 
     <label for="organization-address">Address</label><br />
-    <input disabled type="text" id="organization-address" name="organization-address" /><br />
+    <input
+      disabled
+      required
+      type="text"
+      id="organization-address"
+      name="organization-address"
+    /><br />
 
     <label for="organization-phone">Phone</label><br />
-    <input disabled type="text" id="organization-phone" name="organization-phone" /><br />
+    <input disabled type="number" id="organization-phone" name="organization-phone" /><br />
 
     <label for="organization-website">Website</label><br />
-    <input disabled type="text" id="organization-website" name="organization-website" /><br />
+    <input disabled type="url" id="organization-website" name="organization-website" /><br />
 
     <label for="organization-email">Email</label><br />
-    <input disabled type="text" id="organization-email" name="organization-email" /><br />
+    <input disabled required type="email" id="organization-email" name="organization-email" /><br />
   </div>
   <button>Submit</button>
 </form>
-
-<script src="/static/js/dashboardInfoForm.js"></script>
 
 <script>
   if ({{editable}}) {
