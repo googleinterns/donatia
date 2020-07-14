@@ -1,6 +1,7 @@
 {
   "organizations": [
     {
+      "id": "1",
       "title": "Society of St. Vincent de Paul Archdiocese",
       "address": "2403 Holcombe Blvd, Houston, TX 77021",
       "phone": "(713) 741-8234",
@@ -15,6 +16,7 @@
       "longitude": -95.3847942
     },
     {
+      "id": "2",
       "title": "Houston Food Bank",
       "address": "535 Portwall St, Houston, TX 77029",
       "phone": "(713) 223-3700",
@@ -29,6 +31,7 @@
       "longitude": -95.2747503
     },
     {
+      "id": "3",
       "title": "Emergency Aid Coalition",
       "address": "5401 Fannin St, Houston, TX 77004",
       "phone": "(713) 528-3663",
@@ -43,6 +46,7 @@
       "longitude": -95.3896933
     },
     {
+      "id": "4",
       "title": "Houston Humane Society",
       "address": "14700 Almeda Rd, Houston, TX 77053",
       "phone": "(713) 433-6421",

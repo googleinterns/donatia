@@ -1,52 +1,116 @@
 const {Firestore} = require('@google-cloud/firestore');
 
 // Database Initialization
-const firestore = new Firestore();
-const DB_COLLECTION_NAME = process.env.NODE_ENV == 'production' ? 'movies' : 'dev-movies';
+let firestore = new Firestore();
 
-exports.view = function (req, res) {
-  createMovies();
-  const movies = readMovies();
-  movies.then((data) => {
-    res.send(data);
+/**
+ * Utility function that returns the correct collection name depending on whther the environment is PRODUCTION or DEVELOPMENT.
+ * @param {String} collectionName
+ * @return {string} the collection name under the current node environment
+ */
+function resolveCollectionName(collectionName) {
+  return process.env.NODE_ENV == 'production' ? collectionName : 'dev-' + collectionName;
+}
+
+exports.setDatabase = (firestoreInstance) => (firestore = firestoreInstance);
+
+exports.getDatabase = () => firestore;
+
+/**
+ * Queries for all AcceptedCategories by either organization or category depending on the document reference and fieldName
+ * @param {FirebaseFirestore.DocumentReference} ref
+ * @param {String} fieldName
+ * @return {Array} array of all AcceptedCategories that match the reference
+ */
+async function getAcceptedGategoriesByRef(ref, fieldName) {
+  const snapshot = await firestore
+    .collection(resolveCollectionName('AcceptedCategories'))
+    .where(fieldName, '==', ref)
+    .get();
+  const results = {};
+  snapshot.docs.forEach((doc) => {
+    results[doc.id] = doc.data();
   });
+  return results;
+}
+
+/* Response Handlers */
+
+exports.acceptedCategoriesGet = async function (req, res) {
+  const doc = await firestore
+    .collection(resolveCollectionName('AcceptedCategories'))
+    .doc(req.params['id'])
+    .get();
+
+  if (doc.exists) {
+    res.send(doc.data());
+  } else {
+    res.sendStatus(404);
+  }
 };
 
-/**
- * Inserts 3 new documents into the 'movies' collection with hard-coded data.
- */
-async function createMovies() {
-  // Dummy data to insert into the database
-  const movieData = [
-    {
-      title: 'Black Panther',
-      year: 2018,
-    },
-    {
-      title: 'Avengers: Endgame',
-      year: 2019,
-    },
-    {
-      title: 'Iron Man',
-      year: 2008,
-    },
-  ];
+exports.acceptedCategoriesPost = async function (req, res) {
+  const updatedAcceptedCategoryData = req.body;
 
-  movieData.forEach((movie) => {
-    const document = firestore.collection(DB_COLLECTION_NAME).doc();
-    document.set(movie);
-  });
-}
+  // If there is an update to the category field then change string into DocumentReference
+  if ('category' in updatedAcceptedCategoryData) {
+    updatedAcceptedCategoryData.category = await firestore.doc(
+      `/${resolveCollectionName('Categories')}/${req.body.category}`
+    );
+  }
 
-/**
- * Read all documents in the 'movies' collection
- */
-async function readMovies() {
-  const movieList = [];
-  const moviesRef = firestore.collection(DB_COLLECTION_NAME);
-  const snapshot = await moviesRef.get();
-  snapshot.forEach((movie) => {
-    movieList.push(movie.data());
+  await firestore
+    .collection(`${resolveCollectionName('AcceptedCategories')}`)
+    .doc(`${req.params.id}`)
+    .update(updatedAcceptedCategoryData);
+  res.sendStatus(201);
+};
+
+exports.acceptedCategoriesDelete = async function (req, res) {
+  await firestore
+    .collection(`${resolveCollectionName('AcceptedCategories')}`)
+    .doc(`${req.params.id}`)
+    .delete();
+  res.sendStatus(200);
+};
+
+exports.acceptedCategoriesByFieldGet = async function (req, res) {
+  let fieldReference;
+
+  if (req.params.field == 'organization') {
+    fieldReference = firestore
+      .collection(resolveCollectionName('Organizations'))
+      .doc(req.params.id);
+  } else if (req.params.field == 'category') {
+    fieldReference = firestore.collection(resolveCollectionName('Categories')).doc(req.params.id);
+  }
+
+  const results = await getAcceptedGategoriesByRef(fieldReference, req.params.field);
+
+  res.send(results);
+};
+
+exports.acceptedCategoriesOrganizationPost = async function (req, res) {
+  const newAcceptedCategoryData = req.body;
+  newAcceptedCategoryData.organization = await firestore
+    .collection(`${resolveCollectionName('Organization')}`)
+    .doc(`${req.params.id}`);
+  newAcceptedCategoryData.category = await firestore
+    .collection(`${resolveCollectionName('Categories')}`)
+    .doc(`${req.body.category}`);
+
+  await firestore
+    .collection(resolveCollectionName('AcceptedCategories'))
+    .doc()
+    .set(newAcceptedCategoryData);
+  res.sendStatus(201);
+};
+
+exports.categoriesGet = async function (req, res) {
+  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
+  const categories = [];
+  snapshot.forEach((doc) => {
+    categories.push(doc.id);
   });
-  return movieList;
-}
+  res.send(categories);
+};
