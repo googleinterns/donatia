@@ -1,0 +1,12 @@
+#content {
+  display: flex;
+  flex-direction: row;
+}
+
+#info-section {
+  width: 50%;
+}
+
+#categories-section {
+  width: 50%;
+}
