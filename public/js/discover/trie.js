@@ -61,7 +61,7 @@ class Trie {
    * @param {string} word The word to insert into the tree.
    */
   insert(word) {
-    word = word.toLowerCase();
+    word = word.toLowerCase().replace(/[^a-zA-Z ]/g, '');
     let currentNode = this.root;
 
     // Iterate down the tree for each character in the word.
@@ -78,12 +78,12 @@ class Trie {
   }
 
   /**
-   * Gets the list of possible autocompleted words for a given prefix.
+   * Gets the node containing the given prefix.
    * @param {string} prefix The prefix to find autcomplete suggestions for.
    * @return {array} The list of autocomplete suggestions.
    */
-  autocomplete(prefix) {
-    prefix = prefix.toLowerCase();
+  find(prefix) {
+    prefix = prefix.toLowerCase().replace(/[^a-zA-Z ]/g, '');
     let currentNode = this.root;
 
     // Get the prefix's node in the tree.
@@ -98,7 +98,7 @@ class Trie {
         return [];
       }
     }
-    return this.getChildWords(currentNode);
+    return currentNode;
   }
 
   /**
