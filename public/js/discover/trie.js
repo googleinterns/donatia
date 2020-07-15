@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 const categories = [
   'canned food',
   'produce',
@@ -10,14 +8,14 @@ const categories = [
   'plastic bags',
   'books',
   'school supplies',
-  'children\'s toys',
+  "children's toys",
   'hair products',
   'deoderant',
   'soap',
   'bottled drinks',
   'computers',
   'cars',
-]
+];
 
 const categoryTrie = new Trie(categories);
 
@@ -26,9 +24,9 @@ const categoryTrie = new Trie(categories);
  * @param {string} input The prefix to base autocomplete suggestions on.
  * @return {array} The list of autocomplete suggestions.
  */
-function getAutocompleteCategories(input) {
+window.getAutocompleteCategories = function getAutocompleteCategories(input) {
   return categoryTrie.autocomplete(input);
-}
+};
 
 /**
  * The individual nodes that make up the Trie.
@@ -55,7 +53,7 @@ class Trie {
    */
   constructor(words) {
     this.root = new TrieNode('');
-    for(const word of words) this.insert(word);
+    for (const word of words) this.insert(word);
   }
 
   /**
@@ -71,16 +69,16 @@ class Trie {
       const index = word.charCodeAt(level) - 97;
 
       // Insert the node for that prefix into the trie if it doesn't exist.
-      if (!currentNode.children[index]) { 
+      if (!currentNode.children[index]) {
         currentNode.children[index] = new TrieNode(word.substring(0, level + 1));
       }
       currentNode = currentNode.children[index];
     }
-    currentNode.isWord = true; 
+    currentNode.isWord = true;
   }
 
   /**
-   * Gets the list of possible autocompleted words for a given prefix. 
+   * Gets the list of possible autocompleted words for a given prefix.
    * @param {string} prefix The prefix to find autcomplete suggestions for.
    * @return {array} The list of autocomplete suggestions.
    */
@@ -91,7 +89,7 @@ class Trie {
     // Get the prefix's node in the tree.
     for (let level = 0; level < prefix.length; level++) {
       // Store the ascii value of a character or, if it's a space, set index to 26.
-      const index = (prefix.charAt(index) === " ") ? prefix.charCodeAt(level) - 97 : 26;
+      const index = prefix.charAt(index) === ' ' ? prefix.charCodeAt(level) - 97 : 26;
 
       if (currentNode.children[index]) {
         currentNode = currentNode.children[index];
@@ -114,8 +112,8 @@ class Trie {
     if (node.isWord) words.push(node.prefix);
 
     for (let key = 0; key < node.children.length; key++) {
-      const childWords = this.getChildWords(node.children[key])
-      words = words.concat(childWords)
+      const childWords = this.getChildWords(node.children[key]);
+      words = words.concat(childWords);
     }
 
     return words;
