@@ -1,3 +1,5 @@
+/* global google*/
+
 /**
  * @param {string} id Organization's unique database ID
  * @return {JSON} An organization's information
@@ -27,4 +29,15 @@ window.onload = async function populateForm() {
   document.getElementById('organization-phone').value = formJSON.phone;
   document.getElementById('organization-website').value = formJSON.websiteURL;
   document.getElementById('organization-email').value = formJSON.email;
+};
+
+/*
+ * Adds Google Maps Places autocomplete to address input.
+ */
+window.initAutocomplete = function initAutocomplete() {
+  const autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById('organization-address'),
+    {types: ['address']}
+  );
+  autocomplete.setFields(['formatted_address']);
 };
