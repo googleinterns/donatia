@@ -186,3 +186,35 @@ it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCat
     }
   );
 });
+
+it('GET Request /data/organizations/:id : Get an Organization', function(done) {
+  request(
+    `http://localhost:3000/data/organizations/${ORG_FURNITURE_BANK_ID}`,
+    function (error, response, body) {
+      expect(response.statusCode).to.equal(200);
+      expect(JSON.parse(response.body)).to.deep.equal(ORG_FURNITURE_BANK);
+      done();
+    }
+  );
+});
+
+it('POST Request /data/organizations/:id : Update an Organization', function(done) {
+  request.post(
+    {
+      headers: {'content-type': 'application/json'},
+      url: `http://localhost:3000/data/organizations/${ORG_FURNITURE_BANK_ID}`,
+      body: JSON.stringify({name: "test name"}),
+    },
+    function (error, response, body) {
+      expect(response.statusCode).to.equal(201);
+      expect(
+        firestoreMock
+          .collection('dev-Organizations')
+          .doc(`${ORG_FURNITURE_BANK_ID}`)
+          .get()
+          .data().name
+      ).to.deep.equal("test name");
+      done();
+    }
+  );
+});
