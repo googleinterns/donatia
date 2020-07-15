@@ -27,14 +27,15 @@ a {
   font-size: 1.8rem;
 }
 
-#navbar-links a {
+.navbar-link {
   margin: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px;
+  margin-left: 1em;
 }
 
 .underline:hover {
   border-bottom: 2px solid #929292;
+  margin-bottom: 8px;
 }
 
 #login-button {
@@ -49,14 +50,50 @@ a {
   background-color: #409726;
 }
 
-#logout-button {
-  font-weight: bold;
-  padding: 6px 20px;
-  border-radius: 15px;
-  background-color: #ff5144;
-  color: white;
+.navbar-dropdown {
+  position: relative;
+  display: inline;
+  margin-left: 1em;
 }
 
-#logout-button:hover {
-  background-color: #d63e33;
+.navbar-dropdown-content {
+  position: absolute;
+  display: none;
+  top: 40px;
+  right: 0px;
+  background-color: aliceblue;
+  z-index: 1;
+}
+
+.navbar-dropdown-content > * {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 120px;
+}
+
+.navbar-dropdown:hover .navbar-dropdown-content {
+  display: block;
+}
+
+.navbar-dropdown-content > a:hover {
+  background-color: #f1f1f1;
+}
+
+#navbar-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+}
+
+.navbar-account-container {
+  display: flex;
+  width: 40px;
+  height: 40px;
+}
+
+.navbar-account-image {
+  height: 100%;
+  border-radius: 20px;
 }

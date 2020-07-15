@@ -6,10 +6,20 @@
   </a>
 
   <div id="navbar-links">
-    <a class="underline" href="/discover">Discover</a>
-    <a class="underline" href="/dashboard">My Dashboard</a>
-    <a id="login-button" href="/auth/google">Log In</a>
-    {{!-- TODO: Only show log out if user is logged in. --}}
-    <a id="logout-button" href="/auth/logout">Log Out</a>
+    <a class="navbar-link underline" href="/discover">Discover</a>
+    {{#if user}}
+    <div class="navbar-dropdown">
+      <a class="navbar-account-container" href="/dashboard">
+        <img class="navbar-account-image" src="{{user._json.picture}}" />
+      </a>
+      <div class="navbar-dropdown-content">
+        <div id="navbar-account-name">Signed in as <b>{{user.displayName}}</b></div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/auth/logout">Sign Out</a>
+      </div>
+    </div>
+    {{else}}
+    <a class="navbar-link" id="login-button" href="/auth/google">Sign In</a>
+    {{/if}}
   </div>
 </nav>
