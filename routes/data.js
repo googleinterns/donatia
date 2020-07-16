@@ -149,8 +149,8 @@ exports.getFilteredOrganizations = async function (filter) {
       organizations.push(organization);
     }
   }
-
   return organizations;
+};
 
 exports.organizationsGet = async function (req, res) {
   const organization = await firestore
