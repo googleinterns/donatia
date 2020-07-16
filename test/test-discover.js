@@ -5,7 +5,7 @@ require('../app');
 it('Discover page content', function (done) {
   request(process.env.BASE_URL + 'discover', function (error, response, body) {
     expect(body).to.contain('Google STEP App');
-    expect(body).to.contain('All'); // check for search drop down
+    expect(body).to.contain('Search for an item category');
     done();
   });
 });
