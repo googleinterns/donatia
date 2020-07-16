@@ -77,7 +77,7 @@ window.onload = function () {
 };
 
 export function loadOrganizationInfo() {
-  fetch('http://localhost:3000/data/organization')
+  fetch('http://localhost:3000/data/categories')
   .then(response => response.json())
   .then(data => console.log(data));
 
