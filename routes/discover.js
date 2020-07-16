@@ -9,13 +9,12 @@ exports.view = function (req, res) {
 };
 
 exports.getOrganizations = async function (req, res) {
-  const filter = req.params.filter;
+  const filter = req.params.filter.toLowerCase();
 
   if (filter === 'all') {
     res.send(data.organizations);
   } else {
     const filtered = await database.getFilteredOrganizations(filter);
-    console.log(filtered)
     res.send(filtered);
   }
 };

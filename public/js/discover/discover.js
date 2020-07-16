@@ -32,11 +32,14 @@ function setSearchOptions() {
   fetch('/data/categories')
     .then((data) => data.json())
     .then(data => {
-      console.log(data)
       for(const category of data) {
         let option = document.createElement('option');
-        option.value = category;
-        option.innerText = category;
+
+        const parsedCategory = category.replace(/[^a-zA-Z0-9]/g,' ');
+        const capitalizedCategory = parsedCategory.charAt(0).toUpperCase() + parsedCategory.slice(1)
+
+        option.value = capitalizedCategory;
+        option.innerText = capitalizedCategory;
         select.appendChild(option);
       }
     });
