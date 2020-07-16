@@ -9,6 +9,7 @@ window.onload = function () {
   initMap();
   updateSearchResults();
   setPageEventListeners();
+  setSearchOptions();
 };
 
 /**
@@ -21,6 +22,24 @@ function setPageEventListeners() {
   discoverPage.addEventListener('markerChange', (event) =>
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
+}
+
+/**
+ * Sets the search dropdown options to the categories from the database.
+ */
+function setSearchOptions() {
+  let select = document.getElementById('search-dropdown');
+  fetch('/data/categories')
+    .then((data) => data.json())
+    .then(data => {
+      console.log(data)
+      for(const category of data) {
+        let option = document.createElement('option');
+        option.value = category;
+        option.innerText = category;
+        select.appendChild(option);
+      }
+    });
 }
 
 /**
