@@ -22,7 +22,7 @@ exports.getDatabase = () => firestore;
  * @param {String} fieldName
  * @return {Array} array of all AcceptedCategories that match the reference
  */
-async function getAcceptedGategoriesByRef(ref, fieldName) {
+async function getAcceptedCategoriesByRef(ref, fieldName) {
   const snapshot = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .where(fieldName, '==', ref)
@@ -33,6 +33,21 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
   });
   return results;
 }
+
+exports.getFilteredOrganizations = async function (req, res) {
+  const categoryReference = await firestore.collection(resolveCollectionName('Categories')).doc(req.params.filter);
+  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, "category");
+
+  let organizations = {};
+
+  for(const key in acceptedCategories) {
+    const organization = acceptedCategories[key].organization;
+    organizations[key] = (await organization.get()).data();
+    console.log(organizations[key])
+  }
+
+  res.send(organizations);
+};
 
 /* Response Handlers */
 
@@ -85,7 +100,7 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
     fieldReference = firestore.collection(resolveCollectionName('Categories')).doc(req.params.id);
   }
 
-  const results = await getAcceptedGategoriesByRef(fieldReference, req.params.field);
+  const results = await getAcceptedCategoriesByRef(fieldReference, req.params.field);
 
   res.send(results);
 };
