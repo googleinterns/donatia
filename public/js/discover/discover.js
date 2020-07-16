@@ -7,9 +7,8 @@ import {initMap, createMarkers, selectMarker, removeAllMarkers} from './maps.js'
  */
 window.onload = function () {
   initMap();
-  updateSearchResults();
-  setPageEventListeners();
   setSearchOptions();
+  setPageEventListeners();
 };
 
 /**
@@ -42,6 +41,8 @@ function setSearchOptions() {
         option.innerText = capitalizedCategory;
         select.appendChild(option);
       }
+      // After the dropdown options are created, load the organizations.
+      updateSearchResults();
     });
 }
 
