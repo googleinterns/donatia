@@ -13,20 +13,19 @@ window.onload = function () {
 
 /**
  * Add event listeners to the page to link map markers with cards and
- * for input autocomplete.
+ * for search autocomplete.
  */
 function setPageEventListeners() {
-  // Event listeners for marker and organization card hover.
+  // Map marker and organization card hover events.
   const discoverPage = document.getElementById('discover');
   discoverPage.addEventListener('cardChange', (event) => selectMarker(/* id= */ event.detail));
   discoverPage.addEventListener('markerChange', (event) =>
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
 
-  // Event listeners for search.
+  // Search if the user presses "enter" in the search box.
   const search = document.getElementById("autocomplete-input");
   search.addEventListener("keydown", function (e) {
-    // Search if the user presses "enter" in the search box.
     if (e.keyCode === 13) updateSearchResults();
   })
 }
