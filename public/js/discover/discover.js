@@ -27,15 +27,16 @@ function setPageEventListeners() {
  * Sets the search dropdown options to the categories from the database.
  */
 function setSearchOptions() {
-  let select = document.getElementById('search-dropdown');
+  const select = document.getElementById('search-dropdown');
   fetch('/data/categories')
     .then((data) => data.json())
-    .then(data => {
-      for(const category of data) {
-        let option = document.createElement('option');
+    .then((data) => {
+      for (const category of data) {
+        const option = document.createElement('option');
 
-        const parsedCategory = category.replace(/[^a-zA-Z0-9]/g,' ');
-        const capitalizedCategory = parsedCategory.charAt(0).toUpperCase() + parsedCategory.slice(1)
+        const parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
+        const capitalizedCategory =
+          parsedCategory.charAt(0).toUpperCase() + parsedCategory.slice(1);
 
         option.value = capitalizedCategory;
         option.innerText = capitalizedCategory;

@@ -1,4 +1,4 @@
-const database = require('./data')
+const database = require('./data');
 
 exports.view = function (req, res) {
   res.render('discover', {
@@ -12,7 +12,7 @@ exports.getOrganizations = async function (req, res) {
 
   let filtered;
 
-  if (filter === "all") {
+  if (filter === 'all') {
     filtered = await database.getAllOrganizations(filter);
   } else {
     filtered = await database.getFilteredOrganizations(filter);
