@@ -15,7 +15,9 @@
           type="text" 
           placeholder="Search for an item category"
           oninput="showAutocompleteOptions(this.value)">
-        <a onclick="updateSearchResults()">submit</a>
+        <a id="search-icon-container" onclick="updateSearchResults()">
+          <img id="search-icon" src="static/images/search-icon.png"/>
+        </a>
       </div>
       <div id="autocomplete-list"></div>
     </div>

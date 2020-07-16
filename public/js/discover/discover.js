@@ -16,12 +16,19 @@ window.onload = function () {
  * for input autocomplete.
  */
 function setPageEventListeners() {
+  // Event listeners for marker and organization card hover.
   const discoverPage = document.getElementById('discover');
   discoverPage.addEventListener('cardChange', (event) => selectMarker(/* id= */ event.detail));
   discoverPage.addEventListener('markerChange', (event) =>
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
-  discoverPage.addEventListener('search', () => updateSearchResults());
+
+  // Event listeners for search.
+  const search = document.getElementById("autocomplete-input");
+  search.addEventListener("keydown", function (e) {
+    // Search if the user presses "enter" in the search box.
+    if (e.keyCode === 13) updateSearchResults();
+  })
 }
 
 /**

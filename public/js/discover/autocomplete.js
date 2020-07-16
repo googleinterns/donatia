@@ -6,7 +6,7 @@ const categories = [
   'produce',
   'cleaning supplies',
   'blankets',
-  'clothes',
+  'clothing',
   'pet food',
   'plastic bags',
   'books',
