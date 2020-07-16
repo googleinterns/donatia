@@ -126,7 +126,9 @@ it('POST Request /data/acceptedcategories/:id : update qualityGuidelines field',
   request.post(
     {
       headers: {'content-type': 'application/json'},
-      url: process.env.BASE_URL + `data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_HOUSEHOLD_ITEMS_ID}`,
+      url:
+        process.env.BASE_URL +
+        `data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_HOUSEHOLD_ITEMS_ID}`,
       body: JSON.stringify({qualityGuidelines: ['gently used', 'no damage']}),
     },
     function (error, response, body) {
