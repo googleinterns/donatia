@@ -103,7 +103,7 @@ before(function () {
 });
 
 it('GET Request /data/categories : Get all categories', function (done) {
-  request('http://localhost:3000/data/categories', function (error, response, body) {
+  request(process.env.BASE_URL + 'data/categories', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
     const expectedBody = [CTG_FURNITURE_ID, CTG_FOOD_ID, CTG_CLOTHES_ID, CTG_HOUSEHOLD_ITEMS_ID];
     expect(JSON.parse(body)).to.deep.equal(expectedBody);
@@ -113,7 +113,7 @@ it('GET Request /data/categories : Get all categories', function (done) {
 
 it('GET Request /data/acceptedcategories/:id : get an AcceptedCategory', function (done) {
   request(
-    `http://localhost:3000/data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FURNITURE_ID}`,
+    process.env.BASE_URL + `data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FURNITURE_ID}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(200);
       expect(JSON.parse(response.body)).to.deep.equal(ACCCTG_FURNITURE_BANK_CTG_FURNITURE);
@@ -126,7 +126,7 @@ it('POST Request /data/acceptedcategories/:id : update qualityGuidelines field',
   request.post(
     {
       headers: {'content-type': 'application/json'},
-      url: `http://localhost:3000/data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_HOUSEHOLD_ITEMS_ID}`,
+      url: process.env.BASE_URL + `data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_HOUSEHOLD_ITEMS_ID}`,
       body: JSON.stringify({qualityGuidelines: ['gently used', 'no damage']}),
     },
     function (error, response, body) {
@@ -145,7 +145,7 @@ it('POST Request /data/acceptedcategories/:id : update qualityGuidelines field',
 
 it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', function (done) {
   request.delete(
-    `http://localhost:3000/data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FOOD_ID}`,
+    process.env.BASE_URL + `data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FOOD_ID}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(200);
     }
@@ -153,7 +153,7 @@ it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', f
 
   // Check that AcceptedCategory has been deleted
   request(
-    `http://localhost:3000/data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FOOD_ID}`,
+    process.env.BASE_URL + `data/acceptedcategories/${ACCCTG_FURNITURE_BANK_CTG_FOOD_ID}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(404);
       done();
@@ -173,7 +173,7 @@ it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCat
   request.post(
     {
       headers: {'content-type': 'application/json'},
-      url: `http://localhost:3000/data/acceptedcategories/organization/${ORG_FURNITURE_BANK_ID}`,
+      url: process.env.BASE_URL + `data/acceptedcategories/organization/${ORG_FURNITURE_BANK_ID}`,
       body: JSON.stringify(newAcceptedCategory),
     },
     function (error, response, body) {
@@ -188,7 +188,7 @@ it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCat
 });
 
 it('GET Request /data/organizations/:id : Get an Organization', function (done) {
-  request(`http://localhost:3000/data/organizations/${ORG_FURNITURE_BANK_ID}`, function (
+  request(process.env.BASE_URL + `data/organizations/${ORG_FURNITURE_BANK_ID}`, function (
     error,
     response,
     body
@@ -203,7 +203,7 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
   request.post(
     {
       headers: {'content-type': 'application/json'},
-      url: `http://localhost:3000/data/organizations/${ORG_FURNITURE_BANK_ID}`,
+      url: process.env.BASE_URL + `data/organizations/${ORG_FURNITURE_BANK_ID}`,
       body: JSON.stringify({name: 'test name'}),
     },
     function (error, response, body) {
