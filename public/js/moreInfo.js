@@ -12,6 +12,80 @@ const organizationInfoTemplate =
 
 const acceptedCategoryCardTemplate = 
 `
+{{#each acceptedCategories}}
+<div class="card">
+  <h2>{{this.category._path.segments.[1]}}</h2>
 
+  <h3>Quality Check</h3>
+  <ul>
+    {{#each this.qualityGuidelines}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ul>
+
+  <h3>Instructions</h3>
+  <ol>
+    {{#each this.instructions}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ol>
+</div>
+{{/each}}
 `;
 
+
+const sampleOrg = {
+  name: 'Sample Org',
+  description: 'Description of such and such.',
+  email: 'info@sampleorg.org',
+  phone: 7138429771,
+  website: 'sampleorg.org',
+}
+
+const sampleAcceptedCategories = [
+  {
+  "qualityGuidelines":[
+    "No tears",
+    "No deep cuts and scratches",
+    "No stains that are note suppose to be there",
+    "No holes",
+    "No missing parts",
+    "No fire damage",
+    "No water damage",
+    "No pet dander or fur",
+    "No \"Home repairs\"",
+    "Gently used"
+  ],
+  "instructions":[
+    "Dop off your donation for free at our location",
+    "Schedule a pickup of your donation on our website "
+  ],
+  "category":{
+    "_path":{
+      "segments":[
+        "dev-Categories",
+        "furniture"
+      ]
+    }
+  } 
+}
+];
+
+window.onload = function () {
+  loadOrganizationInfo()
+  loadAcceptedCategories();
+};
+
+export function loadOrganizationInfo() {
+  fetch('http://localhost:3000/data/organization')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
+  const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);
+  document.getElementById("info-section").innerHTML = renderOrgInfo({organization: sampleOrg});
+}
+
+export function loadAcceptedCategories() {
+  const renderAcceptedCategories = Handlebars.compile(acceptedCategoryCardTemplate);
+  document.getElementById("categories-section").innerHTML = renderAcceptedCategories({acceptedCategories: sampleAcceptedCategories});
+}
