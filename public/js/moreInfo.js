@@ -33,44 +33,8 @@ const acceptedCategoryCardTemplate =
 {{/each}}
 `;
 
-
-const sampleOrg = {
-  name: 'Sample Org',
-  description: 'Description of such and such.',
-  email: 'info@sampleorg.org',
-  phone: 7138429771,
-  website: 'sampleorg.org',
-}
-
-const sampleAcceptedCategories = {
-  "1":
-  {
-  "qualityGuidelines":[
-    "No tears",
-    "No deep cuts and scratches",
-    "No stains that are note suppose to be there",
-    "No holes",
-    "No missing parts",
-    "No fire damage",
-    "No water damage",
-    "No pet dander or fur",
-    "No \"Home repairs\"",
-    "Gently used"
-  ],
-  "instructions":[
-    "Dop off your donation for free at our location",
-    "Schedule a pickup of your donation on our website "
-  ],
-  "category":{
-    "_path":{
-      "segments":[
-        "dev-Categories",
-        "furniture"
-      ]
-    }
-  } 
-}
-};
+const locationURL =  window.location.href.split("/");
+const organizationID = locationURL[locationURL.length - 1];
 
 window.onload = function () {
   loadOrganizationInfo()
@@ -78,24 +42,20 @@ window.onload = function () {
 };
 
 export function loadOrganizationInfo() {
-  const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);
-
-  fetch('http://localhost:3000/data/organizations/ZPPVSkSas3SXGcywo5aU')
+  const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);;
+  fetch(`/data/organizations/${organizationID}`)
   .then(response => response.json())
   .then(data => {
-    console.log(data);
+    document.getElementById("info-section").innerHTML = renderOrgInfo({organization: data});
   });
-  document.getElementById("info-section").innerHTML = renderOrgInfo({organization: sampleOrg});
+ 
 }
 
 export function loadAcceptedCategories() {
   const renderAcceptedCategories = Handlebars.compile(acceptedCategoryCardTemplate);
-
-  fetch('http://localhost:3000/data/acceptedcategories/organization/ZPPVSkSas3SXGcywo5aU')
+  fetch(`/data/acceptedcategories/organization/${organizationID}`)
   .then(response => response.json())
   .then(data => {
     document.getElementById("categories-section").innerHTML = renderAcceptedCategories({acceptedCategories: data});
   });
- 
- 
 }
