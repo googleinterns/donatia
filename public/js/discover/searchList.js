@@ -3,7 +3,7 @@ const searchCardTemplate = `
         <div class="search-card" id="{{this.id}}">
           <div class="search-left">
             <div class="search-dropoff-info">
-              <h1 class="search-title">{{this.title}}</h1>
+              <h1 class="search-title">{{this.name}}</h1>
               <h2 class="search-address">{{this.address}}</h2>
               <h2 class="search-phone">{{this.phone}}</h2>
             </div>
@@ -11,9 +11,9 @@ const searchCardTemplate = `
               {{#*inline "acceptanceSymbol"}}
                 {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
               {{/inline}}
-              <p>Drop off {{> acceptanceSymbol accepts=this.supportsDropOff}} </p>
-              <p>Mail in {{> acceptanceSymbol accepts=this.supportsMailIn}} </p>
-              <p>Pick up {{> acceptanceSymbol accepts=this.supportsPickUp}} </p>
+              <p>Drop off {{> acceptanceSymbol accepts=this.acceptsDropOff}} </p>
+              <p>Mail in {{> acceptanceSymbol accepts=this.acceptsMailIn}} </p>
+              <p>Pick up {{> acceptanceSymbol accepts=this.acceptsPickUp}} </p>
             </div>
           </div>
           <div class="search-right">

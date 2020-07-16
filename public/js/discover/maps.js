@@ -34,15 +34,15 @@ export function createMarkers(data) {
   data.forEach((organization) => {
     // Create the markers and attach to the map.
     const marker = new google.maps.Marker({
-      position: new google.maps.LatLng(organization.latitude, organization.longitude),
+      position: new google.maps.LatLng(organization.location._latitude, organization.location._longitude),
       map: map,
-      title: organization.title,
+      title: organization.name,
       id: organization.id,
     });
 
     // Create the marker info window.
     const markerWindow = new google.maps.InfoWindow({
-      content: organization.title,
+      content: organization.name,
     });
 
     // Select a marker and dispatch an event when a marker is hovered on/off.

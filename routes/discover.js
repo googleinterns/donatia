@@ -1,4 +1,5 @@
 const data = require('../testingOrganizations.json');
+const database = require('./data')
 
 exports.view = function (req, res) {
   res.render('discover', {
@@ -7,15 +8,14 @@ exports.view = function (req, res) {
   });
 };
 
-exports.getOrganizations = function (req, res) {
+exports.getOrganizations = async function (req, res) {
   const filter = req.params.filter;
 
   if (filter === 'all') {
     res.send(data.organizations);
   } else {
-    const filtered = data.organizations.filter((organization) =>
-      organization.categories.includes(filter)
-    );
+    const filtered = await database.getFilteredOrganizations(filter);
+    console.log(filtered)
     res.send(filtered);
   }
 };

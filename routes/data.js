@@ -34,21 +34,6 @@ async function getAcceptedCategoriesByRef(ref, fieldName) {
   return results;
 }
 
-exports.getFilteredOrganizations = async function (req, res) {
-  const categoryReference = await firestore.collection(resolveCollectionName('Categories')).doc(req.params.filter);
-  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, "category");
-
-  let organizations = {};
-
-  for(const key in acceptedCategories) {
-    const organization = acceptedCategories[key].organization;
-    organizations[key] = (await organization.get()).data();
-    console.log(organizations[key])
-  }
-
-  res.send(organizations);
-};
-
 /* Response Handlers */
 
 exports.acceptedCategoriesGet = async function (req, res) {
@@ -128,4 +113,21 @@ exports.categoriesGet = async function (req, res) {
     categories.push(doc.id);
   });
   res.send(categories);
+};
+
+exports.getFilteredOrganizations = async function (filter) {
+  const categoryReference = await firestore.collection(resolveCollectionName('Categories')).doc(filter);
+  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, "category");
+
+  let organizations = [];
+
+  for(const key in acceptedCategories) {
+    const organizationReference = acceptedCategories[key].organization;
+    const organization = (await organizationReference.get()).data();
+    organization["id"] = key;
+    
+    organizations.push(organization);
+  }
+
+  return organizations;
 };
