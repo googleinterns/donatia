@@ -1,4 +1,3 @@
-const data = require('../testingOrganizations.json');
 const database = require('./data')
 
 exports.view = function (req, res) {
@@ -11,10 +10,12 @@ exports.view = function (req, res) {
 exports.getOrganizations = async function (req, res) {
   const filter = req.params.filter.toLowerCase();
 
-  if (filter === 'all') {
-    res.send(data.organizations);
+  let filtered;
+
+  if (filter === "all") {
+    filtered = await database.getAllOrganizations(filter);
   } else {
-    const filtered = await database.getFilteredOrganizations(filter);
-    res.send(filtered);
+    filtered = await database.getFilteredOrganizations(filter);
   }
+  res.send(filtered);
 };

@@ -115,7 +115,26 @@ exports.categoriesGet = async function (req, res) {
   res.send(categories);
 };
 
+exports.getAllOrganizations = async function () {
+  const organizations = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .get();
+
+  let parsedOrganizations = [];
+  
+  organizations.docs.forEach((doc) => {
+    const data = doc.data();
+    data["id"] = doc.id;
+
+    parsedOrganizations.push(data);
+  });
+
+  return parsedOrganizations;
+}
+
 exports.getFilteredOrganizations = async function (filter) {
+  filter = filter.toLowerCase();
+
   const categoryReference = await firestore.collection(resolveCollectionName('Categories')).doc(filter);
   const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, "category");
 
