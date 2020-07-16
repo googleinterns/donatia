@@ -57,11 +57,20 @@ class Trie {
   }
 
   /**
+   * Removes special characters from a string.
+   * @param {string} input The raw string that may include special characters.
+   * @return {string} The string stripped of special characters.
+   */
+  clean(input) {
+    return input.toLowerCase().replace(/[^a-zA-Z ]/g, ' ');
+  }
+
+  /**
    * Adds the word to the Trie, creating new nodes for its prefixes if needed.
    * @param {string} word The word to insert into the tree.
    */
   insert(word) {
-    word = word.toLowerCase().replace(/[^a-zA-Z ]/g, '');
+    word = this.clean(word);
     let currentNode = this.root;
 
     // Iterate down the tree for each character in the word.
@@ -83,7 +92,7 @@ class Trie {
    * @return {array} The list of autocomplete suggestions.
    */
   find(prefix) {
-    prefix = prefix.toLowerCase().replace(/[^a-zA-Z ]/g, '');
+    prefix = this.clean(prefix);
     let currentNode = this.root;
 
     // Get the prefix's node in the tree.
