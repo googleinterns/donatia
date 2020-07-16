@@ -7,7 +7,7 @@
     "create-env-dev": "printenv > .env.dev",
     "create-env-prod": "printenv > .env.prod",
     "test": "NODE_ENV=development ./node_modules/.bin/mocha --exit",
-    "start": "node app.js",
+    "start": "NODE_ENV=production node app.js",
     "dev": "NODE_ENV=development node app.js",
     "lint": "eslint --fix .",
     "format": "prettier --write .",
@@ -30,8 +30,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
+<<<<<<< HEAD
+    "select2": "^4.0.13"
+=======
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0"
+>>>>>>> 8daf12a95d4216a1c4d2839b0420349bfcb0af31
   },
   "devDependencies": {
     "chai": "^4.2.0",

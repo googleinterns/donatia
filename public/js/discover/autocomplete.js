@@ -41,8 +41,8 @@ window.showAutocompleteOptions = function(input) {
     return;
   }
 
-  const node = categoryTrie.find(input);
-  const matches = categoryTrie.getChildWords(node);
+  const prefixNode = categoryTrie.find(input);
+  const matches = categoryTrie.getChildWords(prefixNode);
 
   // Render options on page.
   const renderCards = Handlebars.compile(autocompleteOptionTemplate);
