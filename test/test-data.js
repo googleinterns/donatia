@@ -186,26 +186,3 @@ it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCat
     }
   );
 });
-
-// it('something', function (done) {
-//   request.headers['user'] = {
-//       'id': '107880125086980314459',
-//       'displayName': 'Dan',
-//   };
-//   request(
-//     // {
-//     //   headers: {
-//     //     'user': {
-//     //       'id': '107880125086980314459',
-//     //       'displayName': 'Dan',
-//     //     }
-//     //   },
-//     //   url: `http://localhost:3000/data/member`,
-//     // },
-//     `http://localhost:3000/data/member`,
-//     function (error, response, body) {
-//       expect(response.statusCode).to.equal(200);
-//       done();
-//     }
-//   );
-// });
