@@ -1,12 +1,59 @@
-#content {
-  display: flex;
-  flex-direction: row;
+body {
+ height: 100vh;
+ margin: 0;
+ display: flex;
+ flex-direction: column;
 }
 
-#info-section {
+h1, p {
+  margin: 0;
+}
+
+#content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+#info-section, #categories-section {
   width: 50%;
+  padding: 5% 3%;
+}
+#info-section h1 {
+  font-size: 3rem;
+}
+
+#description {
+  line-height: 1.25rem;
+}
+
+#contact-section {
+  margin: 4% 0;
+}
+
+#contact-section p {
+  font-size: 1.25rem;
+  margin: 1% 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#contact-section ion-icon {
+  margin-right: 2%;
 }
 
 #categories-section {
-  width: 50%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  padding: 2% 6%;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 2% 0;
 }
