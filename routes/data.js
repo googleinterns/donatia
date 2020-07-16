@@ -114,3 +114,40 @@ exports.categoriesGet = async function (req, res) {
   });
   res.send(categories);
 };
+
+exports.member = async function (req, res) {
+  const memberData = req.user;
+  const userData = {
+    authenticationID: memberData.id,
+    name: memberData.displayName,
+  };
+  const memberSnapshot = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where("authenticationID", "==", memberData.id);
+
+  memberSnapshot.get().then(function (doc) {
+    if (doc.docs[0]) {
+      res.send(doc.docs[0].id);
+    } else {
+      firestore
+        .collection(resolveCollectionName('Members'))
+        .doc().set(userData)
+        .then(memberSnapshot.get().then(function (doc) {
+          res.send(doc.docs[0].id);
+        }));
+    }
+  });
+}
+
+exports.organizationMemberGet = async function (req, res) {
+  const organizationReference = firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.id);
+  
+  const member = await firestore
+    .collection(resolveCollectionName('MemberAssignments'))
+    .where('organization', '==', organizationReference)
+    .get();
+
+  res.send(member.docs[0]);
+}
