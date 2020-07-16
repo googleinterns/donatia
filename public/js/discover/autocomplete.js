@@ -1,4 +1,26 @@
-const options = ["clothing", "furniture", "food"]
+/* global Trie */
+/* global Handlebars */
+
+const categories = [
+  'canned food',
+  'produce',
+  'cleaning supplies',
+  'blankets',
+  'clothes',
+  'pet food',
+  'plastic bags',
+  'books',
+  'school supplies',
+  "children's toys",
+  'hair products',
+  'deoderant',
+  'soap',
+  'bottled drinks',
+  'computers',
+  'cars',
+];
+
+const categoryTrie = new Trie(categories);
 
 const autocompleteOptionTemplate = 
     `
@@ -9,22 +31,29 @@ const autocompleteOptionTemplate =
       {{/each}}
     `;
 
-function showAutocompleteOptions(input) {
+/**
+ * Displays autocomplete options under the search box as the user types.
+ * @param {string} input The text from the search box. 
+ */
+window.showAutocompleteOptions = function(input) {
   if(input === "") {
     document.getElementById("autocomplete-list").innerHTML = "";
     return;
   }
 
-  const matches = options.filter(option => {
-    return option.toLowerCase().includes(input.toLowerCase());
-  });
+  const node = categoryTrie.find(input);
+  const matches = categoryTrie.getChildWords(node);
 
   // Render options on page.
   const renderCards = Handlebars.compile(autocompleteOptionTemplate);
   document.getElementById("autocomplete-list").innerHTML = renderCards({matches: matches});
 }
 
-function setValueOnClick(value) {
+/**
+ * Sets the input value to the autocomplete option on select.
+ * @param {string} value The autocomplete option to be selected. 
+ */
+window.setValueOnClick = function(value) {
   document.getElementById("autocomplete-input").value = value;
   document.getElementById("autocomplete-list").innerHTML = "";
 }

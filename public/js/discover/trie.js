@@ -1,33 +1,3 @@
-const categories = [
-  'canned food',
-  'produce',
-  'cleaning supplies',
-  'blankets',
-  'clothes',
-  'pet food',
-  'plastic bags',
-  'books',
-  'school supplies',
-  "children's toys",
-  'hair products',
-  'deoderant',
-  'soap',
-  'bottled drinks',
-  'computers',
-  'cars',
-];
-
-const categoryTrie = new Trie(categories);
-
-/**
- * Gives autocomplete suggestions for item categories.
- * @param {string} input The prefix to base autocomplete suggestions on.
- * @return {array} The list of autocomplete suggestions.
- */
-window.getAutocompleteCategories = function getAutocompleteCategories(input) {
-  return categoryTrie.autocomplete(input);
-};
-
 /**
  * The individual nodes that make up the Trie.
  */
@@ -89,7 +59,7 @@ class Trie {
   /**
    * Gets the node containing the given prefix.
    * @param {string} prefix The prefix to find autcomplete suggestions for.
-   * @return {array} The list of autocomplete suggestions.
+   * @return {TrieNode} The node with that prefix.
    */
   find(prefix) {
     prefix = this.clean(prefix);
@@ -98,13 +68,13 @@ class Trie {
     // Get the prefix's node in the tree.
     for (let level = 0; level < prefix.length; level++) {
       // Store the ascii value of a character or, if it's a space, set index to 26.
-      const index = prefix.charAt(index) === ' ' ? prefix.charCodeAt(level) - 97 : 26;
+      const index = prefix.charAt(level) === ' ' ? 26 : prefix.charCodeAt(level) - 97;
 
       if (currentNode.children[index]) {
         currentNode = currentNode.children[index];
       } else {
         // If the prefix isn't in the tree, return no suggestions.
-        return [];
+        currentNode = undefined;
       }
     }
     return currentNode;
@@ -116,14 +86,15 @@ class Trie {
    * @return {array} The the complete words in the Trie under node.
    */
   getChildWords(node) {
+    if (!node) return [];
     let words = [];
 
     if (node.isWord) words.push(node.prefix);
 
-    for (let key = 0; key < node.children.length; key++) {
+    Object.keys(node.children).forEach((key) => {
       const childWords = this.getChildWords(node.children[key]);
       words = words.concat(childWords);
-    }
+    })
 
     return words;
   }

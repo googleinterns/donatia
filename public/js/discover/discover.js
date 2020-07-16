@@ -35,7 +35,6 @@ function updateSearchResults() {
   if (filter === "") filter = "all";
 
   // Requery and repopulate page data.
-  const filter = document.getElementById('search-dropdown').value;
   fetch('/discover/' + filter)
     .then((data) => data.json())
     .then((organizations) => {
