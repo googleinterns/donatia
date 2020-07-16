@@ -79,6 +79,12 @@ window.onload = function () {
 
 export function loadOrganizationInfo() {
   const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);
+
+  fetch('http://localhost:3000/data/organizations/ZPPVSkSas3SXGcywo5aU')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  });
   document.getElementById("info-section").innerHTML = renderOrgInfo({organization: sampleOrg});
 }
 
