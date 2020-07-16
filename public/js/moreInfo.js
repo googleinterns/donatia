@@ -42,7 +42,8 @@ const sampleOrg = {
   website: 'sampleorg.org',
 }
 
-const sampleAcceptedCategories = [
+const sampleAcceptedCategories = {
+  "1":
   {
   "qualityGuidelines":[
     "No tears",
@@ -69,7 +70,7 @@ const sampleAcceptedCategories = [
     }
   } 
 }
-];
+};
 
 window.onload = function () {
   loadOrganizationInfo()
@@ -77,15 +78,18 @@ window.onload = function () {
 };
 
 export function loadOrganizationInfo() {
-  fetch('http://localhost:3000/data/categories')
-  .then(response => response.json())
-  .then(data => console.log(data));
-
   const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);
   document.getElementById("info-section").innerHTML = renderOrgInfo({organization: sampleOrg});
 }
 
 export function loadAcceptedCategories() {
   const renderAcceptedCategories = Handlebars.compile(acceptedCategoryCardTemplate);
-  document.getElementById("categories-section").innerHTML = renderAcceptedCategories({acceptedCategories: sampleAcceptedCategories});
+
+  fetch('http://localhost:3000/data/acceptedcategories/organization/ZPPVSkSas3SXGcywo5aU')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("categories-section").innerHTML = renderAcceptedCategories({acceptedCategories: data});
+  });
+ 
+ 
 }
