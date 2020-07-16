@@ -10,13 +10,14 @@
   <div id="search">
     <div id="filter-container">
       <div id="filters">
-        <input 
+        <input
           id="autocomplete-input"
-          type="text" 
+          type="text"
           placeholder="Search for an item category"
-          oninput="showAutocompleteOptions(this.value)">
+          oninput="showAutocompleteOptions(this.value)"
+        />
         <a id="search-icon-container" onclick="updateSearchResults()">
-          <img id="search-icon" src="static/images/search-icon.svg"/>
+          <img id="search-icon" src="static/images/search-icon.svg" />
         </a>
       </div>
       <div id="autocomplete-list"></div>

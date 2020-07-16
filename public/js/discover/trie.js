@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 /**
  * The individual nodes that make up the Trie.
  */
@@ -94,7 +96,7 @@ class Trie {
     Object.keys(node.children).forEach((key) => {
       const childWords = this.getChildWords(node.children[key]);
       words = words.concat(childWords);
-    })
+    });
 
     return words;
   }

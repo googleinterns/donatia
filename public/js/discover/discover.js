@@ -24,10 +24,10 @@ function setPageEventListeners() {
   );
 
   // Search if the user presses "enter" in the search box.
-  const search = document.getElementById("autocomplete-input");
-  search.addEventListener("keydown", function (e) {
+  const search = document.getElementById('autocomplete-input');
+  search.addEventListener('keydown', function (e) {
     if (e.keyCode === 13) updateSearchResults();
-  })
+  });
 }
 
 /**
@@ -37,8 +37,8 @@ function updateSearchResults() {
   document.getElementById('search-list').innerHTML = '';
   removeAllMarkers();
 
-  let filter = document.getElementById("autocomplete-input").value;
-  if (filter === "") filter = "all";
+  let filter = document.getElementById('autocomplete-input').value;
+  if (filter === '') filter = 'all';
 
   // Requery and repopulate page data.
   fetch('/discover/' + filter)
