@@ -142,7 +142,7 @@ exports.member = async function (req, res) {
   });
 };
 
-exports.organizationMemberGet = async function (req, res) {
+exports.getOrganizationFromMember = async function (req, res) {
   const organizationReference = firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.id);
@@ -159,7 +159,7 @@ exports.organizationMemberGet = async function (req, res) {
   res.send(memberInfo.data());
 };
 
-exports.memberOrganizationGet = async function (req, res) {
+exports.getMemberFromOrganization = async function (req, res) {
   const memberReference = firestore.collection(resolveCollectionName('Members')).doc(req.params.id);
 
   const memberAssignments = await firestore
