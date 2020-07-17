@@ -161,6 +161,48 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   res.sendStatus(201);
 };
 
+exports.member = async function (req, res) {
+  const memberData = req.user;
+  const userData = {
+    authenticationID: memberData.id,
+    name: memberData.displayName,
+  };
+  const memberSnapshot = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', memberData.id);
+
+  memberSnapshot.get().then(function (doc) {
+    if (doc.docs[0]) {
+      res.send(doc.docs[0].id);
+    } else {
+      firestore
+        .collection(resolveCollectionName('Members'))
+        .doc()
+        .set(userData)
+        .then(
+          memberSnapshot.get().then(function (doc) {
+            res.send(doc.docs[0].id);
+          })
+        );
+    }
+  });
+};
+
+exports.organizationMemberGet = async function (req, res) {
+  const organizationReference = firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.id);
+
+  const memberAssignments = await firestore
+    .collection(resolveCollectionName('MemberAssignments'))
+    .where('organization', '==', organizationReference)
+    .get();
+
+  const memberReference = await memberAssignments.docs[0].data().member._path.segments;
+  const memberInfo = await firestore.collection(memberReference[0]).doc(memberReference[1]).get();
+  res.send(memberInfo.data());
+};
+
 exports.organizationsGet = async function (req, res) {
   const organization = await firestore
     .collection(resolveCollectionName('Organizations'))
