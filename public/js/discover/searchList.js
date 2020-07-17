@@ -12,7 +12,7 @@ const searchCardTemplate = `
                 {{#if accepts}} <span class="valid-symbol">✓</span> {{else}} <span class="invalid-symbol">✗</span> {{/if}}
               {{/inline}}
               <p>Drop off {{> acceptanceSymbol accepts=this.acceptsDropOff}} </p>
-              <p>Mail in {{> acceptanceSymbol accepts=this.acceptsMailIn}} </p>
+              <p>Ship in {{> acceptanceSymbol accepts=this.acceptsShipping}} </p>
               <p>Pick up {{> acceptanceSymbol accepts=this.acceptsPickUp}} </p>
             </div>
           </div>

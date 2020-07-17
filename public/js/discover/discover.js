@@ -34,9 +34,10 @@ function setSearchOptions() {
       for (const category of data) {
         const option = document.createElement('option');
 
+        // Replaces special characters with spaces.
         const parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
-        const capitalizedCategory =
-          parsedCategory.charAt(0).toUpperCase() + parsedCategory.slice(1);
+        const capitalizedCategory = capitalize(parsedCategory);
+          
 
         option.value = capitalizedCategory;
         option.innerText = capitalizedCategory;
@@ -45,6 +46,15 @@ function setSearchOptions() {
       // After the dropdown options are created, load the organizations.
       updateSearchResults();
     });
+}
+
+/**
+ * Capitalizes the given string.
+ * @param {string} input The uncapitalized string.
+ * @return {string} The capitalized string.
+ */
+function capitalize(input) {
+  return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 /**
