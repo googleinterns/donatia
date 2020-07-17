@@ -115,7 +115,7 @@ exports.categoriesGet = async function (req, res) {
   res.send(categories);
 };
 
-exports.member = async function (req, res) {
+exports.memberGet = async function (req, res) {
   const memberData = req.user;
   const userData = {
     authenticationID: memberData.id,
@@ -153,9 +153,7 @@ exports.getOrganizationFromMember = async function (req, res) {
     .get();
 
   const memberReference = await memberAssignments.docs[0].data().member._path.segments;
-
   const memberInfo = await firestore.collection(memberReference[0]).doc(memberReference[1]).get();
-
   res.send(memberInfo.data());
 };
 
@@ -175,4 +173,26 @@ exports.getMemberFromOrganization = async function (req, res) {
     .get();
 
   res.json({id: organizationInfo.id});
+};
+
+exports.organizationsGet = async function (req, res) {
+  const organization = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(`${req.params.id}`)
+    .get();
+
+  if (organization.exists) {
+    res.send(organization.data());
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+exports.organizationsPost = async function (req, res) {
+  const updatedOrganizationData = req.body;
+  await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(`${req.params.id}`)
+    .update(updatedOrganizationData);
+  res.sendStatus(201);
 };
