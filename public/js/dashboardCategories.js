@@ -4,9 +4,9 @@
  * @return {JSON} All category entry information.
  */
 async function getAllCategories() {
-  let responseData = await fetch('/data/categories');
-  let responseDataJSON = await responseData.json();
-  let allCategories = responseDataJSON.map(
+  const responseData = await fetch('/data/categories');
+  const responseDataJSON = await responseData.json();
+  const allCategories = responseDataJSON.map(
     function (category) {
       const obj = {
         ID: category,

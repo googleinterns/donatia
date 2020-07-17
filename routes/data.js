@@ -115,7 +115,7 @@ exports.categoriesGet = async function (req, res) {
   res.send(categories);
 };
 
-exports.member = async function (req, res) {
+exports.memberGet = async function (req, res) {
   const memberData = req.user;
   const userData = {
     authenticationID: memberData.id,
