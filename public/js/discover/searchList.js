@@ -78,11 +78,16 @@ export function selectCard(id = null, scroll = false) {
   }
 }
 
+/**
+ * Formats a raw phone number into a +# (###) ### - #### format.
+ * @param {string} number The phone number unformatted.
+ * @return {string} The formatted phone number.
+ */
 function formatPhoneNumber(number) {
   if (number.length == 9) {
-    return '(' + number.substring(0,3) + ') ' + number.substring(3,6) + ' ' + number.substring(0,3);
+    return '(' + number.substring(0,3) + ') ' + number.substring(3,6) + ' - ' + number.substring(0,3);
   } else if (number.length == 10) { 
-    return '+' + number.substring(0,1) + ' (' + number.substring(1,4) + ') ' + number.substring(4,7) + ' ' + number.substring(7,10);
+    return '+' + number.substring(0,1) + ' (' + number.substring(1,4) + ') ' + number.substring(4,7) + ' - ' + number.substring(7,10);
   } else {
     return number;
   }
