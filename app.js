@@ -87,7 +87,6 @@ app.get(
   data.acceptedCategoriesByFieldGet
 );
 app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
-app.get('/data/categories', data.categoriesGet);
 app.get('/data/member', data.getMember);
 app.get('/data/member/organization/:id', data.getOrganizationMember);
 app.get('/data/organizations/:id', data.organizationsGet);
