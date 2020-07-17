@@ -34,6 +34,52 @@ async function getAcceptedCategoriesByRef(ref, fieldName) {
   return results;
 }
 
+/**
+ * Fetches all organizations from the database.
+ * @return {array} The list of all organizations.
+ */
+exports.getAllOrganizations = async function () {
+  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
+
+  const parsedOrganizations = [];
+
+  organizations.docs.forEach((doc) => {
+    const data = doc.data();
+    data['id'] = doc.id;
+
+    parsedOrganizations.push(data);
+  });
+
+  return parsedOrganizations;
+};
+
+/**
+ * Queries the database for organizations with the given item category.
+ * @param {String} filter The category name to filter organizations by.
+ * @return {array} The list of filtered organizations.
+ */
+exports.getFilteredOrganizations = async function (filter) {
+  filter = filter.toLowerCase();
+
+  const categoryReference = await firestore
+    .collection(resolveCollectionName('Categories'))
+    .doc(filter);
+  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, 'category');
+
+  const organizations = [];
+
+  for (const key in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
+      const organizationReference = acceptedCategories[key].organization;
+      const organization = (await organizationReference.get()).data();
+      organization['id'] = key;
+
+      organizations.push(organization);
+    }
+  }
+  return organizations;
+};
+
 /* Response Handlers */
 
 exports.acceptedCategoriesGet = async function (req, res) {
@@ -113,43 +159,6 @@ exports.categoriesGet = async function (req, res) {
     categories.push(doc.id);
   });
   res.send(categories);
-};
-
-exports.getAllOrganizations = async function () {
-  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
-
-  const parsedOrganizations = [];
-
-  organizations.docs.forEach((doc) => {
-    const data = doc.data();
-    data['id'] = doc.id;
-
-    parsedOrganizations.push(data);
-  });
-
-  return parsedOrganizations;
-};
-
-exports.getFilteredOrganizations = async function (filter) {
-  filter = filter.toLowerCase();
-
-  const categoryReference = await firestore
-    .collection(resolveCollectionName('Categories'))
-    .doc(filter);
-  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, 'category');
-
-  const organizations = [];
-
-  for (const key in acceptedCategories) {
-    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
-      const organizationReference = acceptedCategories[key].organization;
-      const organization = (await organizationReference.get()).data();
-      organization['id'] = key;
-
-      organizations.push(organization);
-    }
-  }
-  return organizations;
 };
 
 exports.organizationsGet = async function (req, res) {
