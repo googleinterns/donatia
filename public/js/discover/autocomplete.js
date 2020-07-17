@@ -1,25 +1,6 @@
 /* global Trie */
 /* global Handlebars */
 
-const categories = [
-  'canned food',
-  'produce',
-  'cleaning supplies',
-  'blankets',
-  'clothing',
-  'pet food',
-  'plastic bags',
-  'books',
-  'school supplies',
-  "children's toys",
-  'hair products',
-  'deoderant',
-  'soap',
-  'bottled drinks',
-  'computers',
-  'cars',
-];
-
 const categoryTrie = new Trie(categories);
 
 const autocompleteOptionTemplate = `

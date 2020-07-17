@@ -32,10 +32,17 @@ require('./passport-auth');
 
 const app = express();
 
+// Handlebars helpers.
+var handlebarsConfig = handlebars.create({
+  helpers: {
+    json: function (data) { return JSON.stringify(data); },
+  }
+});
+
 // Environments configs.
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars());
+app.engine('handlebars', handlebarsConfig.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use(express.json());
@@ -87,7 +94,13 @@ app.get(
   data.acceptedCategoriesByFieldGet
 );
 app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
-app.get('/data/categories', data.categoriesGet);
+app.get('/data/member', data.member);
+app.get('/data/member/organization/:id', data.organizationMemberGet);
+app.get('/data/organizations/:id', data.organizationsGet);
+app.post('/data/organizations/:id', data.organizationsPost);
+app.get('/data/categories', (req, res) => {
+  data.getCategories().then((categories) => res.send(categories));
+});
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
