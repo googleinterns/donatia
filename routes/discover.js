@@ -1,9 +1,13 @@
 const database = require('./data');
 
-exports.view = function (req, res) {
+exports.view = async function (req, res) {
+  const categories = await database.getCategories();
+  const parsedCategories = parseCategories(categories);
+
   res.render('discover', {
     MAPS_KEY: process.env.MAPS_KEY,
     user: req.user,
+    categories: parsedCategories,
   });
 };
 
@@ -19,3 +23,22 @@ exports.getOrganizations = async function (req, res) {
   }
   res.send(filtered);
 };
+
+/**
+ * Parses the categories into a human-readable format for the discover page.
+ * @param {array} categories The categories as saved in the database.
+ * @return {array} The categories parsed into a human-readable format.
+ */
+function parseCategories(categories) {
+  const parsed = [];
+  for (let category of categories) {
+    // Replaces special characters with spaces.
+    category = category.replace(/[^a-zA-Z0-9]/g, ' ');
+
+    // Capitalize all categories
+    category = category.charAt(0).toUpperCase() + category.slice(1);
+
+    parsed.push(category);
+  }
+  return parsed;
+}

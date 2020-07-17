@@ -80,6 +80,21 @@ exports.getFilteredOrganizations = async function (filter) {
   return organizations;
 };
 
+/**
+ * Gets all categories from the firestore database.
+ * @return {array} The list of categories.
+ */
+async function getCategories() {
+  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
+  const categories = [];
+  snapshot.forEach((doc) => {
+    categories.push(doc.id);
+  });
+  return categories;
+}
+
+exports.getCategories = getCategories;
+
 /* Response Handlers */
 
 exports.acceptedCategoriesGet = async function (req, res) {
@@ -150,15 +165,6 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
     .doc()
     .set(newAcceptedCategoryData);
   res.sendStatus(201);
-};
-
-exports.categoriesGet = async function (req, res) {
-  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
-  const categories = [];
-  snapshot.forEach((doc) => {
-    categories.push(doc.id);
-  });
-  res.send(categories);
 };
 
 exports.organizationsGet = async function (req, res) {

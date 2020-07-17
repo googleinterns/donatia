@@ -6,7 +6,11 @@
 
 <div id="discover">
   <div id="search">
-    <select id="search-dropdown" onchange="updateSearchResults()"></select>
+    <select id="search-dropdown" onchange="updateSearchResults()">
+      {{#each categories}}
+      <option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </select>
     <div id="search-list"></div>
   </div>
   <div id="map"></div>

@@ -7,7 +7,7 @@ import {initMap, createMarkers, selectMarker, removeAllMarkers} from './maps.js'
  */
 window.onload = function () {
   initMap();
-  setSearchOptions();
+  updateSearchResults();
   setPageEventListeners();
 };
 
@@ -21,39 +21,6 @@ function setPageEventListeners() {
   discoverPage.addEventListener('markerChange', (event) =>
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
-}
-
-/**
- * Sets the search dropdown options to the categories from the database.
- */
-function setSearchOptions() {
-  const select = document.getElementById('search-dropdown');
-  fetch('/data/categories')
-    .then((data) => data.json())
-    .then((data) => {
-      for (const category of data) {
-        const option = document.createElement('option');
-
-        // Replaces special characters with spaces.
-        const parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
-        const capitalizedCategory = capitalize(parsedCategory);
-
-        option.value = capitalizedCategory;
-        option.innerText = capitalizedCategory;
-        select.appendChild(option);
-      }
-      // After the dropdown options are created, load the organizations.
-      updateSearchResults();
-    });
-}
-
-/**
- * Capitalizes the given string.
- * @param {string} input The uncapitalized string.
- * @return {string} The capitalized string.
- */
-function capitalize(input) {
-  return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 /**
