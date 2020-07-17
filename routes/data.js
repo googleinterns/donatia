@@ -115,7 +115,7 @@ exports.categoriesGet = async function (req, res) {
   res.send(categories);
 };
 
-exports.memberGet = async function (req, res) {
+exports.getMember = async function (req, res) {
   const memberData = req.user;
   const userData = {
     authenticationID: memberData.id,
@@ -142,7 +142,7 @@ exports.memberGet = async function (req, res) {
   });
 };
 
-exports.organizationMemberGet = async function (req, res) {
+exports.getOrganizationMember = async function (req, res) {
   const organizationReference = firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.id);
