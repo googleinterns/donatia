@@ -127,7 +127,7 @@ exports.member = async function (req, res) {
 
   memberSnapshot.get().then(function (doc) {
     if (doc.docs[0]) {
-      res.send(doc.docs[0].id);
+      res.json({id: doc.docs[0].id});
     } else {
       firestore
         .collection(resolveCollectionName('Members'))
@@ -135,7 +135,7 @@ exports.member = async function (req, res) {
         .set(userData)
         .then(
           memberSnapshot.get().then(function (doc) {
-            res.send(doc.docs[0].id);
+            res.json({id: doc.docs[0].id});
           })
         );
     }
@@ -157,4 +157,22 @@ exports.organizationMemberGet = async function (req, res) {
   const memberInfo = await firestore.collection(memberReference[0]).doc(memberReference[1]).get();
 
   res.send(memberInfo.data());
+};
+
+exports.memberOrganizationGet = async function (req, res) {
+  const memberReference = firestore.collection(resolveCollectionName('Members')).doc(req.params.id);
+
+  const memberAssignments = await firestore
+    .collection(resolveCollectionName('MemberAssignments'))
+    .where('member', '==', memberReference)
+    .get();
+
+  const organizationReference = await memberAssignments.docs[0].data().organization._path.segments;
+
+  const organizationInfo = await firestore
+    .collection(organizationReference[0])
+    .doc(organizationReference[1])
+    .get();
+
+  res.json({id: organizationInfo.id});
 };
