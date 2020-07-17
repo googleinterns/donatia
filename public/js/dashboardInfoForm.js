@@ -1,34 +1,30 @@
 /* global google*/
 
 /**
- * @param {string} id Organization's unique database ID
- * @return {JSON} An organization's information
+ * Gets the information of the organization assigned to the current user.
+ * @return {JSON} An organization's information.
  */
-function getFormInfo(id) {
-  // TODO: Get organization's information from database
-  const info = {
-    ID: 'google1',
-    name: 'Google',
-    placesID: '12345 Road Drive',
-    description: 'a great place to find non profits!',
-    phone: '1234567890',
-    email: 'org@google.com',
-    websiteURL: 'google.com',
-  };
-  return info;
+async function getFormInfo() {
+  const memberData = await (await fetch('/data/member')).json();
+  const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
+  const orgInfo = await (await fetch(`/data/organizations/${organizationData.id}`)).json();
+  return orgInfo;
 }
 
 /*
  * Pre-populates the input elements of the form.
  */
 window.onload = async function populateForm() {
-  const formJSON = await getFormInfo('{{id}}');
-  document.getElementById('organization-name').value = formJSON.name;
-  document.getElementById('organization-description').value = formJSON.description;
-  document.getElementById('organization-address').value = formJSON.placesID;
-  document.getElementById('organization-phone').value = formJSON.phone;
-  document.getElementById('organization-website').value = formJSON.websiteURL;
-  document.getElementById('organization-email').value = formJSON.email;
+  const formJSON = await getFormInfo();
+  document.getElementById('name').value = formJSON.name;
+  document.getElementById('description').value = formJSON.description;
+  document.getElementById('address').value = formJSON.placesID;
+  document.getElementById('phone').value = formJSON.phone;
+  document.getElementById('website').value = formJSON.website;
+  document.getElementById('email').value = formJSON.email;
+  document.getElementById('acceptsDropOff').checked = formJSON.acceptsDropOff;
+  document.getElementById('acceptsPickup').checked = formJSON.acceptsPickUp;
+  document.getElementById('acceptsShipping').checked = formJSON.acceptsShipping;
 };
 
 /*
