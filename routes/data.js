@@ -189,10 +189,13 @@ exports.organizationsGet = async function (req, res) {
 };
 
 exports.organizationsPost = async function (req, res) {
-  const updatedOrganizationData = req.body;
+  const newOrgData = req.body;
+  newOrgData.acceptsDropOff = newOrgData.acceptsDropOff ? true : false;
+  newOrgData.acceptsPickUp = newOrgData.acceptsPickUp ? true : false;
+  newOrgData.acceptsShipping = newOrgData.acceptsShipping ? true : false;
   await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(`${req.params.id}`)
-    .update(updatedOrganizationData);
-  res.sendStatus(201);
+    .update(newOrgData);
+  res.redirect('/dashboard');
 };

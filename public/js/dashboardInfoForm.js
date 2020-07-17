@@ -8,7 +8,7 @@ async function getFormInfo() {
   const memberData = await (await fetch('/data/member')).json();
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
   const orgInfo = await (await fetch(`/data/organizations/${organizationData.id}`)).json();
-  return orgInfo;
+  return { ...orgInfo, orgID: organizationData.id };
 }
 
 /*
@@ -23,8 +23,9 @@ window.onload = async function populateForm() {
   document.getElementById('website').value = formJSON.website;
   document.getElementById('email').value = formJSON.email;
   document.getElementById('acceptsDropOff').checked = formJSON.acceptsDropOff;
-  document.getElementById('acceptsPickup').checked = formJSON.acceptsPickUp;
+  document.getElementById('acceptsPickUp').checked = formJSON.acceptsPickUp;
   document.getElementById('acceptsShipping').checked = formJSON.acceptsShipping;
+  document.getElementById('org-info-form').action = `/data/organizations/${formJSON.orgID}`;
 };
 
 /*
