@@ -1,3 +1,5 @@
+/* global Handlebars */
+
 const organizationInfoTemplate =
 `
 <h1>{{organization.name}}</h1>
@@ -41,6 +43,9 @@ window.onload = function () {
   loadAcceptedCategories();
 };
 
+/**
+ * Fetc organization info and populate the template
+ */
 export function loadOrganizationInfo() {
   const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);;
   fetch(`/data/organizations/${organizationID}`)
@@ -51,6 +56,9 @@ export function loadOrganizationInfo() {
  
 }
 
+/**
+ * Fetch the all accepted categories of organization and populate template
+ */
 export function loadAcceptedCategories() {
   const renderAcceptedCategories = Handlebars.compile(acceptedCategoryCardTemplate);
   fetch(`/data/acceptedcategories/organization/${organizationID}`)
