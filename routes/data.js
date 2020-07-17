@@ -84,16 +84,10 @@ exports.getFilteredOrganizations = async function (filter) {
  * Gets all categories from the firestore database.
  * @return {array} The list of categories.
  */
-async function getCategories() {
+exports.getCategories = async function () {
   const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
-  const categories = [];
-  snapshot.forEach((doc) => {
-    categories.push(doc.id);
-  });
-  return categories;
-}
-
-exports.getCategories = getCategories;
+  return snapshot.docs.map((doc) => doc.id);
+};
 
 /* Response Handlers */
 
@@ -187,9 +181,4 @@ exports.organizationsPost = async function (req, res) {
     .doc(`${req.params.id}`)
     .update(updatedOrganizationData);
   res.sendStatus(201);
-};
-
-exports.categoriesGet = async function (req, res) {
-  const categories = await getCategories();
-  res.send(categories);
 };
