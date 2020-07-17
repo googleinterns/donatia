@@ -15,23 +15,23 @@ const organizationInfoTemplate =
 const acceptedCategoryCardTemplate = 
 `
 {{#each acceptedCategories}}
-<div class="card">
-  <h2>{{this.category._path.segments.[1]}}</h2>
+  <div class="card">
+    <h2>{{this.category._path.segments.[1]}}</h2>
 
-  <h3>Quality Check</h3>
-  <ul>
-    {{#each this.qualityGuidelines}}
-      <li>{{this}}</li>
-    {{/each}}
-  </ul>
+    <h3>Quality Check</h3>
+    <ul>
+      {{#each this.qualityGuidelines}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
 
-  <h3>Instructions</h3>
-  <ol>
-    {{#each this.instructions}}
-      <li>{{this}}</li>
-    {{/each}}
-  </ol>
-</div>
+    <h3>Instructions</h3>
+    <ol>
+      {{#each this.instructions}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ol>
+  </div>
 {{/each}}
 `;
 
