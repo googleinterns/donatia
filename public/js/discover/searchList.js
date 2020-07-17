@@ -36,7 +36,6 @@ const searchCardTemplate = `
  */
 export function createOrganizationCards(organizations) {
   // Parse organization phone numbers.
-  console.log(organizations);
   organizations.forEach((organization) => {
     organization.phone = formatPhoneNumber(organization.phone);
   });
