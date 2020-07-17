@@ -6,14 +6,13 @@
 async function getAllCategories() {
   const responseData = await fetch('/data/categories');
   const responseDataJSON = await responseData.json();
-  const allCategories = responseDataJSON.map(
-    function (category) {
-      const obj = {
-        ID: category,
-        name: category.replace(/-/g, " "),
-      }
-      return obj;
-    });
+  const allCategories = responseDataJSON.map(function (category) {
+    const obj = {
+      ID: category,
+      name: category.replace(/-/g, ' '),
+    };
+    return obj;
+  });
   return allCategories;
 }
 
