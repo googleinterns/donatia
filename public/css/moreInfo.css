@@ -1,11 +1,12 @@
 body {
- height: 100vh;
- margin: 0;
- display: flex;
- flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-h1, p {
+h1,
+p {
   margin: 0;
 }
 
@@ -16,7 +17,8 @@ h1, p {
   overflow: hidden;
 }
 
-#info-section, #categories-section {
+#info-section,
+#categories-section {
   width: 50%;
   padding: 5% 3%;
 }
