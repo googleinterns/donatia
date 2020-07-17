@@ -4,7 +4,7 @@
  * Gets the information of the organization assigned to the current user.
  * @return {JSON} An organization's information.
  */
-async function getFormInfo() {
+async function getOrganizationInfo() {
   const memberData = await (await fetch('/data/member')).json();
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
   const orgInfo = await (await fetch(`/data/organizations/${organizationData.id}`)).json();
@@ -15,7 +15,7 @@ async function getFormInfo() {
  * Pre-populates the input elements of the form.
  */
 window.onload = async function populateForm() {
-  const formJSON = await getFormInfo();
+  const formJSON = await getOrganizationInfo();
   document.getElementById('name').value = formJSON.name;
   document.getElementById('description').value = formJSON.description;
   document.getElementById('address').value = formJSON.address;
