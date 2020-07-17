@@ -37,7 +37,6 @@ function setSearchOptions() {
         // Replaces special characters with spaces.
         const parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
         const capitalizedCategory = capitalize(parsedCategory);
-          
 
         option.value = capitalizedCategory;
         option.innerText = capitalizedCategory;
