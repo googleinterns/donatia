@@ -188,3 +188,8 @@ exports.organizationsPost = async function (req, res) {
     .update(updatedOrganizationData);
   res.sendStatus(201);
 };
+
+exports.categoriesGet = async function (req, res) {
+  const categories = await getCategories();
+  res.send(categories);
+};

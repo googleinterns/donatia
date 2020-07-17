@@ -89,6 +89,7 @@ app.get(
 app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
 app.get('/data/organizations/:id', data.organizationsGet);
 app.post('/data/organizations/:id', data.organizationsPost);
+app.get('/data/categories', data.categoriesGet);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
