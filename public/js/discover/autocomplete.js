@@ -1,5 +1,4 @@
-/* global Trie */
-/* global Handlebars */
+/* global Trie Handlebars categories */
 
 const categoryTrie = new Trie(categories);
 

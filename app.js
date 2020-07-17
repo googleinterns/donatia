@@ -33,10 +33,12 @@ require('./passport-auth');
 const app = express();
 
 // Handlebars helpers.
-var handlebarsConfig = handlebars.create({
+const handlebarsConfig = handlebars.create({
   helpers: {
-    json: function (data) { return JSON.stringify(data); },
-  }
+    json: function (data) {
+      return JSON.stringify(data);
+    },
+  },
 });
 
 // Environments configs.
