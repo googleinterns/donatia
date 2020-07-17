@@ -22,7 +22,7 @@ exports.getDatabase = () => firestore;
  * @param {String} fieldName
  * @return {Array} array of all AcceptedCategories that match the reference
  */
-async function getAcceptedGategoriesByRef(ref, fieldName) {
+async function getAcceptedCategoriesByRef(ref, fieldName) {
   const snapshot = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .where(fieldName, '==', ref)
@@ -33,6 +33,61 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
   });
   return results;
 }
+
+/**
+ * Fetches all organizations from the database.
+ * @return {array} The list of all organizations.
+ */
+exports.getAllOrganizations = async function () {
+  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
+
+  const parsedOrganizations = [];
+
+  organizations.docs.forEach((doc) => {
+    const data = doc.data();
+    data['id'] = doc.id;
+
+    parsedOrganizations.push(data);
+  });
+
+  return parsedOrganizations;
+};
+
+/**
+ * Queries the database for organizations with the given item category.
+ * @param {String} filter The category name to filter organizations by.
+ * @return {array} The list of filtered organizations.
+ */
+exports.getFilteredOrganizations = async function (filter) {
+  filter = filter.toLowerCase();
+
+  const categoryReference = await firestore
+    .collection(resolveCollectionName('Categories'))
+    .doc(filter);
+  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, 'category');
+
+  const organizations = [];
+
+  for (const key in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
+      const organizationReference = acceptedCategories[key].organization;
+      const organization = (await organizationReference.get()).data();
+      organization['id'] = key;
+
+      organizations.push(organization);
+    }
+  }
+  return organizations;
+};
+
+/**
+ * Gets all categories from the firestore database.
+ * @return {array} The list of categories.
+ */
+exports.getCategories = async function () {
+  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
+  return snapshot.docs.map((doc) => doc.id);
+};
 
 /* Response Handlers */
 
@@ -85,7 +140,7 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
     fieldReference = firestore.collection(resolveCollectionName('Categories')).doc(req.params.id);
   }
 
-  const results = await getAcceptedGategoriesByRef(fieldReference, req.params.field);
+  const results = await getAcceptedCategoriesByRef(fieldReference, req.params.field);
 
   res.send(results);
 };
@@ -104,15 +159,6 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
     .doc()
     .set(newAcceptedCategoryData);
   res.sendStatus(201);
-};
-
-exports.categoriesGet = async function (req, res) {
-  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
-  const categories = [];
-  snapshot.forEach((doc) => {
-    categories.push(doc.id);
-  });
-  res.send(categories);
 };
 
 exports.member = async function (req, res) {

@@ -7,10 +7,9 @@
 <div id="discover">
   <div id="search">
     <select id="search-dropdown" onchange="updateSearchResults()">
-      <option value="all">All</option>
-      <option value="clothing">Clothing</option>
-      <option value="furniture">Furniture</option>
-      <option value="food">Food</option>
+      {{#each categories}}
+      <option value="{{this}}">{{this}}</option>
+      {{/each}}
     </select>
     <div id="search-list"></div>
   </div>
