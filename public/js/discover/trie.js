@@ -69,15 +69,9 @@ class Trie {
 
     // Get the prefix's node in the tree.
     for (let level = 0; level < prefix.length; level++) {
-      // Store the ascii value of a character or, if it's a space, set index to 26.
+      // Get the node at that character's ascii value, if it exists.
       const index = prefix.charAt(level) === ' ' ? 26 : prefix.charCodeAt(level) - 97;
-
-      if (currentNode.children[index]) {
-        currentNode = currentNode.children[index];
-      } else {
-        // If the prefix isn't in the tree, return no suggestions.
-        currentNode = undefined;
-      }
+      currentNode = currentNode.children[index] ? currentNode.children[index] : undefined;
     }
     return currentNode;
   }
