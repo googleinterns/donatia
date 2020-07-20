@@ -84,20 +84,16 @@ export function selectCard(id = null, scroll = false) {
  */
 function formatPhoneNumber(number) {
   if (number.length == 9) {
-    return (
-      '(' + number.substring(0, 3) + ') ' + number.substring(3, 6) + ' - ' + number.substring(0, 3)
-    );
+    const areaCode = number.substring(0, 3);
+    const exchangeCode = number.substring(3, 6);
+    const lineNumber = number.substring(6, 9);
+    return `(${areaCode})-${exchangeCode}-${lineNumber}`;
   } else if (number.length == 10) {
-    return (
-      '+' +
-      number.substring(0, 1) +
-      ' (' +
-      number.substring(1, 4) +
-      ') ' +
-      number.substring(4, 7) +
-      ' - ' +
-      number.substring(7, 10)
-    );
+    const countryCode = number.substring(0, 1);
+    const areaCode = number.substring(1, 4);
+    const exchangeCode = number.substring(4, 7);
+    const lineNumber = number.substring(7, 10);
+    return `+${countryCode} (${areaCode})-${exchangeCode}-${lineNumber}`;
   } else {
     return number;
   }
