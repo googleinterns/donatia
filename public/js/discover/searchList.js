@@ -90,10 +90,7 @@ function formatPhoneNumber(number) {
     return `(${areaCode})-${exchangeCode}-${lineNumber}`;
   } else if (number.length == 10) {
     const countryCode = number.substring(0, 1);
-    const areaCode = number.substring(1, 4);
-    const exchangeCode = number.substring(4, 7);
-    const lineNumber = number.substring(7, 10);
-    return `+${countryCode} (${areaCode})-${exchangeCode}-${lineNumber}`;
+    return `+${countryCode} ${formatPhoneNumber(number.substring(1, 10))}`;
   } else {
     return number;
   }
