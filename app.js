@@ -70,6 +70,9 @@ const discover = require('./routes/discover');
 app.get('/discover', discover.view);
 app.get('/discover/:filter', discover.getOrganizations);
 
+const moreInfo = require('./routes/moreInfo');
+app.get('/discover/organization/:id', moreInfo.view);
+
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
 
