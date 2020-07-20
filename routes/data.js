@@ -161,7 +161,7 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   res.sendStatus(201);
 };
 
-exports.member = async function (req, res) {
+exports.getMember = async function (req, res) {
   const memberData = req.user;
   const userData = {
     authenticationID: memberData.id,
@@ -172,9 +172,12 @@ exports.member = async function (req, res) {
     .where('authenticationID', '==', memberData.id);
 
   memberSnapshot.get().then(function (doc) {
+    // Check if a member with the specified authentication ID exists.
     if (doc.docs[0]) {
+      // If the member is found, send their ID.
       res.send(doc.docs[0].id);
     } else {
+      // Otherwise, create a new member and return their newly created ID.
       firestore
         .collection(resolveCollectionName('Members'))
         .doc()
@@ -188,7 +191,7 @@ exports.member = async function (req, res) {
   });
 };
 
-exports.organizationMemberGet = async function (req, res) {
+exports.getOrganizationMember = async function (req, res) {
   const organizationReference = firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.id);

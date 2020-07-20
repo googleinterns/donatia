@@ -3,22 +3,15 @@
 /**
  * @return {JSON} All category entry information.
  */
-function getAllCategories() {
-  // TODO: Get all categories from database.
-  const allCategories = [
-    {
-      ID: 'clothing',
-      name: 'Clothing',
-    },
-    {
-      ID: 'food',
-      name: 'Food',
-    },
-    {
-      ID: 'house-supplies',
-      name: 'Household Supplies',
-    },
-  ];
+async function getAllCategories() {
+  const responseData = await fetch('/data/categories');
+  const responseDataJSON = await responseData.json();
+  const allCategories = responseDataJSON.map(function (category) {
+    return {
+      ID: category,
+      name: category.replace(/-/g, ' '),
+    };
+  });
   return allCategories;
 }
 
