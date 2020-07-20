@@ -175,7 +175,7 @@ exports.getMember = async function (req, res) {
     // Check if a member with the specified authentication ID exists.
     if (doc.docs[0]) {
       // If the member is found, send their ID.
-      res.send({id: doc.docs[0].id});
+      res.json({id: doc.docs[0].id});
     } else {
       // Otherwise, create a new member and return their newly created ID.
       firestore
@@ -184,7 +184,7 @@ exports.getMember = async function (req, res) {
         .set(userData)
         .then(
           memberSnapshot.get().then(function (doc) {
-            res.send({id: doc.docs[0].id});
+            res.json({id: doc.docs[0].id});
           })
         );
     }
@@ -238,10 +238,13 @@ exports.organizationsGet = async function (req, res) {
 };
 
 exports.organizationsPost = async function (req, res) {
-  const updatedOrganizationData = req.body;
+  const newOrgData = req.body;
+  newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
+  newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
+  newOrgData.acceptsShipping = !!newOrgData.acceptsShipping;
   await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(`${req.params.id}`)
-    .update(updatedOrganizationData);
-  res.sendStatus(201);
+    .update(newOrgData);
+  res.redirect('/dashboard');
 };
