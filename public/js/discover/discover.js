@@ -1,5 +1,5 @@
 import {createOrganizationCards, selectCard} from './searchList.js';
-import {initMap, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
+import {initMap, setLocationInfo, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
 
 /**
  * When the page loads, fetches initial organization data and render it
@@ -34,6 +34,11 @@ function updateSearchResults() {
   const filter = document.getElementById('search-dropdown').value;
   fetch('/discover/' + filter)
     .then((data) => data.json())
+    .then((organizations) => {
+      organizations.forEach(setLocationInfo, organizations);
+      console.log(organizations);
+      return organizations;
+    })
     .then((organizations) => {
       createOrganizationCards(organizations);
       createMarkers(organizations);

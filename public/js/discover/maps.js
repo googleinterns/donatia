@@ -94,3 +94,19 @@ export function removeAllMarkers() {
   for (const marker of markers) marker.marker.setMap(null);
   markers = [];
 }
+
+/**
+ * Sets the address and coordinates of an organization using PlaceId.
+ * @param {JSON} organization The JSON list of organizations.
+ */
+export function setLocationInfo(organization) {
+  console.log('setting info');
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({placeId: organization.placeId}, function (results, status) {
+    if (status === 'OK' && results[0]) {
+      organization.address = results[0].formatted_address;
+      organization.coordinates = results[0].geometry.location;
+      console.log('with geo info', organization);
+    }
+  });
+}
