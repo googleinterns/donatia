@@ -239,9 +239,9 @@ exports.organizationsGet = async function (req, res) {
 
 exports.organizationsPost = async function (req, res) {
   const newOrgData = req.body;
-  newOrgData.acceptsDropOff = newOrgData.acceptsDropOff ? true : false;
-  newOrgData.acceptsPickUp = newOrgData.acceptsPickUp ? true : false;
-  newOrgData.acceptsShipping = newOrgData.acceptsShipping ? true : false;
+  newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
+  newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
+  newOrgData.acceptsShipping = !!newOrgData.acceptsShipping;
   await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(`${req.params.id}`)
