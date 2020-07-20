@@ -22,7 +22,7 @@ exports.getDatabase = () => firestore;
  * @param {String} fieldName
  * @return {Array} array of all AcceptedCategories that match the reference
  */
-async function getAcceptedGategoriesByRef(ref, fieldName) {
+async function getAcceptedCategoriesByRef(ref, fieldName) {
   const snapshot = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .where(fieldName, '==', ref)
@@ -33,6 +33,61 @@ async function getAcceptedGategoriesByRef(ref, fieldName) {
   });
   return results;
 }
+
+/**
+ * Fetches all organizations from the database.
+ * @return {array} The list of all organizations.
+ */
+exports.getAllOrganizations = async function () {
+  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
+
+  const parsedOrganizations = [];
+
+  organizations.docs.forEach((doc) => {
+    const data = doc.data();
+    data['id'] = doc.id;
+
+    parsedOrganizations.push(data);
+  });
+
+  return parsedOrganizations;
+};
+
+/**
+ * Queries the database for organizations with the given item category.
+ * @param {String} filter The category name to filter organizations by.
+ * @return {array} The list of filtered organizations.
+ */
+exports.getFilteredOrganizations = async function (filter) {
+  filter = filter.toLowerCase();
+
+  const categoryReference = await firestore
+    .collection(resolveCollectionName('Categories'))
+    .doc(filter);
+  const acceptedCategories = await getAcceptedCategoriesByRef(categoryReference, 'category');
+
+  const organizations = [];
+
+  for (const key in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
+      const organizationReference = acceptedCategories[key].organization;
+      const organization = (await organizationReference.get()).data();
+      organization['id'] = key;
+
+      organizations.push(organization);
+    }
+  }
+  return organizations;
+};
+
+/**
+ * Gets all categories from the firestore database.
+ * @return {array} The list of categories.
+ */
+exports.getCategories = async function () {
+  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
+  return snapshot.docs.map((doc) => doc.id);
+};
 
 /* Response Handlers */
 
@@ -85,7 +140,7 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
     fieldReference = firestore.collection(resolveCollectionName('Categories')).doc(req.params.id);
   }
 
-  const results = await getAcceptedGategoriesByRef(fieldReference, req.params.field);
+  const results = await getAcceptedCategoriesByRef(fieldReference, req.params.field);
 
   res.send(results);
 };
@@ -106,13 +161,67 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   res.sendStatus(201);
 };
 
-exports.categoriesGet = async function (req, res) {
-  const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
-  const categories = [];
-  snapshot.forEach((doc) => {
-    categories.push(doc.id);
+exports.getMember = async function (req, res) {
+  const memberData = req.user;
+  const userData = {
+    authenticationID: memberData.id,
+    name: memberData.displayName,
+  };
+  const memberSnapshot = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', memberData.id);
+
+  memberSnapshot.get().then(function (doc) {
+    // Check if a member with the specified authentication ID exists.
+    if (doc.docs[0]) {
+      // If the member is found, send their ID.
+      res.send({id: doc.docs[0].id});
+    } else {
+      // Otherwise, create a new member and return their newly created ID.
+      firestore
+        .collection(resolveCollectionName('Members'))
+        .doc()
+        .set(userData)
+        .then(
+          memberSnapshot.get().then(function (doc) {
+            res.send({id: doc.docs[0].id});
+          })
+        );
+    }
   });
-  res.send(categories);
+};
+
+exports.getOrganizationFromMember = async function (req, res) {
+  const organizationReference = firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.id);
+
+  const memberAssignments = await firestore
+    .collection(resolveCollectionName('MemberAssignments'))
+    .where('organization', '==', organizationReference)
+    .get();
+
+  const memberReference = await memberAssignments.docs[0].data().member._path.segments;
+  const memberInfo = await firestore.collection(memberReference[0]).doc(memberReference[1]).get();
+  res.send(memberInfo.data());
+};
+
+exports.getMemberFromOrganization = async function (req, res) {
+  const memberReference = firestore.collection(resolveCollectionName('Members')).doc(req.params.id);
+
+  const memberAssignments = await firestore
+    .collection(resolveCollectionName('MemberAssignments'))
+    .where('member', '==', memberReference)
+    .get();
+
+  const organizationReference = await memberAssignments.docs[0].data().organization._path.segments;
+
+  const organizationInfo = await firestore
+    .collection(organizationReference[0])
+    .doc(organizationReference[1])
+    .get();
+
+  res.json({id: organizationInfo.id});
 };
 
 exports.memberGet = async function (req, res) {
