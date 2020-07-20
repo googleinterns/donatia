@@ -32,7 +32,7 @@ export function initMap() {
  */
 export function createMarkers(data) {
   data.forEach((organization) => {
-    console.log(organization.coordinates)
+    console.log(organization.coordinates);
     // Create the markers and attach to the map.
     const marker = new google.maps.Marker({
       position: organization.coordinates,
@@ -95,20 +95,21 @@ export function removeAllMarkers() {
 
 /**
  * Sets the address and coordinates of an organization using PlaceId.
- * @param {JSON} organization The organization to set location information for.
+ * @param {JSON} organization The organization to set location info for.
+ * @return {Promise} A promise for setting the location info upon the API response.
  */
 export function setLocationInfo(organization) {
   const geocoder = new google.maps.Geocoder();
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     geocoder.geocode({placeId: organization.placeID}, function (results, status) {
       if (status === 'OK' && results[0]) {
         organization.address = results[0].formatted_address;
         organization.coordinates = results[0].geometry.location;
         resolve();
       } else {
-        reject(new Error('Couldnt\'t find the location for geocoding ' + organization.placeID));
+        reject(new Error("Couldnt't find the location for geocoding " + organization.placeID));
       }
-    })
-  })
+    });
+  });
 }

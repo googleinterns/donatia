@@ -34,7 +34,7 @@ function updateSearchResults() {
   const filter = document.getElementById('search-dropdown').value;
   fetch('/discover/' + filter)
     .then((data) => data.json())
-    .then(async organizations => {
+    .then(async (organizations) => {
       for (const organization of organizations) {
         await setLocationInfo(organization);
       }
