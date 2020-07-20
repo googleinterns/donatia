@@ -34,9 +34,10 @@ function updateSearchResults() {
   const filter = document.getElementById('search-dropdown').value;
   fetch('/discover/' + filter)
     .then((data) => data.json())
-    .then((organizations) => {
-      organizations.forEach(setLocationInfo, organizations);
-      console.log(organizations);
+    .then(async organizations => {
+      for (const organization of organizations) {
+        await setLocationInfo(organization);
+      }
       return organizations;
     })
     .then((organizations) => {
