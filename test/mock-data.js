@@ -7,12 +7,12 @@ const CTG_ID_CLOTHES = 'clothes';
 const CTG_ID_CLEANING_SUPPLIES = 'cleaning-supplies';
 const CTG_ID_HYGIENE_PRODUCTS = 'hygiene-products';
 const MOCK_CATEGORIES = {
-  [CTG_ID_FURNITURE]: {name:CTG_ID_FURNITURE}, 
-  [CTG_ID_FOOD]: {name:CTG_ID_FOOD},
-  [CTG_ID_CLOTHES]: {name:CTG_ID_CLOTHES},
-  [CTG_ID_CLEANING_SUPPLIES]: {name:CTG_ID_CLEANING_SUPPLIES}, 
-  [CTG_ID_HYGIENE_PRODUCTS]: {name:CTG_ID_HYGIENE_PRODUCTS },
-}
+  [CTG_ID_FURNITURE]: {name: CTG_ID_FURNITURE},
+  [CTG_ID_FOOD]: {name: CTG_ID_FOOD},
+  [CTG_ID_CLOTHES]: {name: CTG_ID_CLOTHES},
+  [CTG_ID_CLEANING_SUPPLIES]: {name: CTG_ID_CLEANING_SUPPLIES},
+  [CTG_ID_HYGIENE_PRODUCTS]: {name: CTG_ID_HYGIENE_PRODUCTS},
+};
 
 // Organization
 const ORG_ID_WOMEN_SHELTER = 'ORG100';
@@ -22,8 +22,7 @@ const ORG_ID_FOOD_BANK = 'ORG400';
 
 const ORG_WOMEN_SHELTER = {
   name: 'Women Shelter',
-  description:
-    'Shelter for women and children affected by violence.',
+  description: 'Shelter for women and children affected by violence.',
   location: {lng: 10, lat: 25},
   placesID: 'PLACESID_1',
   email: 'info@womenshelter.org',
@@ -32,12 +31,11 @@ const ORG_WOMEN_SHELTER = {
   acceptsDropOff: true,
   acceptsPickUp: false,
   acceptsShipping: true,
-}
+};
 
 const ORG_HOMELESS_SHELTER = {
   name: 'Homeless Shelter',
-  description:
-    'Our missions is to make sure everyone can have a home.',
+  description: 'Our missions is to make sure everyone can have a home.',
   location: {lng: 45, lat: 30},
   placesID: 'PLACESID_2',
   email: 'info@homelessshelter.org',
@@ -46,12 +44,11 @@ const ORG_HOMELESS_SHELTER = {
   acceptsDropOff: true,
   acceptsPickUp: false,
   acceptsShipping: false,
-}
+};
 
 const ORG_FURNITURE_BANK = {
   name: 'Furniture Bank',
-  description:
-    'Giving furniture a new life and giving life to homes',
+  description: 'Giving furniture a new life and giving life to homes',
   location: {lng: 60, lat: 75},
   placesID: 'PLACESID_3',
   email: 'info@furniturebank.org',
@@ -60,12 +57,11 @@ const ORG_FURNITURE_BANK = {
   acceptsDropOff: true,
   acceptsPickUp: true,
   acceptsShipping: false,
-}
+};
 
 const ORG_FOOD_BANK = {
   name: 'Food Bank',
-  description:
-    'Our mission is to make sure that no one goes hungry',
+  description: 'Our mission is to make sure that no one goes hungry',
   location: {lng: 15, lat: 55},
   placesID: 'PLACESID_4',
   email: 'info@foodbank.org',
@@ -74,13 +70,13 @@ const ORG_FOOD_BANK = {
   acceptsDropOff: true,
   acceptsPickUp: true,
   acceptsShipping: false,
-}
+};
 
 const MOCK_ORGANIZATIONS = {
- [ORG_ID_WOMEN_SHELTER]: ORG_WOMEN_SHELTER, 
- [ORG_ID_HOMELESS_SHELTER]: ORG_HOMELESS_SHELTER, 
- [ORG_ID_FURNITURE_BANK]: ORG_FURNITURE_BANK, 
- [ORG_ID_FOOD_BANK]: ORG_FOOD_BANK, 
+  [ORG_ID_WOMEN_SHELTER]: ORG_WOMEN_SHELTER,
+  [ORG_ID_HOMELESS_SHELTER]: ORG_HOMELESS_SHELTER,
+  [ORG_ID_FURNITURE_BANK]: ORG_FURNITURE_BANK,
+  [ORG_ID_FOOD_BANK]: ORG_FOOD_BANK,
 };
 
 // Accepted Categories
@@ -94,48 +90,28 @@ const ACC_CTG_ID_FOOD_BANK_FOR_FOOD = 'ACCCTG600';
 const ACC_CTG_WOMEN_SHELTER_FOR_HYGIENE = {
   organization: `dev-Organization/${ORG_ID_WOMEN_SHELTER}`,
   category: `dev-Categories/${CTG_ID_HYGIENE_PRODUCTS}`,
-  qualityGuidelines: [
-    'Must be in new condition, no used items',
-    'No damaged packaging'
-  ],
-  instructions: [
-    'Package mutliple items in bag or box',
-    'Drop off donation at our locaiton',
-  ],
+  qualityGuidelines: ['Must be in new condition, no used items', 'No damaged packaging'],
+  instructions: ['Package mutliple items in bag or box', 'Drop off donation at our locaiton'],
 };
 
 const ACC_CTG_WOMEN_SHELTER_FOR_CLOTHES = {
   organization: `dev-Organization/${ORG_ID_WOMEN_SHELTER}`,
   category: `dev-Categories/${CTG_ID_CLOTHES}`,
-  qualityGuidelines: [
-    'Must be in new condition, no used items',
-  ],
-  instructions: [
-    'Drop off donations at our location',
-  ],
+  qualityGuidelines: ['Must be in new condition, no used items'],
+  instructions: ['Drop off donations at our location'],
 };
 
 const ACC_CTG_HOMELESS_SHELTER_FOR_CLOTHES = {
-    organization: `dev-Organization/${ORG_HOMELESS_SHELTER}`,
+  organization: `dev-Organization/${ORG_HOMELESS_SHELTER}`,
   category: `dev-Categories/${CTG_ID_CLOTHES}`,
-  qualityGuidelines: [
-    'Gently used',
-    'No stains',
-    'No rips or tears',
-  ],
-  instructions: [
-    'Make sure all clothes are washed',
-    'Drop off donations at our location',
-  ],
+  qualityGuidelines: ['Gently used', 'No stains', 'No rips or tears'],
+  instructions: ['Make sure all clothes are washed', 'Drop off donations at our location'],
 };
 
 const ACC_CTG_HOMELESS_SHELTER_FOR_HYGIENE = {
   organization: `dev-Organization/${ORG_ID_HOMELESS_SHELTER}`,
   category: `dev-Categories/${CTG_ID_HYGIENE_PRODUCTS}`,
-  qualityGuidelines: [
-    'Must be new',
-    'No damaged packaging'
-  ],
+  qualityGuidelines: ['Must be new', 'No damaged packaging'],
   instructions: [
     'Organize donation items into bags or boxes',
     'Drop off your items at our location',
@@ -145,11 +121,7 @@ const ACC_CTG_HOMELESS_SHELTER_FOR_HYGIENE = {
 const ACC_CTG_FURNITURE_BANK_FOR_FURNITURE = {
   organization: `dev-Organization/${ORG_ID_FURNITURE_BANK}`,
   category: `dev-Categories/${ORG_ID_FURNITURE_BANK}`,
-  qualityGuidelines: [
-    'No holes, scratches, or cuts',
-    'No fire damage',
-    'No pet hair',
-  ],
+  qualityGuidelines: ['No holes, scratches, or cuts', 'No fire damage', 'No pet hair'],
   instructions: [
     'Drop off your items at our location',
     'Schedule a free pickup of you items on our website',
@@ -159,23 +131,18 @@ const ACC_CTG_FURNITURE_BANK_FOR_FURNITURE = {
 const ACC_CTG_FOOD_BANK_FOR_FOOD = {
   organization: `dev-Organization/${ORG_ID_FOOD_BANK}`,
   category: `dev-Categories/${CTG_ID_FOOD}`,
-  qualityGuidelines: [
-    'No damage to packaging',
-    'Not expired'
-  ],
-  instructions: [
-    'Drop off donation items at our location'
-  ],
+  qualityGuidelines: ['No damage to packaging', 'Not expired'],
+  instructions: ['Drop off donation items at our location'],
 };
 
 const MOCK_ACCEPTED_CATEGORIES = {
-   [ACC_CTG_ID_WOMEN_SHELTER_FOR_HYGIENE]: ACC_CTG_WOMEN_SHELTER_FOR_HYGIENE,
-   [ACC_CTG_ID_WOMEN_SHELTER_FOR_CLOTHES]: ACC_CTG_WOMEN_SHELTER_FOR_CLOTHES,
-   [ACC_CTG_ID_HOMELESS_SHELTER_FOR_CLOTHES]: ACC_CTG_HOMELESS_SHELTER_FOR_CLOTHES,
-   [ACC_CTG_ID_HOMELESS_SHELTER_FOR_HYGIENE]: ACC_CTG_HOMELESS_SHELTER_FOR_HYGIENE,
-   [ACC_CTG_ID_FURNITURE_BANK_FOR_FURNITURE]: ACC_CTG_FURNITURE_BANK_FOR_FURNITURE,
-   [ACC_CTG_ID_FOOD_BANK_FOR_FOOD]: ACC_CTG_FOOD_BANK_FOR_FOOD,
-}
+  [ACC_CTG_ID_WOMEN_SHELTER_FOR_HYGIENE]: ACC_CTG_WOMEN_SHELTER_FOR_HYGIENE,
+  [ACC_CTG_ID_WOMEN_SHELTER_FOR_CLOTHES]: ACC_CTG_WOMEN_SHELTER_FOR_CLOTHES,
+  [ACC_CTG_ID_HOMELESS_SHELTER_FOR_CLOTHES]: ACC_CTG_HOMELESS_SHELTER_FOR_CLOTHES,
+  [ACC_CTG_ID_HOMELESS_SHELTER_FOR_HYGIENE]: ACC_CTG_HOMELESS_SHELTER_FOR_HYGIENE,
+  [ACC_CTG_ID_FURNITURE_BANK_FOR_FURNITURE]: ACC_CTG_FURNITURE_BANK_FOR_FURNITURE,
+  [ACC_CTG_ID_FOOD_BANK_FOR_FOOD]: ACC_CTG_FOOD_BANK_FOR_FOOD,
+};
 
 // Mock Database Initialization
 const firestoreMock = new FirestoreMock();
@@ -184,29 +151,29 @@ const firestoreMock = new FirestoreMock();
  * Populates mock database with sample data
  */
 exports.populateMockDatabase = () => {
-  for(CTG_ID in MOCK_CATEGORIES) {
-    firestoreMock
-      .collection('dev-Categories')
-      .doc(CTG_ID)
-      .set(MOCK_CATEGORIES[CTG_ID]);
-  }
-
-  for(ORG_ID in MOCK_ORGANIZATIONS) {
-    firestoreMock
-      .collection('dev-Organizations')
-      .doc(ORG_ID)
-      .set(MOCK_ORGANIZATIONS[ORG_ID]);
-  }
-
-  for(ACC_CTG_ID in MOCK_ACCEPTED_CATEGORIES) {
-    firestoreMock
-      .collection('dev-AcceptedCategories')
-      .doc(ACC_CTG_ID)
-      .set(MOCK_ACCEPTED_CATEGORIES[ACC_CTG_ID]);
+  for (const CTG_ID in MOCK_CATEGORIES) {
+    if (CTG_ID in MOCK_CATEGORIES) {
+      firestoreMock.collection('dev-Categories').doc(CTG_ID).set(MOCK_CATEGORIES[CTG_ID]);
     }
-}
+  }
 
-//exports
+  for (const ORG_ID in MOCK_ORGANIZATIONS) {
+    if (ORG_ID in MOCK_ORGANIZATIONS) {
+      firestoreMock.collection('dev-Organizations').doc(ORG_ID).set(MOCK_ORGANIZATIONS[ORG_ID]);
+    }
+  }
+
+  for (const ACC_CTG_ID in MOCK_ACCEPTED_CATEGORIES) {
+    if (ACC_CTG_ID in MOCK_ACCEPTED_CATEGORIES) {
+      firestoreMock
+        .collection('dev-AcceptedCategories')
+        .doc(ACC_CTG_ID)
+        .set(MOCK_ACCEPTED_CATEGORIES[ACC_CTG_ID]);
+    }
+  }
+};
+
+// exports
 exports.CTG_ID_FURNITURE = CTG_ID_FURNITURE;
 exports.CTG_ID_FOOD = CTG_ID_FOOD;
 exports.CTG_ID_CLOTHES = CTG_ID_CLOTHES;
@@ -226,7 +193,3 @@ exports.ACC_CTG_ID_FURNITURE_BANK_FOR_FURNITURE = ACC_CTG_ID_FURNITURE_BANK_FOR_
 exports.ACC_CTG_ID_FOOD_BANK_FOR_FOOD = ACC_CTG_ID_FOOD_BANK_FOR_FOOD;
 exports.MOCK_ACCEPTED_CATEGORIES = MOCK_ACCEPTED_CATEGORIES;
 exports.firestoreMock = firestoreMock;
-
-
-
-

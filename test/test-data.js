@@ -20,17 +20,20 @@ it('GET Request /data/categories : Get all categories', function (done) {
 
 it('GET Request /data/acceptedcategories/:id : get an AcceptedCategory', function (done) {
   request(
-    process.env.BASE_URL + `data/acceptedcategories/${mockData.ACC_CTG_ID_WOMEN_SHELTER_FOR_HYGIENE}`,
+    process.env.BASE_URL +
+      `data/acceptedcategories/${mockData.ACC_CTG_ID_WOMEN_SHELTER_FOR_HYGIENE}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(200);
-      expect(JSON.parse(response.body)).to.deep.equal(mockData.MOCK_ACCEPTED_CATEGORIES[mockData.ACC_CTG_ID_WOMEN_SHELTER_FOR_HYGIENE]);
+      expect(JSON.parse(response.body)).to.deep.equal(
+        mockData.MOCK_ACCEPTED_CATEGORIES[mockData.ACC_CTG_ID_WOMEN_SHELTER_FOR_HYGIENE]
+      );
       done();
     }
   );
 });
 
 it('POST Request /data/acceptedcategories/:id : update qualityGuidelines field', function (done) {
-  const updatedGuidelines = {qualityGuidelines: ['gently used', 'no damage']}; 
+  const updatedGuidelines = {qualityGuidelines: ['gently used', 'no damage']};
   request.post(
     {
       headers: {'content-type': 'application/json'},
@@ -55,7 +58,8 @@ it('POST Request /data/acceptedcategories/:id : update qualityGuidelines field',
 
 it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', function (done) {
   request.delete(
-    process.env.BASE_URL + `data/acceptedcategories/${mockData.ACC_CTG_ID_HOMELESS_SHELTER_FOR_HYGIENE}`,
+    process.env.BASE_URL +
+      `data/acceptedcategories/${mockData.ACC_CTG_ID_HOMELESS_SHELTER_FOR_HYGIENE}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(200);
     }
@@ -63,7 +67,8 @@ it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', f
 
   // Check that AcceptedCategory has been deleted
   request(
-    process.env.BASE_URL + `data/acceptedcategories/${mockData.ACC_CTG_ID_HOMELESS_SHELTER_FOR_HYGIENE}`,
+    process.env.BASE_URL +
+      `data/acceptedcategories/${mockData.ACC_CTG_ID_HOMELESS_SHELTER_FOR_HYGIENE}`,
     function (error, response, body) {
       expect(response.statusCode).to.equal(404);
       done();
@@ -72,8 +77,9 @@ it('DELETE Request /data/acceptedcategories/:id : delete an AcceptedCategory', f
 });
 
 it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCategory', function (done) {
-  const oldCollectionLength = Object.keys(mockData.firestoreMock._db._collections['dev-AcceptedCategories'])
-    .length;
+  const oldCollectionLength = Object.keys(
+    mockData.firestoreMock._db._collections['dev-AcceptedCategories']
+  ).length;
   const newAcceptedCategory = {
     category: `dev-Categories/${mockData.CTG_ID_CLEANING_SUPPLIES}`,
     qualityGuidelines: ['Not toxic', 'No damaged packaging'],
@@ -81,21 +87,20 @@ it('POST Request /data/acceptedcategories/organization/:id : add new AcceptedCat
   };
   const requestOptions = {
     headers: {'content-type': 'application/json'},
-    url: process.env.BASE_URL + `data/acceptedcategories/organization/${mockData.ORG_ID_WOMEN_SHELTER}`,
+    url:
+      process.env.BASE_URL +
+      `data/acceptedcategories/organization/${mockData.ORG_ID_WOMEN_SHELTER}`,
     body: JSON.stringify(newAcceptedCategory),
-  }
+  };
 
-  request.post(
-    requestOptions,
-    function (error, response, body) {
-      expect(response.statusCode).to.equal(201);
-      const currentCollectionLength = Object.keys(
-        mockData.firestoreMock._db._collections['dev-AcceptedCategories']
-      ).length;
-      expect(currentCollectionLength - oldCollectionLength).to.equal(1);
-      done();
-    }
-  );
+  request.post(requestOptions, function (error, response, body) {
+    expect(response.statusCode).to.equal(201);
+    const currentCollectionLength = Object.keys(
+      mockData.firestoreMock._db._collections['dev-AcceptedCategories']
+    ).length;
+    expect(currentCollectionLength - oldCollectionLength).to.equal(1);
+    done();
+  });
 });
 
 it('GET Request /data/organizations/:id : Get an Organization', function (done) {
@@ -105,7 +110,9 @@ it('GET Request /data/organizations/:id : Get an Organization', function (done) 
     body
   ) {
     expect(response.statusCode).to.equal(200);
-    expect(JSON.parse(response.body)).to.deep.equal(mockData.MOCK_ORGANIZATIONS[mockData.ORG_ID_FOOD_BANK]);
+    expect(JSON.parse(response.body)).to.deep.equal(
+      mockData.MOCK_ORGANIZATIONS[mockData.ORG_ID_FOOD_BANK]
+    );
     done();
   });
 });
@@ -116,16 +123,16 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
     headers: {'content-type': 'application/json'},
     url: process.env.BASE_URL + `data/organizations/${mockData.ORG_ID_FOOD_BANK}`,
     body: JSON.stringify({name: newName}),
-  }
-  request.post(
-   requestOptions,
-    function (error, response, body) {
-      expect(response.statusCode).to.equal(201);
-      expect(
-        mockData.firestoreMock.collection('dev-Organizations').doc(`${mockData.ORG_ID_FOOD_BANK}`).get().data()
-          .name
-      ).to.deep.equal(newName);
-      done();
-    }
-  );
+  };
+  request.post(requestOptions, function (error, response, body) {
+    expect(response.statusCode).to.equal(201);
+    expect(
+      mockData.firestoreMock
+        .collection('dev-Organizations')
+        .doc(`${mockData.ORG_ID_FOOD_BANK}`)
+        .get()
+        .data().name
+    ).to.deep.equal(newName);
+    done();
+  });
 });
