@@ -35,6 +35,11 @@ const searchCardTemplate = `
  * @param {JSON} organizations The JSON of organization data to add to the page.
  */
 export function createOrganizationCards(organizations) {
+  // Parse organization phone numbers.
+  organizations.forEach((organization) => {
+    organization.phone = formatPhoneNumber(organization.phone);
+  });
+
   // Generate the cards.
   const renderCards = Handlebars.compile(searchCardTemplate);
   document.getElementById('search-list').innerHTML = renderCards({organizations: organizations});
@@ -69,5 +74,24 @@ export function selectCard(id = null, scroll = false) {
     } else {
       card.classList.remove('selected');
     }
+  }
+}
+
+/**
+ * Formats a raw phone number into a +# (###) ### - #### format.
+ * @param {string} number The phone number unformatted.
+ * @return {string} The formatted phone number.
+ */
+function formatPhoneNumber(number) {
+  if (number.length == 9) {
+    const areaCode = number.substring(0, 3);
+    const exchangeCode = number.substring(3, 6);
+    const lineNumber = number.substring(6, 9);
+    return `(${areaCode})-${exchangeCode}-${lineNumber}`;
+  } else if (number.length == 10) {
+    const countryCode = number.substring(0, 1);
+    return `+${countryCode} ${formatPhoneNumber(number.substring(1, 10))}`;
+  } else {
+    return number;
   }
 }
