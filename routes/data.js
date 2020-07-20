@@ -73,6 +73,7 @@ exports.getFilteredOrganizations = async function (filter) {
       const organizationReference = acceptedCategories[key].organization;
       const organization = (await organizationReference.get()).data();
       organization['id'] = key;
+      organization['categories'] = await getOrganizationCategories(organizationReference);
 
       organizations.push(organization);
     }
@@ -88,6 +89,24 @@ exports.getCategories = async function () {
   const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
   return snapshot.docs.map((doc) => doc.id);
 };
+
+/**
+ * Retrieves the list of categories accepted by an organization.
+ * @param {Reference} organizationReference The Firestore reference to an organization.
+ * @returns {Array} The list of accepted categories by the organization.
+ */
+async function getOrganizationCategories(organizationReference) {
+  const categories = [];
+  const acceptedCategories = await getAcceptedCategoriesByRef(organizationReference, 'organization');
+  for (const key in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
+      const categoryReference = acceptedCategories[key].category;
+      const category = acceptedCategories[key].category.id;
+      categories.push(category)
+    }
+  }
+  return categories;
+}
 
 /* Response Handlers */
 
