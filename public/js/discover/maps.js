@@ -105,10 +105,8 @@ export function setLocationInfo(organization) {
       if (status === 'OK' && results[0]) {
         organization.address = results[0].formatted_address;
         organization.coordinates = results[0].geometry.location;
-        resolve();
-      } else {
-        reject(new Error("Couldnt't find the location for geocoding " + organization.placeID));
       }
+      resolve();
     });
   });
 }
