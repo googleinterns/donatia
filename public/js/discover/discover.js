@@ -1,5 +1,5 @@
 import {createOrganizationCards, selectCard} from './searchList.js';
-import {initMap, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
+import {initMap, setLocationInfo, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
 
 /**
  * When the page loads, fetches initial organization data and render it
@@ -43,6 +43,10 @@ function updateSearchResults() {
   // Requery and repopulate page data.
   fetch('/discover/' + filter)
     .then((data) => data.json())
+    .then(async (organizations) => {
+      await Promise.all(organizations.map(setLocationInfo));
+      return organizations;
+    })
     .then((organizations) => {
       createOrganizationCards(organizations);
       createMarkers(organizations);
