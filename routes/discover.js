@@ -31,9 +31,9 @@ exports.getOrganizations = async function (req, res) {
  */
 function parseCategories(categories) {
   const parsed = {};
-  for (let category of categories) {
+  for (const category of categories) {
     // Replaces special characters with spaces.
-    let parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
+    const parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
 
     // parsed[category] = parsedCategory;
     parsed[parsedCategory] = category;
