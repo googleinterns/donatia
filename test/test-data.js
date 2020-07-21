@@ -125,7 +125,7 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
     body: JSON.stringify({name: newName}),
   };
   request.post(requestOptions, function (error, response, body) {
-    expect(response.statusCode).to.equal(201);
+    expect(response.statusCode).to.equal(302);
     expect(
       mockData.firestoreMock
         .collection('dev-Organizations')
