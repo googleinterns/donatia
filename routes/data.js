@@ -266,3 +266,29 @@ exports.getFavorites = async function(req, res) {
   });
   res.send(results);
 }
+
+exports.getFavoriteOfMember = async function(req, res) {
+  const memberQuery  = await firestore
+  .collection(resolveCollectionName('Members'))
+  .where('authenticationID', '==', req.user.id)
+  .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+  
+    /* 
+    * If organization is a favorite of the member then this query should
+    * return a result of one entry in Favorites
+    */
+    const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
+
+    const isFavoriteOfMember = favoritesSnapshot.docs.length == 1;
+    res.send(isFavoriteOfMember);
+}
+
