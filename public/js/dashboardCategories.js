@@ -3,53 +3,38 @@
 /**
  * @return {JSON} All category entry information.
  */
-function getAllCategories() {
-  // TODO: Get all categories from database.
-  const allCategories = [
-    {
-      ID: 'clothing',
-      name: 'Clothing',
-    },
-    {
-      ID: 'food',
-      name: 'Food',
-    },
-    {
-      ID: 'house-supplies',
-      name: 'Household Supplies',
-    },
-  ];
+async function getAllCategories() {
+  const responseData = await fetch('/data/categories');
+  const responseDataJSON = await responseData.json();
+  const allCategories = responseDataJSON.map(function (category) {
+    return {
+      ID: category,
+      name: category.replace(/-/g, ' '),
+    };
+  });
   return allCategories;
 }
 
 /**
- * @param {string} organizationID ID of organization requesting categories.
+ * Gets all categories that have been accepted by the currently logged in organization.
  * @return {JSON} Object containing all categories used by an organization.
  */
-function getAllAcceptedCategories(organizationID) {
-  // TODO: Get an organizations accepted cagtegories from database
-  const allAcceptedCategories = [
-    {
-      name: 'Clothes',
-      ID: 'org-name-clothes',
-      instructions: [
-        'review quality checklist',
-        'unlock donation locker (code: 5248)',
-        'place in donation locker',
-      ],
-      quality: ['no holes', 'gently used', 'washed recently'],
-    },
-    {
-      name: 'Food',
-      ID: 'org-name-food',
-      instructions: [
-        'review quality checklist',
-        'place in plastic/paper bag',
-        'bring inside during open hours',
-      ],
-      quality: ['expiration date > 6 months from current date', 'no holes', 'labels on cans'],
-    },
-  ];
+async function getAllAcceptedCategories() {
+  const memberData = await (await fetch('/data/member')).json();
+  const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
+  const responseData = await (
+    await fetch(`/data/acceptedcategories/organization/${organizationData.id}`)
+  ).json();
+  const responseDataJSONArray = await Object.values(responseData);
+  const allAcceptedCategories = responseDataJSONArray.map(function (organizationCategory) {
+    const categoryName = organizationCategory.category._path.segments[1];
+    return {
+      name: categoryName.replace(/-/g, ' '),
+      ID: `${categoryName}-category-card`,
+      instructions: organizationCategory.instructions,
+      quality: organizationCategory.qualityGuidelines,
+    };
+  });
   return allAcceptedCategories;
 }
 
@@ -65,6 +50,7 @@ window.addCategory = function addCategory() {
  * @param {string} categoryID ID of the category to be deleted.
  */
 window.deleteCategory = function deleteCategory(categoryID) {
+  // TODO: Delete category from database.
   console.log('deleted' + categoryID);
 };
 

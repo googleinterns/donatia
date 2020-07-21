@@ -5,40 +5,47 @@
 ></script>
 <script src="/static/js/dashboardInfoForm.js"></script>
 
-<form method="post">
+<form id="org-info-form" method="post">
   <div id="form-container">
-    <label for="organization-name">Name</label><br />
-    <input disabled required type="text" id="organization-name" name="organization-name" /><br />
+    <label for="name">Name</label><br />
+    <input disabled required type="text" id="name" name="name" /><br />
 
-    <label for="organization-description">Description</label><br />
-    <input
-      disabled
-      required
-      type="text"
-      id="organization-description"
-      name="organization-description"
-    /><br />
+    <label for="description">Description</label><br />
+    <input disabled required type="text" id="description" name="description" />
+    <br />
 
-    <label for="organization-address">Address</label><br />
-    <input
-      disabled
-      required
-      type="text"
-      id="organization-address"
-      name="organization-address"
-    /><br />
+    <label for="address">Address</label><br />
+    <input disabled required type="text" id="address" name="address" /><br />
+    <input type="hidden" id="addressID" name="addressID" />
 
-    <label for="organization-phone">Phone</label><br />
-    <input disabled type="number" id="organization-phone" name="organization-phone" /><br />
+    <label for="phone">Phone</label><br />
+    <input disabled type="number" id="phone" name="phone" /><br />
 
-    <label for="organization-website">Website</label><br />
-    <input disabled type="url" id="organization-website" name="organization-website" /><br />
+    <label for="website">Website</label><br />
+    <input disabled type="url" id="website" name="website" /><br />
 
-    <label for="organization-email">Email</label><br />
-    <input disabled required type="email" id="organization-email" name="organization-email" /><br />
+    <label for="email">Email</label><br />
+    <input disabled required type="email" id="email" name="email" /><br />
+
+    <input disabled type="checkbox" id="acceptsDropOff" name="acceptsDropOff" />
+    <label for="acceptsDropOff">Accepts drop off donations</label><br />
+
+    <input disabled type="checkbox" id="acceptsPickUp" name="acceptsPickUp" />
+    <label for="acceptsPickUp">Available to pick up donations</label><br />
+
+    <input disabled type="checkbox" id="acceptsShipping" name="acceptsShipping" />
+    <label for="acceptsShipping">Accepts shipped donations</label><br />
   </div>
+  {{#if editable}}
   <button>Submit</button>
+  {{/if}}
 </form>
+
+{{#unless editable}}
+<a href="/dashboard/edit">
+  <button>Edit</button>
+</a>
+{{/unless}}
 
 <script>
   if ({{editable}}) {
