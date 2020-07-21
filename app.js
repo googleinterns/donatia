@@ -32,10 +32,19 @@ require('./passport-auth');
 
 const app = express();
 
+// Handlebars helpers.
+const handlebarsConfig = handlebars.create({
+  helpers: {
+    json: function (data) {
+      return JSON.stringify(data);
+    },
+  },
+});
+
 // Environments configs.
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars());
+app.engine('handlebars', handlebarsConfig.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded());
 app.use(express.json());
