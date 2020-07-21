@@ -1,6 +1,6 @@
 /* global Trie Handlebars categories */
 
-const categoryTrie = new Trie(categories);
+const categoryTrie = new Trie(parsedCategories);
 
 const autocompleteOptionTemplate = `
       {{#each matches}}

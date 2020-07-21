@@ -34,11 +34,14 @@ function setPageEventListeners() {
  * Requeries for organization data and refreshes page data.
  */
 function updateSearchResults() {
+  document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('search-list').innerHTML = '';
   removeAllMarkers();
 
-  let filter = document.getElementById('autocomplete-input').value;
-  if (filter === '') filter = 'all';
+  let parsedFilter = document.getElementById('autocomplete-input').value;
+  if (parsedFilter === '') parsedFilter = 'all';
+
+  const filter = categories[parsedFilter];
 
   // Requery and repopulate page data.
   fetch('/discover/' + filter)

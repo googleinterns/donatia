@@ -30,15 +30,13 @@ exports.getOrganizations = async function (req, res) {
  * @return {array} The categories parsed into a human-readable format.
  */
 function parseCategories(categories) {
-  const parsed = [];
+  const parsed = {};
   for (let category of categories) {
     // Replaces special characters with spaces.
-    category = category.replace(/[^a-zA-Z0-9]/g, ' ');
+    let parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
 
-    // Capitalize all categories
-    category = category.charAt(0).toUpperCase() + category.slice(1);
-
-    parsed.push(category);
+    // parsed[category] = parsedCategory;
+    parsed[parsedCategory] = category;
   }
   return parsed;
 }
