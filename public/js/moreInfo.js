@@ -9,6 +9,10 @@ const organizationInfoTemplate = `
   <a href="mailto:{{organization.email}}"><ion-icon name="mail-outline"></ion-icon>{{organization.email}}</a>
 </div>
 <div id="description">{{organization.description}}</div>
+<form action="/moreInfo/>
+<input type="text" name="emailAddress" />
+<input type="submit value="Send"/>
+</form>
 `;
 
 const acceptedCategoryCardTemplate = `
@@ -32,36 +36,6 @@ const acceptedCategoryCardTemplate = `
   </div>
 {{/each}}
 `;
-
-const emailTemplate = `
-<h1>{{organization.name}}</h1>
-<div> 
-  <a href=""> 12345 Road Drive, Houston, TX 77007</a>
-  <a href="tel:{{organization.phone}}">{{organization.phone}}</a>
-  <a href="{{organization.website}}">{{organization.website}}</a>
-  <a href="mailto:{{organization.email}}">{{organization.email}}</a>
-</div>
-<div>{{organization.description}}</div>
-{{#each acceptedCategories}}
-  <div>
-    <h2>{{this.category._path.segments.[1]}}</h2>
-
-    <h3>Quality Check</h3>
-    <ul>
-      {{#each this.qualityGuidelines}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ul>
-
-    <h3>Instructions</h3>
-    <ol>
-      {{#each this.instructions}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ol>
-  </div>
-{{/each}}
-`
 
 const locationURL = window.location.href.split('/');
 const organizationID = locationURL[locationURL.length - 1];
