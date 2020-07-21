@@ -103,6 +103,8 @@ app.get('/data/member', data.getMember);
 app.get('/data/member/organization/:id', data.getOrganizationFromMember);
 app.get('/data/member/favorites',data.getFavorites);
 app.get('/data/member/favorites/:organizationID',data.getFavoriteOfMember);
+app.post('/data/member/favorites/:organizationID',data.postFavoriteOfMember);
+app.delete('/data/member/favorites/:organizationID',data.deleteFavoriteOfMember);
 app.get('/data/organization/member/:id', data.getMemberFromOrganization);
 app.get('/data/organizations/:id', data.organizationsGet);
 app.post('/data/organizations/:id', data.organizationsPost);

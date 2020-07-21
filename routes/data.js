@@ -292,3 +292,52 @@ exports.getFavoriteOfMember = async function(req, res) {
     res.send(isFavoriteOfMember);
 }
 
+exports.postFavoriteOfMember = async function(req, res) {
+  const memberQuery  = await firestore
+  .collection(resolveCollectionName('Members'))
+  .where('authenticationID', '==', req.user.id)
+  .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+
+  const newFavoritesEntry = {
+    member: memberRef,
+    organization: organizationRef,
+  }
+  
+  await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .doc()
+    .set(newFavoritesEntry);
+
+  res.sendStatus(201);
+}
+
+exports.deleteFavoriteOfMember = async function(req, res) {
+  const memberQuery  = await firestore
+  .collection(resolveCollectionName('Members'))
+  .where('authenticationID', '==', req.user.id)
+  .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+  
+    /* 
+    * Get Favorites entry document
+    */
+    const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
+
+    // Delete the entry
+    await favoritesSnapshot.docs[0].ref.delete();
+
+    res.sendStatus(200);
+}
