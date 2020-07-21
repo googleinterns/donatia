@@ -43,6 +43,7 @@ p {
 }
 
 #contact-section a:hover {
+  transition: color 0.2s ease-in;
   color: #104fad;
 }
 
