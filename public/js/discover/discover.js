@@ -44,11 +44,7 @@ function updateSearchResults() {
   fetch('/discover/' + filter)
     .then((data) => data.json())
     .then(async (organizations) => {
-      const promises = [];
-      for (const organization of organizations) {
-        promises.push(setLocationInfo(organization));
-      }
-      await Promise.all(promises);
+      await Promise.all(organizations.map(setLocationInfo));
       return organizations;
     })
     .then((organizations) => {
