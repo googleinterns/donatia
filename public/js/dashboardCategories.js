@@ -45,7 +45,7 @@ async function getAllAcceptedCategories() {
  * @param {string} type Name of container to retrieve instructions from.
  * @return {Array<string>} Values from the specified input container.
  */
-async function inputsToArray(type) {
+async function getInstructionsByType(type) {
   const inputArray = [];
   const instructionInputs = await document.querySelectorAll(`.${type}-container > input`);
   Array.prototype.forEach.call(instructionInputs, function (instruction) {
@@ -60,8 +60,8 @@ async function inputsToArray(type) {
 window.addCategory = async function addCategory() {
   const memberData = await (await fetch('/data/member')).json();
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
-  const donationInstructions = await inputsToArray('donation');
-  const qualityInstructions = await inputsToArray('quality');
+  const donationInstructions = await getInstructionsByType('donation');
+  const qualityInstructions = await getInstructionsByType('quality');
   fetch(`/data/acceptedcategories/organization/${organizationData.id}`, {
     method: 'POST',
     body: JSON.stringify({

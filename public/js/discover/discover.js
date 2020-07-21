@@ -12,15 +12,22 @@ window.onload = function () {
 };
 
 /**
- * Add event listeners to the page to select the matching marker on a card
- * hover and vice versa.
+ * Add event listeners to the page to link map markers with cards and
+ * for search autocomplete.
  */
 function setPageEventListeners() {
+  // Map marker and organization card hover events.
   const discoverPage = document.getElementById('discover');
   discoverPage.addEventListener('cardChange', (event) => selectMarker(/* id= */ event.detail));
   discoverPage.addEventListener('markerChange', (event) =>
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
+
+  // Search if the user presses "enter" in the search box.
+  const search = document.getElementById('autocomplete-input');
+  search.addEventListener('keydown', function (e) {
+    if (e.keyCode === 13) updateSearchResults();
+  });
 }
 
 /**
@@ -30,8 +37,10 @@ function updateSearchResults() {
   document.getElementById('search-list').innerHTML = '';
   removeAllMarkers();
 
+  let filter = document.getElementById('autocomplete-input').value;
+  if (filter === '') filter = 'all';
+
   // Requery and repopulate page data.
-  const filter = document.getElementById('search-dropdown').value;
   fetch('/discover/' + filter)
     .then((data) => data.json())
     .then((organizations) => {
