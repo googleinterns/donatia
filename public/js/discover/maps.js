@@ -34,10 +34,7 @@ export function createMarkers(data) {
   data.forEach((organization) => {
     // Create the markers and attach to the map.
     const marker = new google.maps.Marker({
-      position: new google.maps.LatLng(
-        organization.location._latitude,
-        organization.location._longitude
-      ),
+      position: organization.coordinates,
       map: map,
       title: organization.name,
       id: organization.id,
@@ -93,4 +90,23 @@ export function selectMarker(id = null) {
 export function removeAllMarkers() {
   for (const marker of markers) marker.marker.setMap(null);
   markers = [];
+}
+
+/**
+ * Sets the address and coordinates of an organization using PlaceId.
+ * @param {JSON} organization The organization to set location info for.
+ * @return {Promise} A promise for setting the location info upon the API response.
+ */
+export function setLocationInfo(organization) {
+  const geocoder = new google.maps.Geocoder();
+
+  return new Promise(function (resolve, reject) {
+    geocoder.geocode({placeId: organization.placeID}, function (results, status) {
+      if (status === 'OK' && results[0]) {
+        organization.address = results[0].formatted_address;
+        organization.coordinates = results[0].geometry.location;
+      }
+      resolve();
+    });
+  });
 }
