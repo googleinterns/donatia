@@ -110,6 +110,9 @@ app.get('/data/categories', (req, res) => {
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
+  if(process.env.NODE_ENV === 'development') {
+    console.log(`DEV: Open at http://localhost:${app.get('port')}`);
+  }
   app.emit('app_started');
 });
 
