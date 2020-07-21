@@ -34,7 +34,7 @@ p {
   margin: 4% 0;
 }
 
-#contact-section p {
+#contact-section a {
   font-size: 1.25rem;
   margin: 1% 0;
   display: flex;
