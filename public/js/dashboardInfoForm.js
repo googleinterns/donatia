@@ -1,5 +1,3 @@
-/* global google*/
-
 /**
  * Gets the information of the organization assigned to the current user.
  * @return {JSON} An organization's information.
@@ -26,21 +24,4 @@ window.onload = async function populateForm() {
   document.getElementById('acceptsPickUp').checked = formJSON.acceptsPickUp;
   document.getElementById('acceptsShipping').checked = formJSON.acceptsShipping;
   document.getElementById('org-info-form').action = `/data/organizations/${formJSON.orgID}`;
-};
-
-/*
- * Adds Google Maps Places autocomplete to address input.
- */
-window.initAutocomplete = function initAutocomplete() {
-  const autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
-  autocomplete.setFields(['place_id', 'geometry', 'name']);
-  autocomplete.addListener('place_changed', function () {
-    const place = autocomplete.getPlace();
-
-    if (!place.geometry) {
-      return;
-    }
-
-    document.getElementById('addressID').value = place.place_id;
-  });
 };
