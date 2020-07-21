@@ -36,7 +36,7 @@ function updateSearchResults() {
     .then((data) => data.json())
     .then((organizations) => {
       createOrganizationCards(organizations);
-      // createMarkers(organizations);
+      createMarkers(organizations);
     });
 }
 

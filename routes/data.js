@@ -98,15 +98,18 @@ exports.getCategories = async function () {
 /**
  * Retrieves the list of categories accepted by an organization.
  * @param {Reference} organizationReference The Firestore reference to an organization.
- * @returns {Array} The list of accepted categories by the organization.
+ * @return {Array} The list of accepted categories by the organization.
  */
 async function getOrganizationCategories(organizationReference) {
   const categories = [];
-  const acceptedCategories = await getAcceptedCategoriesByRef(organizationReference, 'organization');
+  const acceptedCategories = await getAcceptedCategoriesByRef(
+    organizationReference,
+    'organization'
+  );
   for (const key in acceptedCategories) {
     if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
       const category = acceptedCategories[key].category.id;
-      categories.push(category)
+      categories.push(category);
     }
   }
   return categories;
