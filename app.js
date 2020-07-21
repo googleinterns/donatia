@@ -101,12 +101,14 @@ app.get(
 app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
 app.get('/data/member', data.getMember);
 app.get('/data/member/organization/:id', data.getOrganizationFromMember);
+app.get('/data/member/favorites',data.getFavorites);
 app.get('/data/organization/member/:id', data.getMemberFromOrganization);
 app.get('/data/organizations/:id', data.organizationsGet);
 app.post('/data/organizations/:id', data.organizationsPost);
 app.get('/data/categories', (req, res) => {
   data.getCategories().then((categories) => res.send(categories));
 });
+
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));

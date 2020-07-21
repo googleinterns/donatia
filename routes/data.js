@@ -248,3 +248,21 @@ exports.organizationsPost = async function (req, res) {
     .update(newOrgData);
   res.redirect('/dashboard');
 };
+
+exports.getFavorites = async function(req, res) {
+  const memberQuery  = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', req.user.id)
+    .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .get();
+  const results = {};
+  favoritesSnapshot.docs.forEach((doc) => {
+    results[doc.id] = doc.data();
+  });
+  res.send(results);
+}
