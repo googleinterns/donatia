@@ -35,9 +35,11 @@ function updateSearchResults() {
   fetch('/discover/' + filter)
     .then((data) => data.json())
     .then(async (organizations) => {
+      const promises = [];
       for (const organization of organizations) {
-        await setLocationInfo(organization);
+        promises.push(setLocationInfo(organization));
       }
+      await Promise.all(promises);
       return organizations;
     })
     .then((organizations) => {
