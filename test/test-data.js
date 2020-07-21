@@ -209,7 +209,7 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
       body: JSON.stringify({name: 'test name'}),
     },
     function (error, response, body) {
-      expect(response.statusCode).to.equal(201);
+      expect(response.statusCode).to.equal(302);
       expect(
         firestoreMock.collection('dev-Organizations').doc(`${ORG_FURNITURE_BANK_ID}`).get().data()
           .name
