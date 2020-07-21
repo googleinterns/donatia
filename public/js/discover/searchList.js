@@ -88,5 +88,5 @@ function formatPhoneNumber(number) {
     const countryCode = regexMatch[1] ? '+1 ' : '';
     return [countryCode, '(', regexMatch[2], ') ', regexMatch[3], '-', regexMatch[4]].join('');
   }
-  return undefined;
+  return number;
 }
