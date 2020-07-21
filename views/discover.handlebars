@@ -1,16 +1,31 @@
 <link rel="stylesheet" href="static/css/discover/discover.css" />
 <link rel="stylesheet" href="static/css/discover/searchCard.css" />
 
+<script>
+  const categories = JSON.parse('{{{json categories}}}');
+</script>
+
 <script async defer src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}"></script>
 <script src="static/js/discover/discover.js" type="module"></script>
+<script src="static/js/discover/trie.js"></script>
+<script src="static/js/discover/autocomplete.js"></script>
 
 <div id="discover">
   <div id="search">
-    <select id="search-dropdown" onchange="updateSearchResults()">
-      {{#each categories}}
-      <option value="{{this}}">{{this}}</option>
-      {{/each}}
-    </select>
+    <div id="filter-container">
+      <div id="filters">
+        <input
+          id="autocomplete-input"
+          type="text"
+          placeholder="Search for an item category"
+          oninput="showAutocompleteOptions(this.value)"
+        />
+        <a id="search-icon-container" onclick="updateSearchResults()">
+          <img id="search-icon" src="static/images/search-icon.svg" />
+        </a>
+      </div>
+      <div id="autocomplete-list"></div>
+    </div>
     <div id="search-list"></div>
   </div>
   <div id="map"></div>
