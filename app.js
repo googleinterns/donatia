@@ -61,6 +61,9 @@ const discover = require('./routes/discover');
 app.get('/discover', discover.view);
 app.get('/discover/:filter', discover.getOrganizations);
 
+const moreInfo = require('./routes/moreInfo');
+app.get('/discover/organization/:id', moreInfo.view);
+
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
 
@@ -87,12 +90,14 @@ app.get(
   data.acceptedCategoriesByFieldGet
 );
 app.post('/data/acceptedcategories/organization/:id', data.acceptedCategoriesOrganizationPost);
-app.get('/data/categories', data.categoriesGet);
-app.get('/data/member', data.memberGet);
+app.get('/data/member', data.getMember);
 app.get('/data/member/organization/:id', data.getOrganizationFromMember);
 app.get('/data/organization/member/:id', data.getMemberFromOrganization);
 app.get('/data/organizations/:id', data.organizationsGet);
 app.post('/data/organizations/:id', data.organizationsPost);
+app.get('/data/categories', (req, res) => {
+  data.getCategories().then((categories) => res.send(categories));
+});
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));

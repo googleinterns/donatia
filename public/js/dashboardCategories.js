@@ -7,11 +7,10 @@ async function getAllCategories() {
   const responseData = await fetch('/data/categories');
   const responseDataJSON = await responseData.json();
   const allCategories = responseDataJSON.map(function (category) {
-    const obj = {
+    return {
       ID: category,
       name: category.replace(/-/g, ' '),
     };
-    return obj;
   });
   return allCategories;
 }
@@ -31,13 +30,12 @@ async function getAllAcceptedCategories() {
     const categoryKey = categoryInfo[0];
     const categoryValues = categoryInfo[1];
     const categoryName = categoryValues.category._path.segments[1];
-    const obj = {
+    return {
       name: categoryName.replace(/-/g, ' '),
       ID: categoryKey,
       instructions: categoryValues.instructions,
       quality: categoryValues.qualityGuidelines,
     };
-    return obj;
   });
   return allAcceptedCategories;
 }
@@ -55,6 +53,7 @@ async function inputsToArray(type) {
   });
   return inputArray;
 }
+
 /**
  * Retrieves values from form and adds to database.
  */
