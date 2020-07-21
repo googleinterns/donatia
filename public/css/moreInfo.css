@@ -42,6 +42,10 @@ p {
   align-items: center;
 }
 
+#contact-section a:hover {
+  color: #104fad;
+}
+
 #contact-section ion-icon {
   margin-right: 2%;
 }
