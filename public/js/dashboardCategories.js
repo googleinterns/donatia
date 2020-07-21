@@ -25,33 +25,63 @@ async function getAllAcceptedCategories() {
   const responseData = await (
     await fetch(`/data/acceptedcategories/organization/${organizationData.id}`)
   ).json();
-  const responseDataJSONArray = await Object.values(responseData);
-  const allAcceptedCategories = responseDataJSONArray.map(function (organizationCategory) {
-    const categoryName = organizationCategory.category._path.segments[1];
+  const responseDataJSONArray = await Object.entries(responseData);
+  const allAcceptedCategories = responseDataJSONArray.map(function (categoryInfo) {
+    const categoryKey = categoryInfo[0];
+    const categoryValues = categoryInfo[1];
+    const categoryName = categoryValues.category._path.segments[1];
     return {
       name: categoryName.replace(/-/g, ' '),
-      ID: `${categoryName}-category-card`,
-      instructions: organizationCategory.instructions,
-      quality: organizationCategory.qualityGuidelines,
+      ID: categoryKey,
+      instructions: categoryValues.instructions,
+      quality: categoryValues.qualityGuidelines,
     };
   });
   return allAcceptedCategories;
 }
 
 /**
+ * Converts the values of specified input elements to an array.
+ * @param {string} type Name of container to retrieve instructions from.
+ * @return {Array<string>} Values from the specified input container.
+ */
+async function getInstructionsByType(type) {
+  const inputArray = [];
+  const instructionInputs = await document.querySelectorAll(`.${type}-container > input`);
+  Array.prototype.forEach.call(instructionInputs, function (instruction) {
+    inputArray.push(instruction.value);
+  });
+  return inputArray;
+}
+
+/**
  * Retrieves values from form and adds to database.
  */
-window.addCategory = function addCategory() {
-  // TODO: Add category to database.
-  console.log('added a category');
+window.addCategory = async function addCategory() {
+  const memberData = await (await fetch('/data/member')).json();
+  const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
+  const donationInstructions = await getInstructionsByType('donation');
+  const qualityInstructions = await getInstructionsByType('quality');
+  fetch(`/data/acceptedcategories/organization/${organizationData.id}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      instructions: donationInstructions,
+      qualityGuidelines: qualityInstructions,
+      category: document.getElementById('add-categories').value,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).then(location.reload());
 };
 
 /**
  * @param {string} categoryID ID of the category to be deleted.
  */
 window.deleteCategory = function deleteCategory(categoryID) {
-  // TODO: Delete category from database.
-  console.log('deleted' + categoryID);
+  fetch(`/data/acceptedcategories/${categoryID}`, {
+    method: 'DELETE',
+  }).then(location.reload());
 };
 
 /** Class representing the parts of an instruction element. */
@@ -68,7 +98,7 @@ class InstructionTokens {
 }
 
 const inputBoxTemplate = `
-  <div id="{{type}}-container-{{index}}">
+  <div id="{{type}}-container-{{index}}" class="{{type}}-container">
     <input id="{{type}}-input-{{index}}" name="{{type}}-input-{{index}}" type="text"></input>
     <button id="{{type}}-remove-{{index}}" onclick="removeInstructionInput(this.id)" hidden>-</button>
     <button id="{{type}}-add-{{index}}" onclick="addInstructionInput(this.id)">+</button><br>
