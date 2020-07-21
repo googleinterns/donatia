@@ -83,18 +83,10 @@ export function selectCard(id = null, scroll = false) {
  * @return {string} The formatted phone number.
  */
 function formatPhoneNumber(number) {
-  if (number.length == 10) {
-    const areaCode = number.substring(0, 3);
-    const exchangeCode = number.substring(3, 6);
-    const lineNumber = number.substring(6, 10);
-    return `(${areaCode}) ${exchangeCode}-${lineNumber}`;
-  } else if (number.length > 10) {
-    const countryCode = number.substring(0, number.length - 10);
-    const areaCode = number.substring(number.length - 10, number.length - 7);
-    const exchangeCode = number.substring(number.length - 7, number.length - 4);
-    const lineNumber = number.substring(number.length - 4, number.length);
-    return `+${countryCode}-${areaCode}-${exchangeCode}-${lineNumber}`;
-  } else {
-    return number;
+  const regexMatch = number.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (regexMatch) {
+    const countryCode = regexMatch[1] ? '+1 ' : '';
+    return [countryCode, '(', regexMatch[2], ') ', regexMatch[3], '-', regexMatch[4]].join('');
   }
+  return undefined;
 }
