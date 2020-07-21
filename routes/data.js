@@ -43,12 +43,17 @@ exports.getAllOrganizations = async function () {
 
   const parsedOrganizations = [];
 
-  organizations.docs.forEach((doc) => {
-    const data = doc.data();
-    data['id'] = doc.id;
+  for (const key in organizations.docs) {
+    if (Object.prototype.hasOwnProperty.call(organizations.docs, key)) {
+      const doc = organizations.docs[key];
 
-    parsedOrganizations.push(data);
-  });
+      const data = doc.data();
+      data['id'] = doc.id;
+      data['categories'] = await getOrganizationCategories(doc.ref);
+
+      parsedOrganizations.push(data);
+    }
+  }
 
   return parsedOrganizations;
 };
@@ -100,7 +105,6 @@ async function getOrganizationCategories(organizationReference) {
   const acceptedCategories = await getAcceptedCategoriesByRef(organizationReference, 'organization');
   for (const key in acceptedCategories) {
     if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
-      const categoryReference = acceptedCategories[key].category;
       const category = acceptedCategories[key].category.id;
       categories.push(category)
     }
