@@ -1,36 +1,79 @@
-.dashboard-section {
-  display: -webkit-flex;
+body {
+  height: 100vh;
+  margin: 0;
   display: flex;
-  height: 100%;
+  flex-direction: column;
+}
+
+button {
+  background-color: #04c39a;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #03b38d;
+}
+
+.dashboard-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
 }
 
 .dashboard-nav {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  background: #ccc;
-  padding-top: 3em;
+  width: 20%;
+  padding: 3% 3%;
 }
 
-.dashboard-nav > ul {
-  list-style-type: none;
+.dashboard-nav > a {
+  display: block;
+  padding: 1em;
+  font-size: 1.2rem;
 }
 
-#dashboard-title {
-  text-align: center;
-  font-size: 3em;
+.dashboard-nav > a:hover {
+  cursor: pointer;
+  background-color: #f1f1f1;
 }
 
 .dashboard-content {
-  -webkit-flex: 3;
-  -ms-flex: 3;
-  flex: 3;
+  width: 80%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
   background-color: #f1f1f1;
   padding: 3em;
 }
 
-#form-container > input {
-  margin-bottom: 1em;
+#add-categories,
+#quality-container > * > input,
+#donation-container > * > input {
+  width: 50%;
+}
+
+#quality-container > * > button,
+#donation-container > * > button {
+  padding: 0px 5px;
+}
+
+input,
+select {
+  width: 80%;
+  padding: 10px 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+input[type='checkbox'] {
+  width: auto;
 }
 
 .category-card {
