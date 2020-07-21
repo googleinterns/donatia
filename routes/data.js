@@ -187,7 +187,7 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   res.sendStatus(201);
 };
 
-exports.member = async function (req, res) {
+exports.getMember = async function (req, res) {
   const memberData = req.user;
   const userData = {
     authenticationID: memberData.id,
@@ -198,23 +198,26 @@ exports.member = async function (req, res) {
     .where('authenticationID', '==', memberData.id);
 
   memberSnapshot.get().then(function (doc) {
+    // Check if a member with the specified authentication ID exists.
     if (doc.docs[0]) {
-      res.send(doc.docs[0].id);
+      // If the member is found, send their ID.
+      res.json({id: doc.docs[0].id});
     } else {
+      // Otherwise, create a new member and return their newly created ID.
       firestore
         .collection(resolveCollectionName('Members'))
         .doc()
         .set(userData)
         .then(
           memberSnapshot.get().then(function (doc) {
-            res.send(doc.docs[0].id);
+            res.json({id: doc.docs[0].id});
           })
         );
     }
   });
 };
 
-exports.organizationMemberGet = async function (req, res) {
+exports.getOrganizationFromMember = async function (req, res) {
   const organizationReference = firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.id);
@@ -227,6 +230,24 @@ exports.organizationMemberGet = async function (req, res) {
   const memberReference = await memberAssignments.docs[0].data().member._path.segments;
   const memberInfo = await firestore.collection(memberReference[0]).doc(memberReference[1]).get();
   res.send(memberInfo.data());
+};
+
+exports.getMemberFromOrganization = async function (req, res) {
+  const memberReference = firestore.collection(resolveCollectionName('Members')).doc(req.params.id);
+
+  const memberAssignments = await firestore
+    .collection(resolveCollectionName('MemberAssignments'))
+    .where('member', '==', memberReference)
+    .get();
+
+  const organizationReference = await memberAssignments.docs[0].data().organization._path.segments;
+
+  const organizationInfo = await firestore
+    .collection(organizationReference[0])
+    .doc(organizationReference[1])
+    .get();
+
+  res.json({id: organizationInfo.id});
 };
 
 exports.organizationsGet = async function (req, res) {
@@ -243,10 +264,13 @@ exports.organizationsGet = async function (req, res) {
 };
 
 exports.organizationsPost = async function (req, res) {
-  const updatedOrganizationData = req.body;
+  const newOrgData = req.body;
+  newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
+  newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
+  newOrgData.acceptsShipping = !!newOrgData.acceptsShipping;
   await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(`${req.params.id}`)
-    .update(updatedOrganizationData);
-  res.sendStatus(201);
+    .update(newOrgData);
+  res.redirect('/dashboard');
 };
