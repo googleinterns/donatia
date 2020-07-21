@@ -15,7 +15,6 @@ const autocompleteOptionTemplate = `
  * @param {string} input The text from the search box.
  */
 window.showAutocompleteOptions = function (input) {
-  console.log('inputted', input);
   if (input === '') {
     document.getElementById('autocomplete-list').innerHTML = '';
     return;

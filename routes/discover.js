@@ -27,15 +27,13 @@ exports.getOrganizations = async function (req, res) {
 /**
  * Parses the categories into a human-readable format for the discover page.
  * @param {array} categories The categories as saved in the database.
- * @return {array} The categories parsed into a human-readable format.
+ * @return {JSON} An object matching parsed category named to unparsed category names.
  */
 function parseCategories(categories) {
   const parsed = {};
   for (const category of categories) {
     // Replaces special characters with spaces.
     const parsedCategory = category.replace(/[^a-zA-Z0-9]/g, ' ');
-
-    // parsed[category] = parsedCategory;
     parsed[parsedCategory] = category;
   }
   return parsed;

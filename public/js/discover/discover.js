@@ -40,13 +40,13 @@ function updateSearchResults() {
   document.getElementById('search-list').innerHTML = '';
   removeAllMarkers();
 
-  let parsedFilter = document.getElementById('autocomplete-input').value;
-  if (parsedFilter === '') parsedFilter = 'all';
+  let filter = document.getElementById('autocomplete-input').value;
+  if (filter === '') filter = 'all';
 
-  const filter = categories[parsedFilter];
+  const unparsedFilter = categories[filter];
 
   // Requery and repopulate page data.
-  fetch('/discover/' + filter)
+  fetch('/discover/' + unparsedFilter)
     .then((data) => data.json())
     .then((organizations) => {
       createOrganizationCards(organizations);
