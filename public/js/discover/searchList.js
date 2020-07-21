@@ -56,6 +56,10 @@ export function createOrganizationCards(organizations) {
       selectCard();
       card.dispatchEvent(new CustomEvent('cardChange', {bubbles: true, detail: null}));
     });
+
+    card.addEventListener('click', function (e) {
+      window.open(`/discover/organization/${card.id}`, "_blank"); 
+    });
   }
 }
 
@@ -94,4 +98,9 @@ function formatPhoneNumber(number) {
   } else {
     return number;
   }
+}
+
+function openMoreInfoPage(organizationID) {
+  window.open( 
+    `/discover/organization/${organizationID}`, "_blank"); 
 }
