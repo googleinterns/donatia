@@ -32,6 +32,9 @@ export function initMap() {
  */
 export function createMarkers(data) {
   data.forEach((organization) => {
+    // If no coordinates, skip to the next organization.
+    if (!organization.coordinates) return;
+
     // Create the markers and attach to the map.
     const marker = new google.maps.Marker({
       position: organization.coordinates,
