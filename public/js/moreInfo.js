@@ -3,7 +3,7 @@
 const organizationInfoTemplate = `
 <h1>{{organization.name}}</h1>
 <div id="contact-section"> 
-  <a href=""><ion-icon name="map-outline"></ion-icon>{{organization.address}}</a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination={{organization.lat}},{{organization.lng}}&destination_place_id={{organization.placeID}}"><ion-icon name="map-outline"></ion-icon>{{organization.address}}</a>
   <a href="tel:{{organization.phone}}"><ion-icon name="call-outline"></ion-icon>{{organization.phone}}</a>
   <a href="{{organization.website}}"><ion-icon name="globe-outline"></ion-icon>{{organization.website}}</a>
   <a href="mailto:{{organization.email}}"><ion-icon name="mail-outline"></ion-icon>{{organization.email}}</a>
@@ -75,11 +75,13 @@ function setAddressFromPlaceID(organization) {
       if (status === 'OK') {
         if (results[0]) {
           organization.address =  results[0].formatted_address;
+          organization.lat = results[0].geometry.location.lat();
+          organization.lng = results[0].geometry.location.lng();
         } else {
-          console.error('No results found');
+          console.log('No results found');
         }
       } else {
-        console.error('Geocoder failed due to: ' + status);
+        console.log('Geocoder failed due to: ' + status);
       }
       resolve();
     });
