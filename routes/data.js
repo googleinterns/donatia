@@ -250,6 +250,12 @@ exports.organizationsPost = async function (req, res) {
 };
 
 exports.getFavorites = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
   const memberQuery = await firestore
     .collection(resolveCollectionName('Members'))
     .where('authenticationID', '==', req.user.id)
@@ -268,6 +274,12 @@ exports.getFavorites = async function (req, res) {
 };
 
 exports.getFavoriteOfMember = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
   const memberQuery = await firestore
     .collection(resolveCollectionName('Members'))
     .where('authenticationID', '==', req.user.id)
@@ -293,6 +305,12 @@ exports.getFavoriteOfMember = async function (req, res) {
 };
 
 exports.postFavoriteOfMember = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
   const memberQuery = await firestore
     .collection(resolveCollectionName('Members'))
     .where('authenticationID', '==', req.user.id)
@@ -314,6 +332,12 @@ exports.postFavoriteOfMember = async function (req, res) {
 };
 
 exports.deleteFavoriteOfMember = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
   const memberQuery = await firestore
     .collection(resolveCollectionName('Members'))
     .where('authenticationID', '==', req.user.id)
