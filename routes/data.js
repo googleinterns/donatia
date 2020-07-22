@@ -248,3 +248,117 @@ exports.organizationsPost = async function (req, res) {
     .update(newOrgData);
   res.redirect('/dashboard');
 };
+
+exports.getFavorites = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberQuery = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', req.user.id)
+    .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .get();
+  const results = {};
+  favoritesSnapshot.docs.forEach((doc) => {
+    results[doc.id] = doc.data();
+  });
+  res.send(results);
+};
+
+exports.getFavoriteOfMember = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberQuery = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', req.user.id)
+    .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+
+  /*
+   * If organization is a favorite of the member then this query should
+   * return a result of one entry in Favorites
+   */
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
+
+  const isFavoriteOfMember = favoritesSnapshot.docs.length == 1;
+  res.send(isFavoriteOfMember);
+};
+
+exports.postFavoriteOfMember = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberQuery = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', req.user.id)
+    .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+
+  const newFavoritesEntry = {
+    member: memberRef,
+    organization: organizationRef,
+  };
+
+  await firestore.collection(resolveCollectionName('Favorites')).doc().set(newFavoritesEntry);
+
+  res.sendStatus(201);
+};
+
+exports.deleteFavoriteOfMember = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberQuery = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', req.user.id)
+    .get();
+  const memberRef = memberQuery.docs[0].ref;
+
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+
+  /*
+   * Get Favorites entry document
+   */
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
+
+  // Delete the entry
+  await favoritesSnapshot.docs[0].ref.delete();
+
+  res.sendStatus(200);
+};
