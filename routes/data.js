@@ -174,7 +174,7 @@ exports.acceptedCategoriesByFieldGet = async function (req, res) {
 exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   const newAcceptedCategoryData = req.body;
   newAcceptedCategoryData.organization = await firestore
-    .collection(`${resolveCollectionName('Organization')}`)
+    .collection(`${resolveCollectionName('Organizations')}`)
     .doc(`${req.params.id}`);
   newAcceptedCategoryData.category = await firestore
     .collection(`${resolveCollectionName('Categories')}`)
