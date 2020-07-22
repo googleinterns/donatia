@@ -3,6 +3,22 @@
   defer
   src="https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&libraries=places&callback=initAutocomplete"
 ></script>
+<script>
+  /*
+   * This JavaScript was included inline to ensure the initAutocomplete
+   * function is available as soon as the Maps API script above loads.
+   * Adds Google Maps Places autocomplete to address input.
+   */
+  function initAutocomplete() {
+    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
+    autocomplete.setFields(['place_id', 'geometry', 'name']);
+    autocomplete.addListener('place_changed', function () {
+      const place = autocomplete.getPlace();
+      if (!place.place_id) return;
+      document.getElementById('addressID').value = place.place_id;
+    });
+  }
+</script>
 <script src="/static/js/dashboardInfoForm.js"></script>
 
 <form id="org-info-form" method="post">
