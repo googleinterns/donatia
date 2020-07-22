@@ -107,6 +107,7 @@ app.post('/data/organizations/:id', data.organizationsPost);
 app.get('/data/categories', (req, res) => {
   data.getCategories().then((categories) => res.send(categories));
 });
+app.get('/data/update/placids', data.updatePlaceIDs);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));

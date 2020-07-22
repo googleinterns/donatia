@@ -1,4 +1,5 @@
 const {Firestore} = require('@google-cloud/firestore');
+const fetch = require('node-fetch');
 
 // Database Initialization
 let firestore = new Firestore();
@@ -247,4 +248,39 @@ exports.organizationsPost = async function (req, res) {
     .doc(`${req.params.id}`)
     .update(newOrgData);
   res.redirect('/dashboard');
+};
+
+exports.updatePlaceIDs = async function (req, res) {
+  // Get all entries from the Organizations table.
+  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
+
+  let tasksCompleted = '';
+
+  await Promise.all(
+    organizations.docs.map(async (doc) => {
+      const oldPlaceID = doc.data().placeID;
+      const oldPlaceName = doc.data().name;
+
+      if (oldPlaceID != undefined && oldPlaceID != '') {
+        // If the current entry has a placeID, check if it is the latest one.
+        const placeJSON = await (
+          await fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${oldPlaceID}&fields=place_id&key=${process.env.MAPS_KEY}`
+          )
+        ).json();
+        const newPlaceID = placeJSON.result.place_id;
+
+        // Update the current doc's placeID if a newer placeID has been retrieved.
+        if (newPlaceID != '' && newPlaceID != undefined && newPlaceID != oldPlaceID) {
+          doc._ref.update({
+            placeID: newPlaceID,
+          });
+          tasksCompleted += `Updated ${oldPlaceName}. `;
+        }
+      } else {
+        tasksCompleted += `Missing placeID: ${oldPlaceName}. `;
+      }
+    })
+  );
+  res.json(tasksCompleted);
 };
