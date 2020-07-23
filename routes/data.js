@@ -44,12 +44,17 @@ exports.getAllOrganizations = async function () {
 
   const parsedOrganizations = [];
 
-  organizations.docs.forEach((doc) => {
-    const data = doc.data();
-    data['id'] = doc.id;
+  for (const id in organizations.docs) {
+    if (Object.prototype.hasOwnProperty.call(organizations.docs, id)) {
+      const doc = organizations.docs[id];
 
-    parsedOrganizations.push(data);
-  });
+      const data = doc.data();
+      data['id'] = id;
+      data['categories'] = await getOrganizationCategories(doc.ref);
+
+      parsedOrganizations.push(data);
+    }
+  }
 
   return parsedOrganizations;
 };
@@ -69,11 +74,12 @@ exports.getFilteredOrganizations = async function (filter) {
 
   const organizations = [];
 
-  for (const key in acceptedCategories) {
-    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
-      const organizationReference = acceptedCategories[key].organization;
+  for (const id in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, id)) {
+      const organizationReference = acceptedCategories[id].organization;
       const organization = (await organizationReference.get()).data();
-      organization['id'] = key;
+      organization['id'] = id;
+      organization['categories'] = await getOrganizationCategories(organizationReference);
 
       organizations.push(organization);
     }
@@ -89,6 +95,26 @@ exports.getCategories = async function () {
   const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
   return snapshot.docs.map((doc) => doc.id);
 };
+
+/**
+ * Retrieves the list of categories accepted by an organization.
+ * @param {Reference} organizationReference The Firestore reference to an organization.
+ * @return {Array} The list of accepted categories by the organization.
+ */
+async function getOrganizationCategories(organizationReference) {
+  const categories = [];
+  const acceptedCategories = await getAcceptedCategoriesByRef(
+    organizationReference,
+    'organization'
+  );
+  for (const key in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, key)) {
+      const category = acceptedCategories[key].category.id;
+      categories.push(category);
+    }
+  }
+  return categories;
+}
 
 /* Response Handlers */
 
@@ -259,7 +285,7 @@ exports.updatePlaceIDs = async function (req, res) {
   await Promise.all(
     organizations.docs.map(async (doc) => {
       const oldPlaceID = doc.data().placeID;
-      const oldPlaceName = doc.data().name;
+      const placeName = doc.data().name;
 
       if (oldPlaceID) {
         // If the current entry has a placeID, check if it is the latest one.
@@ -275,10 +301,10 @@ exports.updatePlaceIDs = async function (req, res) {
           doc._ref.update({
             placeID: newPlaceID,
           });
-          tasksCompleted += `Updated ${oldPlaceName}. `;
+          tasksCompleted += `Updated ${placeName}. `;
         }
       } else {
-        tasksCompleted += `Missing placeID: ${oldPlaceName}. `;
+        tasksCompleted += `Missing placeID: ${placeName}. `;
       }
     })
   );
