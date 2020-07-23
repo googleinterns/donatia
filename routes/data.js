@@ -91,45 +91,52 @@ exports.getCategories = async function () {
 
 /**
  * Get the reference to the user's Member document
+ * @param {*} user User object set by Passport.js
  * @return {DocumentReference} reference to a Member document
  */
-async function getMemberRef() {
+async function getMemberRef(user) {
   // If user is not authenticated then return no authorized
-  if (!req.user) {
+  if (!user) {
     return undefined;
   }
 
   const memberQuery = await firestore
     .collection(resolveCollectionName('Members'))
-    .where('authenticationID', '==', req.user.id)
+    .where('authenticationID', '==', user.id)
     .get();
 
   return memberQuery.docs[0].ref;
 }
 
-exports.isFavoriteOfMember = async function(organizationID) {
+/**
+ * @param {String} organizationID ID  of organanization
+ * @param {*} req request object
+ * @return {boolean} true if organization is in member's favorite
+ */
+exports.isFavoriteOfMember = async function (organizationID, req) {
   // If user is not authenticated then return false
   if (!req.user) {
-   return false;
+    return false;
   }
 
- const organizationRef = await firestore
-   .collection(resolveCollectionName('Organizations'))
-   .doc(organizationID);
+  const memberRef = getMemberRef();
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(organizationID);
 
- /*
-  * If organization is a favorite of the member then this query should
-  * return a result of one entry in Favorites
-  */
- const favoritesSnapshot = await firestore
-   .collection(resolveCollectionName('Favorites'))
-   .where('member', '==', getMemberRef())
-   .where('organization', '==', organizationRef)
-   .get();
+  /*
+   * If organization is a favorite of the member then this query should
+   * return a result of one entry in Favorites
+   */
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
 
- const isFavorite = favoritesSnapshot.docs.length == 1;
- return isFavorite;
-}
+  const isFavorite = favoritesSnapshot.docs.length == 1;
+  return isFavorite;
+};
 
 /* Response Handlers */
 
@@ -298,16 +305,17 @@ exports.getFavorites = async function (req, res) {
     return;
   }
 
+  const memberRef = await getMemberRef(req.user);
   const favoritesSnapshot = await firestore
     .collection(resolveCollectionName('Favorites'))
-    .where('member', '==', getMemberRef())
+    .where('member', '==', memberRef)
     .get();
-    
-  const results = {};
+
+  const results = [];
   favoritesSnapshot.docs.forEach((doc) => {
-    results[doc.id] = doc.data();
+    results.push({...doc.data(), id: doc.id});
   });
-  res.send(results);
+  res.json(results);
 };
 
 exports.postFavoriteOfMember = async function (req, res) {
@@ -317,17 +325,17 @@ exports.postFavoriteOfMember = async function (req, res) {
     return;
   }
 
+  const memberRef = await getMemberRef(req.user);
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.organizationID);
 
   const newFavoritesEntry = {
-    member: getMemberRef(),
+    member: memberRef,
     organization: organizationRef,
   };
 
   await firestore.collection(resolveCollectionName('Favorites')).doc().set(newFavoritesEntry);
-
   res.sendStatus(201);
 };
 
@@ -338,6 +346,7 @@ exports.deleteFavoriteOfMember = async function (req, res) {
     return;
   }
 
+  const memberRef = await getMemberRef(req.user);
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.organizationID);
@@ -347,12 +356,11 @@ exports.deleteFavoriteOfMember = async function (req, res) {
    */
   const favoritesSnapshot = await firestore
     .collection(resolveCollectionName('Favorites'))
-    .where('member', '==', getMemberRef())
+    .where('member', '==', memberRef)
     .where('organization', '==', organizationRef)
     .get();
 
   // Delete the entry
   await favoritesSnapshot.docs[0].ref.delete();
-
   res.sendStatus(200);
 };
