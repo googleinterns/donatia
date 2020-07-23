@@ -44,7 +44,6 @@ exports.getAllOrganizations = async function () {
   const parsedOrganizations = [];
 
   for (const doc of organizations.docs) {
-    console.log(doc);
     const data = doc.data();
     data['id'] = doc.id;
     data['categories'] = await getOrganizationCategories(doc.ref);

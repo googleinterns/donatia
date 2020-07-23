@@ -25,6 +25,9 @@ function setPageEventListeners() {
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
 
+  // Trigger autocomplete search on selection
+  discoverPage.addEventListener('search', () => updateSearchResults());
+
   // Search if the user presses "enter" in the search box.
   const search = document.getElementById('autocomplete-input');
   search.addEventListener('keydown', function (e) {
