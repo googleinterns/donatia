@@ -47,7 +47,7 @@ class Trie {
 
     // Iterate down the tree for each character in the word.
     for (let level = 0; level < word.length; level++) {
-      const index = word.charCodeAt(level) - 97;
+      const index = word.charAt(level) === ' ' ? 26 : word.charCodeAt(level) - 97;
 
       // Insert the node for that prefix into the trie if it doesn't exist.
       if (!currentNode.children[index]) {
