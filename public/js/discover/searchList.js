@@ -47,17 +47,17 @@ export function createOrganizationCards(organizations) {
   // Add event listeners to the cards for hovering.
   const searchCards = document.getElementsByClassName('search-card');
   for (const card of searchCards) {
-    card.addEventListener('mouseover', function (e) {
+    card.addEventListener('mouseover', function (event) {
       selectCard(card.id);
       card.dispatchEvent(new CustomEvent('cardChange', {bubbles: true, detail: card.id}));
     });
 
-    card.addEventListener('mouseout', function (e) {
+    card.addEventListener('mouseout', function (event) {
       selectCard();
       card.dispatchEvent(new CustomEvent('cardChange', {bubbles: true, detail: null}));
     });
 
-    card.addEventListener('click', function (e) {
+    card.addEventListener('click', function (event) {
       window.open(`/discover/organization/${card.id}`, '_blank');
     });
   }
