@@ -41,7 +41,7 @@ function updateSearchResults() {
   removeAllMarkers();
 
   const filter = document.getElementById('autocomplete-input').value;
-  let unparsedFilter = filter === '' ? "all" : categories[filter];
+  const unparsedFilter = filter === '' ? 'all' : categories[filter];
 
   // Requery and repopulate page data.
   fetch('/discover/' + unparsedFilter)
