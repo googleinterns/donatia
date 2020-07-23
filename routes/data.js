@@ -89,6 +89,48 @@ exports.getCategories = async function () {
   return snapshot.docs.map((doc) => doc.id);
 };
 
+/**
+ * Get the reference to the user's Member document
+ * @return {DocumentReference} reference to a Member document
+ */
+async function getMemberRef() {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    return undefined;
+  }
+
+  const memberQuery = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', req.user.id)
+    .get();
+
+  return memberQuery.docs[0].ref;
+}
+
+exports.isFavoriteOfMember = async function(organizationID) {
+  // If user is not authenticated then return false
+  if (!req.user) {
+   return false;
+  }
+
+ const organizationRef = await firestore
+   .collection(resolveCollectionName('Organizations'))
+   .doc(organizationID);
+
+ /*
+  * If organization is a favorite of the member then this query should
+  * return a result of one entry in Favorites
+  */
+ const favoritesSnapshot = await firestore
+   .collection(resolveCollectionName('Favorites'))
+   .where('member', '==', getMemberRef())
+   .where('organization', '==', organizationRef)
+   .get();
+
+ const isFavorite = favoritesSnapshot.docs.length == 1;
+ return isFavorite;
+}
+
 /* Response Handlers */
 
 exports.acceptedCategoriesGet = async function (req, res) {
@@ -256,52 +298,16 @@ exports.getFavorites = async function (req, res) {
     return;
   }
 
-  const memberQuery = await firestore
-    .collection(resolveCollectionName('Members'))
-    .where('authenticationID', '==', req.user.id)
-    .get();
-  const memberRef = memberQuery.docs[0].ref;
-
   const favoritesSnapshot = await firestore
     .collection(resolveCollectionName('Favorites'))
-    .where('member', '==', memberRef)
+    .where('member', '==', getMemberRef())
     .get();
+    
   const results = {};
   favoritesSnapshot.docs.forEach((doc) => {
     results[doc.id] = doc.data();
   });
   res.send(results);
-};
-
-exports.getFavoriteOfMember = async function (req, res) {
-  // If user is not authenticated then return no authorized
-  if (!req.user) {
-    res.sendStatus(401);
-    return;
-  }
-
-  const memberQuery = await firestore
-    .collection(resolveCollectionName('Members'))
-    .where('authenticationID', '==', req.user.id)
-    .get();
-  const memberRef = memberQuery.docs[0].ref;
-
-  const organizationRef = await firestore
-    .collection(resolveCollectionName('Organizations'))
-    .doc(req.params.organizationID);
-
-  /*
-   * If organization is a favorite of the member then this query should
-   * return a result of one entry in Favorites
-   */
-  const favoritesSnapshot = await firestore
-    .collection(resolveCollectionName('Favorites'))
-    .where('member', '==', memberRef)
-    .where('organization', '==', organizationRef)
-    .get();
-
-  const isFavoriteOfMember = favoritesSnapshot.docs.length == 1;
-  res.send(isFavoriteOfMember);
 };
 
 exports.postFavoriteOfMember = async function (req, res) {
@@ -311,18 +317,12 @@ exports.postFavoriteOfMember = async function (req, res) {
     return;
   }
 
-  const memberQuery = await firestore
-    .collection(resolveCollectionName('Members'))
-    .where('authenticationID', '==', req.user.id)
-    .get();
-  const memberRef = memberQuery.docs[0].ref;
-
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.organizationID);
 
   const newFavoritesEntry = {
-    member: memberRef,
+    member: getMemberRef(),
     organization: organizationRef,
   };
 
@@ -338,12 +338,6 @@ exports.deleteFavoriteOfMember = async function (req, res) {
     return;
   }
 
-  const memberQuery = await firestore
-    .collection(resolveCollectionName('Members'))
-    .where('authenticationID', '==', req.user.id)
-    .get();
-  const memberRef = memberQuery.docs[0].ref;
-
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.organizationID);
@@ -353,7 +347,7 @@ exports.deleteFavoriteOfMember = async function (req, res) {
    */
   const favoritesSnapshot = await firestore
     .collection(resolveCollectionName('Favorites'))
-    .where('member', '==', memberRef)
+    .where('member', '==', getMemberRef())
     .where('organization', '==', organizationRef)
     .get();
 
