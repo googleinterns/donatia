@@ -213,9 +213,10 @@ exports.getMemberFromOrganization = async function (req, res) {
     .collection(resolveCollectionName('MemberAssignments'))
     .where('member', '==', memberReference)
     .get();
-
   const organizationDoc = await memberAssignments.docs[0];
-  if (organizationDoc == undefined) {
+
+  // Return undefined if the organization hasn't been approved yet.
+  if (!organizationDoc) {
     res.json({id: undefined});
     return;
   }

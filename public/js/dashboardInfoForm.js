@@ -9,7 +9,7 @@ async function getOrganizationInfo() {
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
 
   // Return undefined if the organization hasn't been approved yet.
-  if (organizationData.id == undefined) {
+  if (!organizationData.id) {
     return {orgID: undefined};
   }
 
@@ -34,7 +34,7 @@ const approvalMissingTemplate = `
 window.onload = async function populateForm() {
   const formJSON = await getOrganizationInfo();
 
-  if (formJSON.orgID == undefined) {
+  if (!formJSON.orgID) {
     const renderApprovalAlert = Handlebars.compile(approvalMissingTemplate);
     document
       .getElementById(`form-container`)
