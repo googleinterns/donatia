@@ -31,42 +31,44 @@ export function initMap() {
  * @param {JSON} data A json containing organzation data to create markers for.
  */
 export function createMarkers(data) {
-  data.forEach((organization) => {
-    // Create the markers and attach to the map.
-    const marker = new google.maps.Marker({
-      position: organization.coordinates,
-      map: map,
-      title: organization.name,
-      id: organization.id,
-    });
+  data
+    .filter((organization) => !!organization.coordinates)
+    .forEach((organization) => {
+      // Create the markers and attach to the map.
+      const marker = new google.maps.Marker({
+        position: organization.coordinates,
+        map: map,
+        title: organization.name,
+        id: organization.id,
+      });
 
-    // Create the marker info window.
-    const markerWindow = new google.maps.InfoWindow({
-      content: organization.name,
-    });
+      // Create the marker info window.
+      const markerWindow = new google.maps.InfoWindow({
+        content: organization.name,
+      });
 
-    // Select a marker and dispatch an event when a marker is hovered on/off.
-    const mapContainer = document.getElementById('map');
+      // Select a marker and dispatch an event when a marker is hovered on/off.
+      const mapContainer = document.getElementById('map');
 
-    google.maps.event.addListener(marker, 'mouseover', function () {
-      selectMarker(marker.id);
-      mapContainer.dispatchEvent(
-        new CustomEvent('markerChange', {bubbles: true, detail: marker.id})
-      );
-    });
+      google.maps.event.addListener(marker, 'mouseover', function () {
+        selectMarker(marker.id);
+        mapContainer.dispatchEvent(
+          new CustomEvent('markerChange', {bubbles: true, detail: marker.id})
+        );
+      });
 
-    google.maps.event.addListener(marker, 'mouseout', function () {
-      selectMarker(null);
-      mapContainer.dispatchEvent(new CustomEvent('markerChange', {bubbles: true, detail: null}));
-    });
+      google.maps.event.addListener(marker, 'mouseout', function () {
+        selectMarker(null);
+        mapContainer.dispatchEvent(new CustomEvent('markerChange', {bubbles: true, detail: null}));
+      });
 
-    bounds.extend(marker.getPosition());
-    map.fitBounds(bounds);
-    markers.push({
-      marker: marker,
-      markerWindow: markerWindow,
+      bounds.extend(marker.getPosition());
+      map.fitBounds(bounds);
+      markers.push({
+        marker: marker,
+        markerWindow: markerWindow,
+      });
     });
-  });
 }
 
 /**
