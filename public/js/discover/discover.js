@@ -40,10 +40,8 @@ function updateSearchResults() {
   document.getElementById('search-list').innerHTML = '';
   removeAllMarkers();
 
-  let filter = document.getElementById('autocomplete-input').value;
-  if (filter === '') filter = 'all';
-
-  const unparsedFilter = categories[filter];
+  const filter = document.getElementById('autocomplete-input').value;
+  let unparsedFilter = filter === '' ? "all" : categories[filter];
 
   // Requery and repopulate page data.
   fetch('/discover/' + unparsedFilter)
