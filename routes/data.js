@@ -261,7 +261,7 @@ exports.updatePlaceIDs = async function (req, res) {
       const oldPlaceID = doc.data().placeID;
       const oldPlaceName = doc.data().name;
 
-      if (oldPlaceID != undefined && oldPlaceID != '') {
+      if (oldPlaceID) {
         // If the current entry has a placeID, check if it is the latest one.
         const placeJSON = await (
           await fetch(
@@ -271,7 +271,7 @@ exports.updatePlaceIDs = async function (req, res) {
         const newPlaceID = placeJSON.result.place_id;
 
         // Update the current doc's placeID if a newer placeID has been retrieved.
-        if (newPlaceID != '' && newPlaceID != undefined && newPlaceID != oldPlaceID) {
+        if (!!newPlaceID && newPlaceID != oldPlaceID) {
           doc._ref.update({
             placeID: newPlaceID,
           });
