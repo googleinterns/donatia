@@ -83,10 +83,9 @@ export function selectCard(id = null, scroll = false) {
  * @return {string} The formatted phone number.
  */
 function formatPhoneNumber(number) {
-  const regexMatch = number.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  const regexMatch = number.match(/^(\d{3})(\d{3})(\d{4})$/);
   if (regexMatch) {
-    const countryCode = regexMatch[1] ? '+1 ' : '';
-    return [countryCode, '(', regexMatch[2], ') ', regexMatch[3], '-', regexMatch[4]].join('');
+    return `(${regexMatch[1]}) ${regexMatch[2]}-${regexMatch[3]}`;
   }
   return number;
 }
