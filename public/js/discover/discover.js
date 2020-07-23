@@ -1,6 +1,8 @@
 import {createOrganizationCards, selectCard} from './searchList.js';
 import {initMap, setLocationInfo, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
 
+/* global categories */
+
 /**
  * When the page loads, fetches initial organization data and render it
  * in cards on the list.
@@ -34,14 +36,17 @@ function setPageEventListeners() {
  * Requeries for organization data and refreshes page data.
  */
 function updateSearchResults() {
+  document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('search-list').innerHTML = '';
   removeAllMarkers();
 
   let filter = document.getElementById('autocomplete-input').value;
   if (filter === '') filter = 'all';
 
+  const unparsedFilter = categories[filter];
+
   // Requery and repopulate page data.
-  fetch('/discover/' + filter)
+  fetch('/discover/' + unparsedFilter)
     .then((data) => data.json())
     .then(async (organizations) => {
       await Promise.all(organizations.map(setLocationInfo));

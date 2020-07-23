@@ -38,6 +38,9 @@ export function createOrganizationCards(organizations) {
   // Parse organization phone numbers.
   organizations.forEach((organization) => {
     organization.phone = formatPhoneNumber(organization.phone);
+    organization.categories = organization.categories.map((category) =>
+      category.replace(/[^a-zA-Z0-9]/g, ' ')
+    );
   });
 
   // Generate the cards.
