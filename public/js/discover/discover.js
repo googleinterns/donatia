@@ -38,6 +38,10 @@ function setPageEventListeners() {
 function updateSearchResults() {
   document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('search-list').innerHTML = '';
+
+  // Show loading icon.
+  document.getElementById('loading-container').style.display = 'flex';
+
   removeAllMarkers();
 
   let filter = document.getElementById('autocomplete-input').value;
@@ -53,6 +57,7 @@ function updateSearchResults() {
       return organizations;
     })
     .then((organizations) => {
+      document.getElementById('loading-container').style.display = 'none';
       createOrganizationCards(organizations);
       createMarkers(organizations);
     });
