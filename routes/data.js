@@ -90,7 +90,7 @@ exports.getCategories = async function () {
 };
 
 /**
- * Get the reference to the user's Member document
+ * Gets the reference to the user's Member document
  * @param {*} user User object set by Passport.js
  * @return {DocumentReference} reference to a Member document
  */
@@ -124,10 +124,8 @@ exports.isFavoriteOfMember = async function (organizationID, req) {
     .collection(resolveCollectionName('Organizations'))
     .doc(organizationID);
 
-  /*
-   * If organization is a favorite of the member then this query should
-   * return a result of one entry in Favorites
-   */
+  // If organization is a favorite of the member then this query should
+  // return a result of one entry in Favorites.
   const favoritesSnapshot = await firestore
     .collection(resolveCollectionName('Favorites'))
     .where('member', '==', memberRef)
