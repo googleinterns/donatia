@@ -337,6 +337,41 @@ exports.organizationsPost = async function (req, res) {
   res.redirect('/dashboard');
 };
 
+exports.updatePlaceIDs = async function (req, res) {
+  // Get all entries from the Organizations table.
+  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
+
+  let tasksCompleted = '';
+
+  await Promise.all(
+    organizations.docs.map(async (doc) => {
+      const oldPlaceID = doc.data().placeID;
+      const placeName = doc.data().name;
+
+      if (oldPlaceID) {
+        // If the current entry has a placeID, check if it is the latest one.
+        const placeJSON = await (
+          await fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${oldPlaceID}&fields=place_id&key=${process.env.MAPS_KEY}`
+          )
+        ).json();
+        const newPlaceID = placeJSON.result.place_id;
+
+        // Update the current doc's placeID if a newer placeID has been retrieved.
+        if (!!newPlaceID && newPlaceID != oldPlaceID) {
+          doc._ref.update({
+            placeID: newPlaceID,
+          });
+          tasksCompleted += `Updated ${placeName}. `;
+        }
+      } else {
+        tasksCompleted += `Missing placeID: ${placeName}. `;
+      }
+    })
+  );
+  res.json(tasksCompleted);
+};
+
 exports.getFavorites = async function (req, res) {
   // If user is not authenticated then return no authorized
   if (!req.user) {
