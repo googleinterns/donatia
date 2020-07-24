@@ -1,4 +1,5 @@
 const {Firestore} = require('@google-cloud/firestore');
+const fetch = require('node-fetch');
 
 // Database Initialization
 let firestore = new Firestore();
@@ -43,16 +44,12 @@ exports.getAllOrganizations = async function () {
 
   const parsedOrganizations = [];
 
-  for (const id in organizations.docs) {
-    if (Object.prototype.hasOwnProperty.call(organizations.docs, id)) {
-      const doc = organizations.docs[id];
+  for (const doc of organizations.docs) {
+    const data = doc.data();
+    data['id'] = doc.id;
+    data['categories'] = await getOrganizationCategories(doc.ref);
 
-      const data = doc.data();
-      data['id'] = id;
-      data['categories'] = await getOrganizationCategories(doc.ref);
-
-      parsedOrganizations.push(data);
-    }
+    parsedOrganizations.push(data);
   }
 
   return parsedOrganizations;
@@ -73,11 +70,13 @@ exports.getFilteredOrganizations = async function (filter) {
 
   const organizations = [];
 
-  for (const id in acceptedCategories) {
-    if (Object.prototype.hasOwnProperty.call(acceptedCategories, id)) {
-      const organizationReference = acceptedCategories[id].organization;
-      const organization = (await organizationReference.get()).data();
-      organization['id'] = id;
+  for (const acceptedCategoryId in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, acceptedCategoryId)) {
+      const organizationReference = acceptedCategories[acceptedCategoryId].organization;
+      const organizationSnapshot = await organizationReference.get();
+
+      const organization = organizationSnapshot.data();
+      organization['id'] = organizationSnapshot.id;
       organization['categories'] = await getOrganizationCategories(organizationReference);
 
       organizations.push(organization);
@@ -93,6 +92,53 @@ exports.getFilteredOrganizations = async function (filter) {
 exports.getCategories = async function () {
   const snapshot = await firestore.collection(resolveCollectionName('Categories')).get();
   return snapshot.docs.map((doc) => doc.id);
+};
+
+/**
+ * Gets the reference to the user's Member document
+ * @param {*} user User object set by Passport.js
+ * @return {DocumentReference} reference to a Member document
+ */
+async function getMemberReference(user) {
+  // If user is not authenticated then return no authorized
+  if (!user) {
+    return undefined;
+  }
+
+  const memberQuery = await firestore
+    .collection(resolveCollectionName('Members'))
+    .where('authenticationID', '==', user.id)
+    .get();
+
+  return memberQuery.docs[0].ref;
+}
+
+/**
+ * @param {String} organizationID ID  of organanization
+ * @param {*} req request object
+ * @return {boolean} true if organization is in member's favorite
+ */
+exports.isFavoriteOfMember = async function (organizationID, req) {
+  // If user is not authenticated then return false
+  if (!req.user) {
+    return false;
+  }
+
+  const memberRef = getMemberReference();
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(organizationID);
+
+  // If organization is a favorite of the member then this query should
+  // return a result of one entry in Favorites.
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
+
+  const isFavorite = favoritesSnapshot.docs.length == 1;
+  return isFavorite;
 };
 
 /**
@@ -239,8 +285,15 @@ exports.getMemberFromOrganization = async function (req, res) {
     .collection(resolveCollectionName('MemberAssignments'))
     .where('member', '==', memberReference)
     .get();
+  const organizationDoc = await memberAssignments.docs[0];
 
-  const organizationReference = await memberAssignments.docs[0].data().organization._path.segments;
+  // Return undefined if the organization hasn't been approved yet.
+  if (!organizationDoc) {
+    res.json({id: undefined});
+    return;
+  }
+
+  const organizationReference = organizationDoc.data().organization._path.segments;
 
   const organizationInfo = await firestore
     .collection(organizationReference[0])
@@ -265,6 +318,18 @@ exports.organizationsGet = async function (req, res) {
 
 exports.organizationsPost = async function (req, res) {
   const newOrgData = req.body;
+
+  // If placeID was not populated, retrieve it.
+  if (newOrgData.placeID == '') {
+    const placeJSON = await (
+      await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${newOrgData.address}&key=${process.env.MAPS_KEY}`
+      )
+    ).json();
+    newOrgData.placeID = placeJSON.results[0].place_id;
+  }
+  delete newOrgData.address;
+
   newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
   newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
   newOrgData.acceptsShipping = !!newOrgData.acceptsShipping;
@@ -273,4 +338,106 @@ exports.organizationsPost = async function (req, res) {
     .doc(`${req.params.id}`)
     .update(newOrgData);
   res.redirect('/dashboard');
+};
+
+exports.updatePlaceIDs = async function (req, res) {
+  // Get all entries from the Organizations table.
+  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
+
+  let tasksCompleted = '';
+
+  await Promise.all(
+    organizations.docs.map(async (doc) => {
+      const oldPlaceID = doc.data().placeID;
+      const placeName = doc.data().name;
+
+      if (oldPlaceID) {
+        // If the current entry has a placeID, check if it is the latest one.
+        const placeJSON = await (
+          await fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${oldPlaceID}&fields=place_id&key=${process.env.MAPS_KEY}`
+          )
+        ).json();
+        const newPlaceID = placeJSON.result.place_id;
+
+        // Update the current doc's placeID if a newer placeID has been retrieved.
+        if (!!newPlaceID && newPlaceID != oldPlaceID) {
+          doc._ref.update({
+            placeID: newPlaceID,
+          });
+          tasksCompleted += `Updated ${placeName}. `;
+        }
+      } else {
+        tasksCompleted += `Missing placeID: ${placeName}. `;
+      }
+    })
+  );
+  res.json(tasksCompleted);
+};
+
+exports.getFavorites = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberRef = await getMemberReference(req.user);
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .get();
+
+  const results = [];
+  favoritesSnapshot.docs.forEach((doc) => {
+    results.push({...doc.data(), id: doc.id});
+  });
+  res.json(results);
+};
+
+exports.postFavorite = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberRef = await getMemberReference(req.user);
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+
+  const newFavoritesEntry = {
+    member: memberRef,
+    organization: organizationRef,
+  };
+
+  await firestore.collection(resolveCollectionName('Favorites')).doc().set(newFavoritesEntry);
+  res.sendStatus(201);
+};
+
+exports.deleteFavorite = async function (req, res) {
+  // If user is not authenticated then return no authorized
+  if (!req.user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const memberRef = await getMemberReference(req.user);
+  const organizationRef = await firestore
+    .collection(resolveCollectionName('Organizations'))
+    .doc(req.params.organizationID);
+
+  /*
+   * Get Favorites entry document
+   */
+  const favoritesSnapshot = await firestore
+    .collection(resolveCollectionName('Favorites'))
+    .where('member', '==', memberRef)
+    .where('organization', '==', organizationRef)
+    .get();
+
+  // Delete the entry
+  await favoritesSnapshot.docs[0].ref.delete();
+  res.sendStatus(200);
 };

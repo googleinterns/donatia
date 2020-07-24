@@ -86,19 +86,13 @@ export function selectCard(id = null, scroll = false) {
 
 /**
  * Formats a raw phone number into a +# (###) ### - #### format.
- * @param {string} number The phone number unformatted.
+ * @param {number} number The phone number unformatted.
  * @return {string} The formatted phone number.
  */
 function formatPhoneNumber(number) {
-  if (number.length == 9) {
-    const areaCode = number.substring(0, 3);
-    const exchangeCode = number.substring(3, 6);
-    const lineNumber = number.substring(6, 9);
-    return `(${areaCode})-${exchangeCode}-${lineNumber}`;
-  } else if (number.length == 10) {
-    const countryCode = number.substring(0, 1);
-    return `+${countryCode} ${formatPhoneNumber(number.substring(1, 10))}`;
-  } else {
-    return number;
+  const regexMatch = number.toString().match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (regexMatch) {
+    return `(${regexMatch[1]}) ${regexMatch[2]}-${regexMatch[3]}`;
   }
+  return number;
 }
