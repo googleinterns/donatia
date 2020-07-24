@@ -33,6 +33,9 @@ window.showAutocompleteOptions = function (input) {
  * @param {string} value The autocomplete option to be selected.
  */
 window.setValueOnClick = function (value) {
-  document.getElementById('autocomplete-input').value = value;
+  const autocompleteInput = document.getElementById('autocomplete-input');
+  autocompleteInput.value = value;
+  autocompleteInput.dispatchEvent(new CustomEvent('search', {bubbles: true}));
+
   document.getElementById('autocomplete-list').innerHTML = '';
 };
