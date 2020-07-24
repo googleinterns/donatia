@@ -1,12 +1,13 @@
 /* global Handlebars */
+/* global google*/
 
 const organizationInfoTemplate = `
 <h1>{{organization.name}}</h1>
 <div id="contact-section"> 
-  <p><ion-icon name="map-outline"></ion-icon> 12345 Road Drive, Houston, TX 77007</p>
-  <p><ion-icon name="call-outline"></ion-icon>{{organization.phone}}</p>
-  <p><ion-icon name="globe-outline"></ion-icon>{{organization.website}}</p>
-  <p><ion-icon name="mail-outline"></ion-icon>{{organization.email}}</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination={{organization.lat}},{{organization.lng}}&destination_place_id={{organization.placeID}}"><ion-icon name="map-outline"></ion-icon>{{organization.address}}</a>
+  <a href="tel:{{organization.phone}}"><ion-icon name="call-outline"></ion-icon>{{organization.phone}}</a>
+  <a href="{{organization.website}}"><ion-icon name="globe-outline"></ion-icon>{{organization.website}}</a>
+  <a href="mailto:{{organization.email}}"><ion-icon name="mail-outline"></ion-icon>{{organization.email}}</a>
 </div>
 <div id="description">{{organization.description}}</div>
 `;
@@ -48,7 +49,8 @@ export function loadOrganizationInfo() {
   const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);
   fetch(`/data/organizations/${organizationID}`)
     .then((response) => response.json())
-    .then((data) => {
+    .then(async (data) => {
+      await setAddressFromPlaceID(data);
       document.getElementById('info-section').innerHTML = renderOrgInfo({organization: data});
     });
 }
@@ -65,4 +67,29 @@ export function loadAcceptedCategories() {
         acceptedCategories: data,
       });
     });
+}
+
+/**
+ * Set the address of the organization using its placeID
+ * @param {*} organization
+ * @return {Promise} promise object that resolves when address is retrieved or not found
+ */
+function setAddressFromPlaceID(organization) {
+  const geocoder = new google.maps.Geocoder();
+  return new Promise(function (resolve, reject) {
+    geocoder.geocode({placeId: organization.placeID}, function (results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          organization.address = results[0].formatted_address;
+          organization.lat = results[0].geometry.location.lat();
+          organization.lng = results[0].geometry.location.lng();
+        } else {
+          console.log('No results found');
+        }
+      } else {
+        console.log('Geocoder failed due to: ' + status);
+      }
+      resolve();
+    });
+  });
 }

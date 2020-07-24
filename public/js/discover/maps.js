@@ -31,45 +31,44 @@ export function initMap() {
  * @param {JSON} data A json containing organzation data to create markers for.
  */
 export function createMarkers(data) {
-  data.forEach((organization) => {
-    // Create the markers and attach to the map.
-    const marker = new google.maps.Marker({
-      position: new google.maps.LatLng(
-        organization.location._latitude,
-        organization.location._longitude
-      ),
-      map: map,
-      title: organization.name,
-      id: organization.id,
-    });
+  data
+    .filter((organization) => !!organization.coordinates)
+    .forEach((organization) => {
+      // Create the markers and attach to the map.
+      const marker = new google.maps.Marker({
+        position: organization.coordinates,
+        map: map,
+        title: organization.name,
+        id: organization.id,
+      });
 
-    // Create the marker info window.
-    const markerWindow = new google.maps.InfoWindow({
-      content: organization.name,
-    });
+      // Create the marker info window.
+      const markerWindow = new google.maps.InfoWindow({
+        content: organization.name,
+      });
 
-    // Select a marker and dispatch an event when a marker is hovered on/off.
-    const mapContainer = document.getElementById('map');
+      // Select a marker and dispatch an event when a marker is hovered on/off.
+      const mapContainer = document.getElementById('map');
 
-    google.maps.event.addListener(marker, 'mouseover', function () {
-      selectMarker(marker.id);
-      mapContainer.dispatchEvent(
-        new CustomEvent('markerChange', {bubbles: true, detail: marker.id})
-      );
-    });
+      google.maps.event.addListener(marker, 'mouseover', function () {
+        selectMarker(marker.id);
+        mapContainer.dispatchEvent(
+          new CustomEvent('markerChange', {bubbles: true, detail: marker.id})
+        );
+      });
 
-    google.maps.event.addListener(marker, 'mouseout', function () {
-      selectMarker(null);
-      mapContainer.dispatchEvent(new CustomEvent('markerChange', {bubbles: true, detail: null}));
-    });
+      google.maps.event.addListener(marker, 'mouseout', function () {
+        selectMarker(null);
+        mapContainer.dispatchEvent(new CustomEvent('markerChange', {bubbles: true, detail: null}));
+      });
 
-    bounds.extend(marker.getPosition());
-    map.fitBounds(bounds);
-    markers.push({
-      marker: marker,
-      markerWindow: markerWindow,
+      bounds.extend(marker.getPosition());
+      map.fitBounds(bounds);
+      markers.push({
+        marker: marker,
+        markerWindow: markerWindow,
+      });
     });
-  });
 }
 
 /**
@@ -93,4 +92,23 @@ export function selectMarker(id = null) {
 export function removeAllMarkers() {
   for (const marker of markers) marker.marker.setMap(null);
   markers = [];
+}
+
+/**
+ * Sets the address and coordinates of an organization using PlaceId.
+ * @param {JSON} organization The organization to set location info for.
+ * @return {Promise} A promise for setting the location info upon the API response.
+ */
+export function setLocationInfo(organization) {
+  const geocoder = new google.maps.Geocoder();
+
+  return new Promise(function (resolve, reject) {
+    geocoder.geocode({placeId: organization.placeID}, function (results, status) {
+      if (status === 'OK' && results[0]) {
+        organization.address = results[0].formatted_address;
+        organization.coordinates = results[0].geometry.location;
+      }
+      resolve();
+    });
+  });
 }
