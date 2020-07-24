@@ -44,16 +44,12 @@ exports.getAllOrganizations = async function () {
 
   const parsedOrganizations = [];
 
-  for (const id in organizations.docs) {
-    if (Object.prototype.hasOwnProperty.call(organizations.docs, id)) {
-      const doc = organizations.docs[id];
+  for (const doc of organizations.docs) {
+    const data = doc.data();
+    data['id'] = doc.id;
+    data['categories'] = await getOrganizationCategories(doc.ref);
 
-      const data = doc.data();
-      data['id'] = id;
-      data['categories'] = await getOrganizationCategories(doc.ref);
-
-      parsedOrganizations.push(data);
-    }
+    parsedOrganizations.push(data);
   }
 
   return parsedOrganizations;
@@ -74,11 +70,13 @@ exports.getFilteredOrganizations = async function (filter) {
 
   const organizations = [];
 
-  for (const id in acceptedCategories) {
-    if (Object.prototype.hasOwnProperty.call(acceptedCategories, id)) {
-      const organizationReference = acceptedCategories[id].organization;
-      const organization = (await organizationReference.get()).data();
-      organization['id'] = id;
+  for (const acceptedCategoryId in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, acceptedCategoryId)) {
+      const organizationReference = acceptedCategories[acceptedCategoryId].organization;
+      const organizationSnapshot = await organizationReference.get();
+
+      const organization = organizationSnapshot.data();
+      organization['id'] = organizationSnapshot.id;
       organization['categories'] = await getOrganizationCategories(organizationReference);
 
       organizations.push(organization);
@@ -240,8 +238,15 @@ exports.getMemberFromOrganization = async function (req, res) {
     .collection(resolveCollectionName('MemberAssignments'))
     .where('member', '==', memberReference)
     .get();
+  const organizationDoc = await memberAssignments.docs[0];
 
-  const organizationReference = await memberAssignments.docs[0].data().organization._path.segments;
+  // Return undefined if the organization hasn't been approved yet.
+  if (!organizationDoc) {
+    res.json({id: undefined});
+    return;
+  }
+
+  const organizationReference = organizationDoc.data().organization._path.segments;
 
   const organizationInfo = await firestore
     .collection(organizationReference[0])
@@ -266,6 +271,18 @@ exports.organizationsGet = async function (req, res) {
 
 exports.organizationsPost = async function (req, res) {
   const newOrgData = req.body;
+
+  // If placeID was not populated, retrieve it.
+  if (newOrgData.placeID == '') {
+    const placeJSON = await (
+      await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${newOrgData.address}&key=${process.env.MAPS_KEY}`
+      )
+    ).json();
+    newOrgData.placeID = placeJSON.results[0].place_id;
+  }
+  delete newOrgData.address;
+
   newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
   newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
   newOrgData.acceptsShipping = !!newOrgData.acceptsShipping;
