@@ -86,3 +86,16 @@ input[type='checkbox'] {
   display: flex;
   justify-content: flex-end;
 }
+
+.alert {
+  padding: 20px;
+  background-color: #cc3300;
+  color: white;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.alert > a {
+  color: #0dd9fb;
+}

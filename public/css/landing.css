@@ -32,3 +32,17 @@ body {
 #landing-search-button:hover {
   background-color: #03b38d;
 }
+
+#landing-register-button {
+  background-color: #c38a04;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-top: 30px;
+}
+
+#landing-register-button:hover {
+  background-color: #aa8225;
+}
