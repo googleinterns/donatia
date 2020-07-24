@@ -34,12 +34,17 @@ p {
   margin: 4% 0;
 }
 
-#contact-section p {
+#contact-section a {
   font-size: 1.25rem;
   margin: 1% 0;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+#contact-section a:hover {
+  transition: color 0.2s ease-in;
+  color: #104fad;
 }
 
 #contact-section ion-icon {
