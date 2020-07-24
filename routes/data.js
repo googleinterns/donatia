@@ -1,4 +1,5 @@
 const {Firestore} = require('@google-cloud/firestore');
+const fetch = require('node-fetch');
 
 // Database Initialization
 let firestore = new Firestore();
@@ -270,6 +271,18 @@ exports.organizationsGet = async function (req, res) {
 
 exports.organizationsPost = async function (req, res) {
   const newOrgData = req.body;
+
+  // If placeID was not populated, retrieve it.
+  if (newOrgData.placeID == '') {
+    const placeJSON = await (
+      await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${newOrgData.address}&key=${process.env.MAPS_KEY}`
+      )
+    ).json();
+    newOrgData.placeID = placeJSON.results[0].place_id;
+  }
+  delete newOrgData.address;
+
   newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
   newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
   newOrgData.acceptsShipping = !!newOrgData.acceptsShipping;
