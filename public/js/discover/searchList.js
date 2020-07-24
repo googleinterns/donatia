@@ -86,7 +86,7 @@ export function selectCard(id = null, scroll = false) {
 
 /**
  * Formats a raw phone number into a +# (###) ### - #### format.
- * @param {integer} number The phone number unformatted.
+ * @param {number} number The phone number unformatted.
  * @return {string} The formatted phone number.
  */
 function formatPhoneNumber(number) {
