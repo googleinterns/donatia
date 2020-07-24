@@ -76,7 +76,7 @@ app.get('/discover/organization/:id', moreInfo.view);
 const dashboard = require('./routes/dashboard');
 app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
 
-app.get('/auth/google', passport.authenticate('google', {scope: ['profile']}));
+app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 app.get(
   '/auth/google/callback',
