@@ -94,7 +94,7 @@ exports.getCategories = async function () {
  * @param {*} user User object set by Passport.js
  * @return {DocumentReference} reference to a Member document
  */
-async function getMemberRef(user) {
+async function getMemberReference(user) {
   // If user is not authenticated then return no authorized
   if (!user) {
     return undefined;
@@ -119,7 +119,7 @@ exports.isFavoriteOfMember = async function (organizationID, req) {
     return false;
   }
 
-  const memberRef = getMemberRef();
+  const memberRef = getMemberReference();
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(organizationID);
@@ -303,7 +303,7 @@ exports.getFavorites = async function (req, res) {
     return;
   }
 
-  const memberRef = await getMemberRef(req.user);
+  const memberRef = await getMemberReference(req.user);
   const favoritesSnapshot = await firestore
     .collection(resolveCollectionName('Favorites'))
     .where('member', '==', memberRef)
@@ -316,14 +316,14 @@ exports.getFavorites = async function (req, res) {
   res.json(results);
 };
 
-exports.postFavoriteOfMember = async function (req, res) {
+exports.postFavorite = async function (req, res) {
   // If user is not authenticated then return no authorized
   if (!req.user) {
     res.sendStatus(401);
     return;
   }
 
-  const memberRef = await getMemberRef(req.user);
+  const memberRef = await getMemberReference(req.user);
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.organizationID);
@@ -337,14 +337,14 @@ exports.postFavoriteOfMember = async function (req, res) {
   res.sendStatus(201);
 };
 
-exports.deleteFavoriteOfMember = async function (req, res) {
+exports.deleteFavorite = async function (req, res) {
   // If user is not authenticated then return no authorized
   if (!req.user) {
     res.sendStatus(401);
     return;
   }
 
-  const memberRef = await getMemberRef(req.user);
+  const memberRef = await getMemberReference(req.user);
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(req.params.organizationID);
