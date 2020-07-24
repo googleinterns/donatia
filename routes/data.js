@@ -238,8 +238,15 @@ exports.getMemberFromOrganization = async function (req, res) {
     .collection(resolveCollectionName('MemberAssignments'))
     .where('member', '==', memberReference)
     .get();
+  const organizationDoc = await memberAssignments.docs[0];
 
-  const organizationReference = await memberAssignments.docs[0].data().organization._path.segments;
+  // Return undefined if the organization hasn't been approved yet.
+  if (!organizationDoc) {
+    res.json({id: undefined});
+    return;
+  }
+
+  const organizationReference = organizationDoc.data().organization._path.segments;
 
   const organizationInfo = await firestore
     .collection(organizationReference[0])
