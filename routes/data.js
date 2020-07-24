@@ -43,16 +43,12 @@ exports.getAllOrganizations = async function () {
 
   const parsedOrganizations = [];
 
-  for (const id in organizations.docs) {
-    if (Object.prototype.hasOwnProperty.call(organizations.docs, id)) {
-      const doc = organizations.docs[id];
+  for (const doc of organizations.docs) {
+    const data = doc.data();
+    data['id'] = doc.id;
+    data['categories'] = await getOrganizationCategories(doc.ref);
 
-      const data = doc.data();
-      data['id'] = id;
-      data['categories'] = await getOrganizationCategories(doc.ref);
-
-      parsedOrganizations.push(data);
-    }
+    parsedOrganizations.push(data);
   }
 
   return parsedOrganizations;
@@ -73,11 +69,13 @@ exports.getFilteredOrganizations = async function (filter) {
 
   const organizations = [];
 
-  for (const id in acceptedCategories) {
-    if (Object.prototype.hasOwnProperty.call(acceptedCategories, id)) {
-      const organizationReference = acceptedCategories[id].organization;
-      const organization = (await organizationReference.get()).data();
-      organization['id'] = id;
+  for (const acceptedCategoryId in acceptedCategories) {
+    if (Object.prototype.hasOwnProperty.call(acceptedCategories, acceptedCategoryId)) {
+      const organizationReference = acceptedCategories[acceptedCategoryId].organization;
+      const organizationSnapshot = await organizationReference.get();
+
+      const organization = organizationSnapshot.data();
+      organization['id'] = organizationSnapshot.id;
       organization['categories'] = await getOrganizationCategories(organizationReference);
 
       organizations.push(organization);
