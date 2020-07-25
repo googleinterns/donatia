@@ -25,7 +25,11 @@ const searchCardTemplate = `
                 {{/each}}
               </div>
              </div>
-             <img class="favorite-icon" {{#if this.favorite}} src="static/images/favorite-solid.svg" {{else}} src="static/images/favorite-hollow.svg" {{/if}}>
+             <img 
+              class="favorite-icon" 
+              onclick="toggleFavorite(this)"
+              data-favorited="{{this.favorite}}"
+              {{#if this.favorite}} src="static/images/favorite-solid.svg" {{else}} src="static/images/favorite-hollow.svg" {{/if}}>
           </div>
         </div>
       {{/each}}
@@ -63,9 +67,9 @@ export function createOrganizationCards(organizations) {
       card.dispatchEvent(new CustomEvent('cardChange', {bubbles: true, detail: null}));
     });
 
-    card.addEventListener('click', function (event) {
-      window.open(`/discover/organization/${card.id}`, '_blank');
-    });
+    // card.addEventListener('click', function (event) {
+    //   window.open(`/discover/organization/${card.id}`, '_blank');
+    // });
   }
 }
 
@@ -98,4 +102,16 @@ function formatPhoneNumber(number) {
     return `(${regexMatch[1]}) ${regexMatch[2]}-${regexMatch[3]}`;
   }
   return number;
+}
+
+/**
+ * Toggles the favorite staus of for that organization.
+ * @param {element} favoriteIcon The favorite icon for that organizaiton
+ */
+window.toggleFavorite = function(favoriteIcon) {
+  const favorited = favoriteIcon.dataset.favorited == "true";
+  favoriteIcon.src = favorited ? "static/images/favorite-hollow.svg" : "static/images/favorite-solid.svg";
+  favoriteIcon.dataset.favorited = favorited ? "false" : "true";
+
+  // fetch();
 }
