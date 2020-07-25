@@ -1,6 +1,8 @@
 import {createOrganizationCards, selectCard} from './searchList.js';
 import {initMap, setLocationInfo, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
 
+/* global categories */
+
 /**
  * When the page loads, fetches initial organization data and render it
  * in cards on the list.
@@ -23,6 +25,9 @@ function setPageEventListeners() {
     selectCard(/* id= */ event.detail, /* scroll= */ true)
   );
 
+  // Trigger autocomplete search on selection
+  discoverPage.addEventListener('search', () => updateSearchResults());
+
   // Search if the user presses "enter" in the search box.
   const search = document.getElementById('autocomplete-input');
   search.addEventListener('keydown', function (e) {
@@ -34,20 +39,26 @@ function setPageEventListeners() {
  * Requeries for organization data and refreshes page data.
  */
 function updateSearchResults() {
+  document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('search-list').innerHTML = '';
+
+  // Show loading icon.
+  document.getElementById('loading-container').style.display = 'flex';
+
   removeAllMarkers();
 
-  let filter = document.getElementById('autocomplete-input').value;
-  if (filter === '') filter = 'all';
+  const filter = document.getElementById('autocomplete-input').value;
+  const unparsedFilter = filter === '' ? 'all' : categories[filter];
 
   // Requery and repopulate page data.
-  fetch('/discover/' + filter)
+  fetch('/discover/' + unparsedFilter)
     .then((data) => data.json())
     .then(async (organizations) => {
       await Promise.all(organizations.map(setLocationInfo));
       return organizations;
     })
     .then((organizations) => {
+      document.getElementById('loading-container').style.display = 'none';
       createOrganizationCards(organizations);
       createMarkers(organizations);
     });
