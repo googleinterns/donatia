@@ -17,12 +17,15 @@ const searchCardTemplate = `
             </div>
           </div>
           <div class="search-right">
-            <h2>Accepts</h2>
-            <div class="search-categories-contianer">
-              {{#each this.categories}}
-                <p class="search-category">{{this}}</p>
-              {{/each}}
-            </div>
+            <div>
+              <h2>Accepts</h2>
+              <div class="search-categories-contianer">
+                {{#each this.categories}}
+                  <p class="search-category">{{this}}</p>
+                {{/each}}
+              </div>
+             </div>
+             <img class="favorite-icon" {{#if this.favorite}} src="static/images/favorite-solid.svg" {{else}} src="static/images/favorite-hollow.svg" {{/if}}>
           </div>
         </div>
       {{/each}}
