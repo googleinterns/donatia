@@ -17,9 +17,9 @@ exports.getOrganizations = async function (req, res) {
   let filtered;
 
   if (filter === 'all') {
-    filtered = await database.getAllOrganizations(filter);
+    filtered = await database.getAllOrganizations(req.user);
   } else {
-    filtered = await database.getFilteredOrganizations(filter);
+    filtered = await database.getFilteredOrganizations(filter, req.user);
   }
   res.send(filtered);
 };
