@@ -27,7 +27,7 @@ const searchCardTemplate = `
              </div>
              <img 
               class="favorite-icon" 
-              onclick="toggleFavorite(this)"
+              onclick="toggleFavorite(this, '{{this.id}}')"
               data-favorited="{{this.favorite}}"
               {{#if this.favorite}} src="static/images/favorite-solid.svg" {{else}} src="static/images/favorite-hollow.svg" {{/if}}>
           </div>
@@ -106,12 +106,23 @@ function formatPhoneNumber(number) {
 
 /**
  * Toggles the favorite staus of for that organization.
- * @param {element} favoriteIcon The favorite icon for that organizaiton
+ * @param {element} favoriteIcon The favorite icon for that organizaiton.
+ * @param {String} id The organization to be toggled.
  */
-window.toggleFavorite = function(favoriteIcon) {
-  const favorited = favoriteIcon.dataset.favorited == "true";
-  favoriteIcon.src = favorited ? "static/images/favorite-hollow.svg" : "static/images/favorite-solid.svg";
-  favoriteIcon.dataset.favorited = favorited ? "false" : "true";
+window.toggleFavorite = function(favoriteIcon, id) {
+  const favorited = favoriteIcon.dataset.favorited === "true";
 
-  // fetch();
+  if (favorited) {
+    fetch("/data/member/favorites/" + id, {method: "DELETE",})
+      .then(() => {
+        favoriteIcon.src = "static/images/favorite-hollow.svg";
+        favoriteIcon.dataset.favorited = "false";
+      })
+  } else {
+    fetch("/data/member/favorites/" + id, {method: "POST",})
+      .then(() => {
+        favoriteIcon.src = "static/images/favorite-solid.svg";
+        favoriteIcon.dataset.favorited = "true";
+      })
+  }
 }
