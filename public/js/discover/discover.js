@@ -53,14 +53,14 @@ function updateSearchResults() {
   // Requery and repopulate page data.
   fetch('/discover/' + unparsedFilter)
     .then((data) => data.json())
-    .then(async (organizations) => {
-      await Promise.all(organizations.map(setLocationInfo));
-      return organizations;
+    .then(async (data) => {
+      await Promise.all(data.organizations.map(setLocationInfo));
+      return data;
     })
-    .then((organizations) => {
+    .then((data) => {
       document.getElementById('loading-container').style.display = 'none';
-      createOrganizationCards(organizations);
-      createMarkers(organizations);
+      createOrganizationCards(data.organizations, data.isLoggedIn);
+      createMarkers(data.organizations);
     });
 }
 

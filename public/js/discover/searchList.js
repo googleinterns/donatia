@@ -25,11 +25,14 @@ const searchCardTemplate = `
                 {{/each}}
               </div>
              </div>
-             <img 
-              class="favorite-icon" 
-              onclick="toggleFavorite(this, '{{this.id}}')"
-              data-favorited="{{this.favorite}}"
-              {{#if this.favorite}} src="static/images/favorite-solid.svg" {{else}} src="static/images/favorite-hollow.svg" {{/if}}>
+              {{#if ../isLoggedIn}}
+                <img 
+                  class="favorite-icon" 
+                  onclick="toggleFavorite(this, '{{this.id}}')"
+                  data-favorited="{{this.favorite}}"
+                  {{#if this.favorite}} src="static/images/favorite-solid.svg" 
+                  {{else}} src="static/images/favorite-hollow.svg" {{/if}}>
+              {{/if}}
           </div>
         </div>
       {{/each}}
@@ -41,7 +44,9 @@ const searchCardTemplate = `
  * Renders the organization data into cards.
  * @param {JSON} organizations The JSON of organization data to add to the page.
  */
-export function createOrganizationCards(organizations) {
+export function createOrganizationCards(organizations, isLoggedIn = false) {
+  console.log(isLoggedIn)
+
   // Parse organization phone numbers.
   organizations.forEach((organization) => {
     organization.phone = formatPhoneNumber(organization.phone);
@@ -52,7 +57,7 @@ export function createOrganizationCards(organizations) {
 
   // Generate the cards.
   const renderCards = Handlebars.compile(searchCardTemplate);
-  document.getElementById('search-list').innerHTML = renderCards({organizations: organizations});
+  document.getElementById('search-list').innerHTML = renderCards({organizations: organizations, isLoggedIn: isLoggedIn,});
 
   // Add event listeners to the cards for hovering.
   const searchCards = document.getElementsByClassName('search-card');

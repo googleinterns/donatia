@@ -21,7 +21,10 @@ exports.getOrganizations = async function (req, res) {
   } else {
     filtered = await database.getFilteredOrganizations(filter, req.user);
   }
-  res.send(filtered);
+  res.json({
+    isLoggedIn: req.user !== undefined,
+    organizations: filtered,
+  });
 };
 
 /**
