@@ -50,7 +50,8 @@ export function loadOrganizationInfo() {
   fetch(`/data/organizations/${organizationID}`)
     .then((response) => response.json())
     .then(async (data) => {
-      await setAddressFromPlaceID(data);
+      data.address = await getAddressFromPlaceID(data.placeID); 
+      data.phone = formatPhoneNumber(data.phone);
       document.getElementById('info-section').innerHTML = renderOrgInfo({organization: data});
     });
 }
@@ -67,29 +68,4 @@ export function loadAcceptedCategories() {
         acceptedCategories: data,
       });
     });
-}
-
-/**
- * Set the address of the organization using its placeID
- * @param {*} organization
- * @return {Promise} promise object that resolves when address is retrieved or not found
- */
-function setAddressFromPlaceID(organization) {
-  const geocoder = new google.maps.Geocoder();
-  return new Promise(function (resolve, reject) {
-    geocoder.geocode({placeId: organization.placeID}, function (results, status) {
-      if (status === 'OK') {
-        if (results[0]) {
-          organization.address = results[0].formatted_address;
-          organization.lat = results[0].geometry.location.lat();
-          organization.lng = results[0].geometry.location.lng();
-        } else {
-          console.log('No results found');
-        }
-      } else {
-        console.log('Geocoder failed due to: ' + status);
-      }
-      resolve();
-    });
-  });
 }

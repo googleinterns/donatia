@@ -56,14 +56,7 @@ window.onload = async function populateForm() {
     return;
   }
 
-  // Convert placesID to formatted address.
-  const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({placeId: formJSON.placeID}, (results, status) => {
-    if (status === 'OK' && results[0]) {
-      document.getElementById('address').value = results[0].formatted_address;
-    }
-  });
-
+  document.getElementById('address').value = await getAddressFromPlaceID(formJSON.placeID);
   document.getElementById('name').value = formJSON.name;
   document.getElementById('description').value = formJSON.description;
   document.getElementById('phone').value = formJSON.phone;
