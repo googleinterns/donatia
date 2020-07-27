@@ -100,7 +100,7 @@ exports.getCategories = async function () {
 
 /**
  * Gets the reference to the user's Member document
- * @param {*} user User object set by Passport.js
+ * @param {User} user User object set by Passport.js
  * @return {DocumentReference} reference to a Member document
  */
 async function getMemberReference(user) {
@@ -119,7 +119,7 @@ async function getMemberReference(user) {
 
 /**
  * @param {String} organizationID ID  of organanization
- * @param {*} user User object set by Passport.js
+ * @param {User} user User object set by Passport.js
  * @return {boolean} true if organization is in member's favorite
  */
 async function isFavoriteOfMember(organizationID, user) {
