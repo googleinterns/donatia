@@ -15,7 +15,7 @@ const organizationInfoTemplate = `
 const acceptedCategoryCardTemplate = `
 {{#each acceptedCategories}}
   <div class="card">
-    <h2>{{this.category._path.segments.[1]}}</h2>
+    <h2>{{formatCategory this.category._path.segments.[1]}}</h2>
 
     <h3>Quality Check</h3>
     <ul>
@@ -38,6 +38,12 @@ const locationURL = window.location.href.split('/');
 const organizationID = locationURL[locationURL.length - 1];
 
 window.onload = function () {
+  Handlebars.registerHelper('formatCategory', function(category) {
+    let formatString  = category.toLowerCase().replace(/[^a-zA-Z ]/g, ' ');
+    formatString = formatString.charAt(0).toUpperCase() + formatString.slice(1);
+    return formatString;
+  });
+
   loadOrganizationInfo();
   loadAcceptedCategories();
 };
