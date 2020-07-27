@@ -37,6 +37,7 @@ async function getAcceptedCategoriesByRef(ref, fieldName) {
 
 /**
  * Fetches all organizations from the database.
+ * @param {User} user The user from the request.
  * @return {array} The list of all organizations.
  */
 exports.getAllOrganizations = async function (user) {
@@ -59,6 +60,7 @@ exports.getAllOrganizations = async function (user) {
 /**
  * Queries the database for organizations with the given item category.
  * @param {String} filter The category name to filter organizations by.
+ * @param {User} user The user from the request.
  * @return {array} The list of filtered organizations.
  */
 exports.getFilteredOrganizations = async function (filter, user) {
@@ -141,7 +143,7 @@ async function isFavoriteOfMember(organizationID, user) {
 
   const isFavorite = favoritesSnapshot.docs.length == 1;
   return isFavorite;
-};
+}
 
 /**
  * Retrieves the list of categories accepted by an organization.
