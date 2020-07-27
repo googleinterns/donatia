@@ -1,4 +1,5 @@
 /* global google Handlebars */
+import {getAddressFromPlaceID} from '/static/js/global.js';
 
 /**
  * Gets the information of the organization assigned to the current user.

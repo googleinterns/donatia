@@ -1,3 +1,5 @@
+import {formatPhoneNumber} from '/static/js/global.js';
+
 const searchCardTemplate = `
       {{#each organizations}}
         <div class="search-card" id="{{this.id}}">

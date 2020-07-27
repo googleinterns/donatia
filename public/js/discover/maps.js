@@ -1,3 +1,5 @@
+import {getAddressFromPlaceID, getCoordinatesFromPlaceID} from '/static/js/global.js';
+
 const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;

@@ -1,5 +1,6 @@
 /* global Handlebars */
-/* global google*/
+
+import {getAddressFromPlaceID, formatPhoneNumber} from '/static/js/global.js';
 
 const organizationInfoTemplate = `
 <h1>{{organization.name}}</h1>
@@ -38,8 +39,8 @@ const locationURL = window.location.href.split('/');
 const organizationID = locationURL[locationURL.length - 1];
 
 window.onload = function () {
-  Handlebars.registerHelper('formatCategory', function(category) {
-    let formatString  = category.toLowerCase().replace(/[^a-zA-Z ]/g, ' ');
+  Handlebars.registerHelper('formatCategory', function (category) {
+    let formatString = category.toLowerCase().replace(/[^a-zA-Z ]/g, ' ');
     formatString = formatString.charAt(0).toUpperCase() + formatString.slice(1);
     return formatString;
   });
@@ -49,14 +50,14 @@ window.onload = function () {
 };
 
 /**
- * Fetc organization info and populate the template
+ * Fetch organization info and populate the template
  */
 export function loadOrganizationInfo() {
   const renderOrgInfo = Handlebars.compile(organizationInfoTemplate);
   fetch(`/data/organizations/${organizationID}`)
     .then((response) => response.json())
     .then(async (data) => {
-      data.address = await getAddressFromPlaceID(data.placeID); 
+      data.address = await getAddressFromPlaceID(data.placeID);
       data.phone = formatPhoneNumber(data.phone);
       document.getElementById('info-section').innerHTML = renderOrgInfo({organization: data});
     });
