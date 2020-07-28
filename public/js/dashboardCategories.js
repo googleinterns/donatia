@@ -34,7 +34,7 @@ async function getAllAcceptedCategories() {
   const memberData = await (await fetch('/data/member')).json();
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
 
-  // Return undefined if the organization hasn't been approved yet.
+  // Display alert and return if the organization hasn't been approved yet.
   if (!organizationData.id) {
     const renderApprovalAlert = Handlebars.compile(approvalMissingTemplate);
     document
@@ -92,6 +92,7 @@ window.addCategory = async function addCategory() {
   const donationInstructions = await getInstructionsByType('donation');
   const qualityInstructions = await getInstructionsByType('quality');
 
+  // Display alert and return if there is an error posting the new category.
   if (!organizationData.id || donationInstructions.length == 0 || qualityInstructions.length == 0) {
     const renderInfoAlert = Handlebars.compile(infoMissingTemplate);
     document.getElementById(`category-cards`).insertAdjacentHTML('afterbegin', renderInfoAlert());

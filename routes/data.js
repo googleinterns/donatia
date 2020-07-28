@@ -230,12 +230,14 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
     .collection(`${resolveCollectionName('Categories')}`)
     .doc(`${req.body.category}`);
 
+  // Check if the organization already has accepted the category.
   const existingCategory = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
     .where('category', '==', newAcceptedCategoryData.category)
     .where('organization', '==', newAcceptedCategoryData.organization)
     .get();
 
+  // If the category is not found, set it. Otherwise, update the existing one.
   if (existingCategory.docs.length == 0) {
     await firestore
       .collection(resolveCollectionName('AcceptedCategories'))
