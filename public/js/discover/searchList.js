@@ -19,7 +19,7 @@ const searchCardTemplate = `
           <div class="search-right">
             <div>
               <h2>Accepts</h2>
-              <div class="search-categories-contianer">
+              <div class="search-categories-container">
                 {{#each this.categories}}
                   <p class="search-category">{{this}}</p>
                 {{/each}}

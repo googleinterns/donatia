@@ -242,6 +242,7 @@ exports.getMember = async function (req, res) {
   const userData = {
     authenticationID: memberData.id,
     name: memberData.displayName,
+    email: memberData.emails[0].value,
   };
   const memberSnapshot = await firestore
     .collection(resolveCollectionName('Members'))
@@ -253,16 +254,12 @@ exports.getMember = async function (req, res) {
       // If the member is found, send their ID.
       res.json({id: doc.docs[0].id});
     } else {
-      // Otherwise, create a new member and return their newly created ID.
+      // Otherwise, create a new member.
       firestore
         .collection(resolveCollectionName('Members'))
         .doc()
         .set(userData)
-        .then(
-          memberSnapshot.get().then(function (doc) {
-            res.json({id: doc.docs[0].id});
-          })
-        );
+        .then(res.sendStatus(200));
     }
   });
 };
