@@ -37,9 +37,10 @@ async function getAcceptedCategoriesByRef(ref, fieldName) {
 
 /**
  * Fetches all organizations from the database.
+ * @param {User} user The user from the request.
  * @return {array} The list of all organizations.
  */
-exports.getAllOrganizations = async function () {
+exports.getAllOrganizations = async function (user) {
   const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
 
   const parsedOrganizations = [];
@@ -47,6 +48,7 @@ exports.getAllOrganizations = async function () {
   for (const doc of organizations.docs) {
     const data = doc.data();
     data['id'] = doc.id;
+    data['favorite'] = await isFavoriteOfMember(doc.id, user);
     data['categories'] = await getOrganizationCategories(doc.ref);
 
     parsedOrganizations.push(data);
@@ -58,9 +60,10 @@ exports.getAllOrganizations = async function () {
 /**
  * Queries the database for organizations with the given item category.
  * @param {String} filter The category name to filter organizations by.
+ * @param {User} user The user from the request.
  * @return {array} The list of filtered organizations.
  */
-exports.getFilteredOrganizations = async function (filter) {
+exports.getFilteredOrganizations = async function (filter, user) {
   filter = filter.toLowerCase();
 
   const categoryReference = await firestore
@@ -77,6 +80,7 @@ exports.getFilteredOrganizations = async function (filter) {
 
       const organization = organizationSnapshot.data();
       organization['id'] = organizationSnapshot.id;
+      organization['favorite'] = await isFavoriteOfMember(organizationSnapshot.id, user);
       organization['categories'] = await getOrganizationCategories(organizationReference);
 
       organizations.push(organization);
@@ -96,7 +100,7 @@ exports.getCategories = async function () {
 
 /**
  * Gets the reference to the user's Member document
- * @param {*} user User object set by Passport.js
+ * @param {User} user User object set by Passport.js
  * @return {DocumentReference} reference to a Member document
  */
 async function getMemberReference(user) {
@@ -115,16 +119,16 @@ async function getMemberReference(user) {
 
 /**
  * @param {String} organizationID ID  of organanization
- * @param {*} req request object
+ * @param {User} user User object set by Passport.js
  * @return {boolean} true if organization is in member's favorite
  */
-exports.isFavoriteOfMember = async function (organizationID, req) {
+async function isFavoriteOfMember(organizationID, user) {
   // If user is not authenticated then return false
-  if (!req.user) {
+  if (!user) {
     return false;
   }
 
-  const memberRef = getMemberReference();
+  const memberRef = await getMemberReference(user);
   const organizationRef = await firestore
     .collection(resolveCollectionName('Organizations'))
     .doc(organizationID);
@@ -139,7 +143,7 @@ exports.isFavoriteOfMember = async function (organizationID, req) {
 
   const isFavorite = favoritesSnapshot.docs.length == 1;
   return isFavorite;
-};
+}
 
 /**
  * Retrieves the list of categories accepted by an organization.
