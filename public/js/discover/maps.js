@@ -1,3 +1,5 @@
+import {getAddressFromPlaceID, getCoordinatesFromPlaceID} from '/static/js/global.js';
+
 const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
@@ -97,18 +99,8 @@ export function removeAllMarkers() {
 /**
  * Sets the address and coordinates of an organization using PlaceId.
  * @param {JSON} organization The organization to set location info for.
- * @return {Promise} A promise for setting the location info upon the API response.
  */
-export function setLocationInfo(organization) {
-  const geocoder = new google.maps.Geocoder();
-
-  return new Promise(function (resolve, reject) {
-    geocoder.geocode({placeId: organization.placeID}, function (results, status) {
-      if (status === 'OK' && results[0]) {
-        organization.address = results[0].formatted_address;
-        organization.coordinates = results[0].geometry.location;
-      }
-      resolve();
-    });
-  });
+export async function setLocationInfo(organization) {
+  organization.address = await getAddressFromPlaceID(organization.placeID);
+  organization.coordinates = await getCoordinatesFromPlaceID(organization.placeID);
 }
