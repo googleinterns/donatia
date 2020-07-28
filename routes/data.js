@@ -226,10 +226,24 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
     .collection(`${resolveCollectionName('Categories')}`)
     .doc(`${req.body.category}`);
 
-  await firestore
+  const existingCategory = await firestore
     .collection(resolveCollectionName('AcceptedCategories'))
-    .doc()
-    .set(newAcceptedCategoryData);
+    .where('category', '==', newAcceptedCategoryData.category)
+    .where('organization', '==', newAcceptedCategoryData.organization)
+    .get();
+
+  if (existingCategory.docs.length == 0) {
+    await firestore
+      .collection(resolveCollectionName('AcceptedCategories'))
+      .doc()
+      .set(newAcceptedCategoryData);
+  } else {
+    const acceptedReference = await existingCategory.docs[0].ref._path.segments;
+    await firestore
+      .collection(acceptedReference[0])
+      .doc(acceptedReference[1])
+      .update(newAcceptedCategoryData);
+  }
   res.sendStatus(201);
 };
 
@@ -255,7 +269,7 @@ exports.getMember = async function (req, res) {
         .collection(resolveCollectionName('Members'))
         .doc()
         .set(userData)
-        .then(res.sendStatus(200));
+        .then(res.json({id: null}));
     }
   });
 };
