@@ -22,7 +22,7 @@
 .text {
   color: #3b3b3b;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 2.5rem;
   margin: 0px;
 }
@@ -35,6 +35,10 @@
 
 #landing-text {
   width: 50%;
+}
+
+#landing-info {
+  margin: 2vh 0px;
 }
 
 #landing-header {
@@ -122,10 +126,17 @@
   padding: 1.5vh 8vw;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
 }
 
-#footer > p {
+#footer > img {
+  height: 40px;
+  width: 40px;
+}
+
+#footer > a,
+img {
   color: white;
-  margin: 0px;
+  margin: 0px 20px;
 }
