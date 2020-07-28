@@ -29,7 +29,7 @@
 
 /* Landing Section */
 
-#landing {
+#landing-section {
   background-color: #96ddf2;
 }
 
@@ -83,6 +83,10 @@
 
 /* Icon section */
 
+#icon-section {
+  padding: 4vh 8vw;
+}
+
 #icon-body {
   display: flex;
   flex-grow: 1;
@@ -102,8 +106,8 @@
 }
 
 .icon > img {
-  height: 80px;
-  width: 80px;
+  height: 40px;
+  width: 40px;
   background: #e6e6e6;
   padding: 30px;
   border-radius: 50%;
@@ -111,7 +115,7 @@
 
 /* About Section */
 
-#about {
+#about-section {
   background-color: #e2f4f9;
 }
 
