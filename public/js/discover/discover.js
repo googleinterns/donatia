@@ -38,7 +38,7 @@ function setPageEventListeners() {
 /**
  * Requeries for organization data and refreshes page data.
  */
-function updateSearchResults() {
+async function updateSearchResults() {
   document.getElementById('autocomplete-list').innerHTML = '';
   document.getElementById('search-list').innerHTML = '';
 
@@ -51,17 +51,36 @@ function updateSearchResults() {
   const unparsedFilter = filter === '' ? 'all' : categories[filter];
 
   // Requery and repopulate page data.
-  fetch('/discover/' + unparsedFilter)
-    .then((data) => data.json())
-    .then(async (data) => {
-      await Promise.all(data.organizations.map(setLocationInfo));
-      return data;
-    })
-    .then((data) => {
-      document.getElementById('loading-container').style.display = 'none';
-      createOrganizationCards(data.organizations, data.isLoggedIn);
-      createMarkers(data.organizations);
-    });
+  let data;
+  if (document.getElementById('favorite-button').className == 'show-favorites') {
+    data = await (await fetch('/data/member/favorites')).json();
+  } else {
+    data = await (await fetch('/discover/' + unparsedFilter)).json();
+  }
+
+  await Promise.all(data.organizations.map(setLocationInfo));
+  document.getElementById('loading-container').style.display = 'none';
+  createOrganizationCards(data.organizations, data.isLoggedIn);
+  createMarkers(data.organizations);
 }
+
+/**
+ * Alternates results between the user's favorites and all organizations.
+ */
+window.toggleFavorites = function () {
+  const autocompleteBox = document.getElementById('autocomplete-input');
+  const favoriteButton = document.getElementById('favorite-button');
+
+  if (favoriteButton.className == 'show-all') {
+    favoriteButton.className = 'show-favorites';
+    favoriteButton.innerHTML = 'Show All';
+    autocompleteBox.disabled = true;
+  } else {
+    favoriteButton.className = 'show-all';
+    favoriteButton.innerHTML = 'Show Favorites';
+    autocompleteBox.disabled = false;
+  }
+  updateSearchResults();
+};
 
 window.updateSearchResults = () => updateSearchResults();

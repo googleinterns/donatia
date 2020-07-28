@@ -12,19 +12,31 @@
 
 <div id="discover">
   <div id="search">
-    <div id="filter-container">
-      <div id="filters">
-        <input
-          id="autocomplete-input"
-          type="text"
-          placeholder="Search for an item category"
-          oninput="showAutocompleteOptions(this.value)"
-        />
-        <a id="search-icon-container" onclick="updateSearchResults()">
-          <img id="search-icon" src="static/images/search-icon.svg" />
-        </a>
+    <div id="filter-row">
+      <div id="filter-container">
+        <div id="filters">
+          <input
+            id="autocomplete-input"
+            type="text"
+            placeholder="Search for an item category"
+            oninput="showAutocompleteOptions(this.value)"
+          />
+          <a id="search-icon-container" onclick="updateSearchResults()">
+            <img id="search-icon" src="static/images/search-icon.svg" />
+          </a>
+        </div>
+        <div id="autocomplete-list"></div>
       </div>
-      <div id="autocomplete-list"></div>
+      {{#if user}}
+      <button id="favorite-button" class="show-all" onclick="toggleFavorites()">
+        Show Favorites
+      </button>
+      {{else}}
+      <button id="favorite-button" class="signin-favorites-container">
+        Show Favorites
+        <span class="signin-favorites-button">Sign in to view favorites</span>
+      </button>
+      {{/if}}
     </div>
 
     <div id="loading-container">

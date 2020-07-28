@@ -393,10 +393,24 @@ exports.getFavorites = async function (req, res) {
     .get();
 
   const results = [];
-  favoritesSnapshot.docs.forEach((doc) => {
-    results.push({...doc.data(), id: doc.id});
+  await Promise.all(
+    favoritesSnapshot.docs.map(async (doc) => {
+      const orgReference = await doc.data().organization._path.segments;
+      const orgInfo = await firestore.collection(orgReference[0]).doc(orgReference[1]).get();
+      const categories = await getOrganizationCategories(orgInfo.ref);
+      const orgData = await orgInfo.data();
+      results.push({
+        ...orgData,
+        id: orgInfo.id,
+        favorite: true,
+        categories: categories,
+      });
+    })
+  );
+  res.json({
+    organizations: results,
+    isLoggedIn: true,
   });
-  res.json(results);
 };
 
 exports.postFavorite = async function (req, res) {
