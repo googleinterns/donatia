@@ -130,7 +130,7 @@
   align-items: center;
 }
 
-#footer > img {
+#footer > a > img {
   height: 40px;
   width: 40px;
 }
