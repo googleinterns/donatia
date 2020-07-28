@@ -69,11 +69,12 @@ body {
   outline: none;
 }
 
-.signin-favorites-container {
+.signin-favorites-button {
   position: relative;
+  background-color: grey !important;
 }
 
-.signin-favorites-container .signin-favorites-button {
+.signin-favorites-button .signin-favorites-tooltip {
   visibility: hidden;
   width: 120px;
   background-color: black;
@@ -87,7 +88,7 @@ body {
   margin-left: -60px;
 }
 
-.signin-favorites-container:hover .signin-favorites-button {
+.signin-favorites-button:hover .signin-favorites-tooltip {
   visibility: visible;
 }
 
