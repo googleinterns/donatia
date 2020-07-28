@@ -16,7 +16,7 @@
   max-width: 1300px;
 }
 
-#landing-left {
+#landing-text {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -71,6 +71,11 @@
 
 #landing-register-button:hover {
   background-color: #03b38d;
+}
+
+/* Icon section */
+#icon-section {
+  justify-content: space-evenly;
 }
 
 /* About Section */
