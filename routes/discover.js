@@ -14,7 +14,10 @@ exports.view = async function (req, res) {
 exports.getOrganizations = async function (req, res) {
   const filter = req.params.filter.toLowerCase();
 
-  const filtered = filter === 'all' ? await database.getAllOrganizations(req.user) : await database.getFilteredOrganizations(filter, req.user);
+  const filtered =
+    filter === 'all'
+      ? await database.getAllOrganizations(req.user)
+      : await database.getFilteredOrganizations(filter, req.user);
 
   res.json({
     isLoggedIn: req.user !== undefined,
