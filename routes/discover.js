@@ -14,14 +14,15 @@ exports.view = async function (req, res) {
 exports.getOrganizations = async function (req, res) {
   const filter = req.params.filter.toLowerCase();
 
-  let filtered;
+  const filtered =
+    filter === 'all'
+      ? await database.getAllOrganizations(req.user)
+      : await database.getFilteredOrganizations(filter, req.user);
 
-  if (filter === 'all') {
-    filtered = await database.getAllOrganizations(filter);
-  } else {
-    filtered = await database.getFilteredOrganizations(filter);
-  }
-  res.send(filtered);
+  res.json({
+    isLoggedIn: req.user !== undefined,
+    organizations: filtered,
+  });
 };
 
 /**
