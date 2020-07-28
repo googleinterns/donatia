@@ -1,5 +1,3 @@
-/* Landing Section */
-
 .flex-row-centered {
   display: flex;
   flex-direction: row;
@@ -7,37 +5,43 @@
   justify-content: center;
 }
 
-#landing {
-  background-color: #96ddf2;
-  padding: 10vh 8vw;
+.section {
+  padding: 8vh 8vw;
 }
 
-#landing-body {
+.content {
   max-width: 1300px;
 }
 
-#landing-text {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
+.big-image {
+  align-self: center;
+  max-height: 500px;
+  flex: 1;
 }
 
 .text {
   color: #3b3b3b;
   text-align: left;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  margin: 0px;
+}
+
+/* Landing Section */
+
+#landing {
+  background-color: #96ddf2;
+}
+
+#landing-text {
+  width: 50%;
 }
 
 #landing-header {
   color: #242424;
   font-size: 4.5rem;
+  text-align: left;
   margin: 0px;
-}
-
-#donate-image {
-  align-self: center;
-  max-height: 500px;
-  flex: 1;
 }
 
 #landing-buttons {
@@ -46,7 +50,7 @@
   flex-wrap: wrap;
 }
 
-#landing-buttons > a{
+#landing-buttons > a {
   color: white;
   font-weight: bold;
   border-radius: 5px;
@@ -74,11 +78,54 @@
 }
 
 /* Icon section */
-#icon-section {
-  justify-content: space-evenly;
+
+#icon-body {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.icon {
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon > p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.icon > img {
+  height: 80px;
+  width: 80px;
+  background: #e6e6e6;
+  padding: 30px;
+  border-radius: 50%;
 }
 
 /* About Section */
+
 #about {
-  height: 50vh;
+  background-color: #e2f4f9;
+}
+
+#about-text {
+  width: 55%;
+  text-align: right;
+}
+
+/* Footer */
+#footer {
+  background-color: #24292e;
+  padding: 1.5vh 8vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#footer > p {
+  color: white;
+  margin: 0px;
 }
