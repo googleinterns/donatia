@@ -28,7 +28,8 @@
 .search-right {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: flex-end;
   max-width: 45%;
 }
 
@@ -70,7 +71,7 @@
   text-align: right;
 }
 
-.search-categories-contianer {
+.search-categories-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -93,4 +94,9 @@
 .invalid-symbol {
   color: #a83234;
   font-weight: bold;
+}
+
+.favorite-icon {
+  height: 30px;
+  width: 30px;
 }
