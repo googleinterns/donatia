@@ -119,12 +119,13 @@ it('GET Request /data/organizations/:id : Get an Organization', function (done) 
 
 it('POST Request /data/organizations/:id : Update an Organization', function (done) {
   const newName = 'test name';
+  const oldAddress = '535 Portwall St, Houston, TX 77029';
   const requestOptions = {
     headers: {'content-type': 'application/json'},
     url: process.env.BASE_URL + `data/organizations/${mockData.ORG_ID_FOOD_BANK}`,
     body: JSON.stringify({
       name: newName,
-      address: '535 Portwall St, Houston, TX 77029',
+      address: oldAddress,
     }),
   };
   request.post(requestOptions, function (error, response, body) {
@@ -136,6 +137,6 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
         .get()
         .data().name
     ).to.deep.equal(newName);
-    done();
+    setTimeout(done, 0);
   });
 });
