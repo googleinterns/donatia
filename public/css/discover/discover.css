@@ -38,12 +38,58 @@ body {
   height: 100%;
 }
 
+#filter-row {
+  display: flex;
+  flex-direction: row;
+}
+
 #filter-container {
   position: relative;
   border-radius: 18px;
   background-color: white;
   border: 1.7px solid #4f4f4f;
-  width: 100%;
+  flex: 1;
+}
+
+#favorite-button {
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 15px;
+  background-color: #c38a04;
+  color: white;
+  border: none;
+  margin: 5px 10px;
+}
+
+#favorite-button:hover {
+  background-color: #aa8225;
+}
+
+#favorite-button:focus {
+  outline: none;
+}
+
+.signin-favorites-button {
+  position: relative;
+  background-color: grey !important;
+}
+
+.signin-favorites-button .signin-favorites-tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.signin-favorites-button:hover .signin-favorites-tooltip {
+  visibility: visible;
 }
 
 #filters {
@@ -59,6 +105,10 @@ body {
   padding: 8px 10px;
   border: none;
   background: transparent;
+}
+
+#autocomplete-input:focus {
+  outline: none;
 }
 
 #autocomplete-list {
