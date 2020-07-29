@@ -1,11 +1,11 @@
 /* global Handlebars */
 
-import {getAddressFromPlaceID, formatPhoneNumber} from '/static/js/global.js';
+import {formatPhoneNumber} from '/static/js/global.js';
 
 const organizationInfoTemplate = `
 <h1>{{organization.name}}</h1>
 <div id="contact-section"> 
-  <a href="https://www.google.com/maps/dir/?api=1&destination={{organization.lat}},{{organization.lng}}&destination_place_id={{organization.placeID}}"><ion-icon name="map-outline"></ion-icon>{{organization.address}}</a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination={{organization.coordinates.lat}},{{organization.coordinates.lng}}"><ion-icon name="map-outline"></ion-icon>{{organization.address}}</a>
   <a href="tel:{{organization.phone}}"><ion-icon name="call-outline"></ion-icon>{{organization.phone}}</a>
   <a target="_blank" href="{{organization.website}}"><ion-icon name="globe-outline"></ion-icon>{{organization.website}}</a>
   <a href="mailto:{{organization.email}}"><ion-icon name="mail-outline"></ion-icon>{{organization.email}}</a>
@@ -57,7 +57,6 @@ export function loadOrganizationInfo() {
   fetch(`/data/organizations/${organizationID}`)
     .then((response) => response.json())
     .then(async (data) => {
-      data.address = await getAddressFromPlaceID(data.placeID);
       data.phone = formatPhoneNumber(data.phone);
       document.getElementById('info-section').innerHTML = renderOrgInfo({organization: data});
     });

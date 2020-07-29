@@ -336,16 +336,12 @@ exports.organizationsGet = async function (req, res) {
 exports.organizationsPost = async function (req, res) {
   const newOrgData = req.body;
 
-  // If placeID was not populated, retrieve it.
-  if (newOrgData.placeID == '') {
-    const placeJSON = await (
-      await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${newOrgData.address}&key=${process.env.MAPS_KEY}`
-      )
-    ).json();
-    newOrgData.placeID = placeJSON.results[0].place_id;
-  }
-  delete newOrgData.address;
+  const placeJSON = await (
+    await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${newOrgData.address}&key=${process.env.MAPS_KEY}`
+    )
+  ).json();
+  newOrgData.coordinates = placeJSON.results[0].geometry.location;
 
   newOrgData.acceptsDropOff = !!newOrgData.acceptsDropOff;
   newOrgData.acceptsPickUp = !!newOrgData.acceptsPickUp;
@@ -355,41 +351,6 @@ exports.organizationsPost = async function (req, res) {
     .doc(`${req.params.id}`)
     .update(newOrgData);
   res.redirect('/dashboard');
-};
-
-exports.updatePlaceIDs = async function (req, res) {
-  // Get all entries from the Organizations table.
-  const organizations = await firestore.collection(resolveCollectionName('Organizations')).get();
-
-  let tasksCompleted = '';
-
-  await Promise.all(
-    organizations.docs.map(async (doc) => {
-      const oldPlaceID = doc.data().placeID;
-      const placeName = doc.data().name;
-
-      if (oldPlaceID) {
-        // If the current entry has a placeID, check if it is the latest one.
-        const placeJSON = await (
-          await fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${oldPlaceID}&fields=place_id&key=${process.env.MAPS_KEY}`
-          )
-        ).json();
-        const newPlaceID = placeJSON.result.place_id;
-
-        // Update the current doc's placeID if a newer placeID has been retrieved.
-        if (!!newPlaceID && newPlaceID != oldPlaceID) {
-          doc._ref.update({
-            placeID: newPlaceID,
-          });
-          tasksCompleted += `Updated ${placeName}. `;
-        }
-      } else {
-        tasksCompleted += `Missing placeID: ${placeName}. `;
-      }
-    })
-  );
-  res.json(tasksCompleted);
 };
 
 exports.getFavorites = async function (req, res) {

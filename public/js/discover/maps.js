@@ -1,5 +1,3 @@
-import {getAddressFromPlaceID, getCoordinatesFromPlaceID} from '/static/js/global.js';
-
 const HOUSTON_COORDS = {lat: 29.7604, lng: -95.3698};
 
 let map;
@@ -94,13 +92,4 @@ export function selectMarker(id = null) {
 export function removeAllMarkers() {
   for (const marker of markers) marker.marker.setMap(null);
   markers = [];
-}
-
-/**
- * Sets the address and coordinates of an organization using PlaceId.
- * @param {JSON} organization The organization to set location info for.
- */
-export async function setLocationInfo(organization) {
-  organization.address = await getAddressFromPlaceID(organization.placeID);
-  organization.coordinates = await getCoordinatesFromPlaceID(organization.placeID);
 }
