@@ -1,7 +1,7 @@
 {
   "name": "step-node-starter",
   "version": "1.0.0",
-  "description": "Skeleton app for Node.js based STEP capstone project. ",
+  "description": "Donatia app",
   "main": "index.js",
   "scripts": {
     "create-env-dev": "printenv > .env.dev",
