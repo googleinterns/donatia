@@ -4,7 +4,9 @@ require('../app');
 
 it('Landing page content', function (done) {
   request(process.env.BASE_URL, function (error, response, body) {
-    expect(body).to.contain('Find the best organizations to donate your items to');
+    expect(body).to.contain(
+      'Donatia makes donating simple by connecting people to non-profit organizations.'
+    );
     done();
   });
 });

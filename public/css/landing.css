@@ -1,48 +1,146 @@
-body {
-  height: 100vh;
+.flex-row-centered {
   display: flex;
-  flex-direction: column;
-}
-
-#landing {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: #104fad;
+}
+
+.section {
+  padding: 8vh 8vw;
+}
+
+.content {
+  max-width: 1300px;
+}
+
+.big-image {
+  align-self: center;
+  max-height: 500px;
+  flex: 1;
+}
+
+.text {
+  color: #3b3b3b;
+  text-align: left;
+  font-size: 1.4rem;
+  line-height: 2.5rem;
+  margin: 0px;
+}
+
+/* Landing Section */
+
+#landing-section {
+  background-color: #96ddf2;
 }
 
 #landing-text {
+  width: 50%;
+}
+
+#landing-info {
+  margin: 2vh 0px;
+}
+
+#landing-header {
+  color: #242424;
+  font-size: 4.5rem;
+  text-align: left;
+  margin: 0px;
+}
+
+#landing-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#landing-buttons > a {
   color: white;
-  font-size: 3.5rem;
-  max-width: 800px;
-  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 13px 25px;
+  font-size: 1.4rem;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 #landing-search-button {
-  background-color: #04c39a;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 15px 30px;
-  font-size: 1.5rem;
+  background-color: #eba400;
 }
 
 #landing-search-button:hover {
-  background-color: #03b38d;
+  background-color: #aa8225;
 }
 
 #landing-register-button {
-  background-color: #c38a04;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-size: 1rem;
-  margin-top: 30px;
+  background-color: #32d9a1;
 }
 
 #landing-register-button:hover {
-  background-color: #aa8225;
+  background-color: #03b38d;
+}
+
+/* Icon section */
+
+#icon-section {
+  padding: 4vh 8vw;
+}
+
+#icon-body {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.icon {
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon > p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.icon > img {
+  height: 40px;
+  width: 40px;
+  background: #e6e6e6;
+  padding: 30px;
+  border-radius: 50%;
+}
+
+/* About Section */
+
+#about-section {
+  background-color: #e2f4f9;
+}
+
+#about-text {
+  width: 55%;
+  text-align: right;
+}
+
+/* Footer */
+#footer {
+  background-color: #24292e;
+  padding: 1.5vh 8vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#footer > a > img {
+  height: 40px;
+  width: 40px;
+}
+
+#footer > a,
+img {
+  color: white;
+  margin: 0px 20px;
 }
