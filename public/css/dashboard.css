@@ -35,7 +35,7 @@ button:hover {
 .dashboard-nav > a {
   display: block;
   padding: 1em;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .dashboard-nav > a:hover {
@@ -76,7 +76,7 @@ input[type='checkbox'] {
   width: auto;
 }
 
-.category-card {
+.add-category-card {
   padding: 1em;
   margin: 1em;
   border-style: solid;
