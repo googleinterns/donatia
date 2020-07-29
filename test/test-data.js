@@ -137,6 +137,6 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
         .get()
         .data().name
     ).to.deep.equal(newName);
-    setTimeout(done, 0);
+    done();
   });
 });
