@@ -1,7 +1,7 @@
 <script src="/static/js/dashboardCategories.js"></script>
 
-<div>
-  <div class="category-card">
+<div id="category-cards">
+  <div class="add-category-card">
     <h3>Add a category</h3>
 
     <label for="categories">Choose a category:</label><br />
@@ -27,7 +27,7 @@
   <div id="existing-card-holder">
     <script type="text/x-handlebars" id="existing-cards-template">
       \{{#each cardList}}
-        <div class="category-card" id=\{{this.ID}}>
+        <div class="add-category-card" id=\{{this.ID}}>
           <h3>\{{this.name}}</h3>
           <div class="quality-section">
             <p>Quality Check Instructions:</p>

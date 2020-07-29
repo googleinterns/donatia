@@ -7,7 +7,7 @@ const organizationInfoTemplate = `
 <div id="contact-section"> 
   <a href="https://www.google.com/maps/dir/?api=1&destination={{organization.lat}},{{organization.lng}}&destination_place_id={{organization.placeID}}"><ion-icon name="map-outline"></ion-icon>{{organization.address}}</a>
   <a href="tel:{{organization.phone}}"><ion-icon name="call-outline"></ion-icon>{{organization.phone}}</a>
-  <a href="{{organization.website}}"><ion-icon name="globe-outline"></ion-icon>{{organization.website}}</a>
+  <a target="_blank" href="{{organization.website}}"><ion-icon name="globe-outline"></ion-icon>{{organization.website}}</a>
   <a href="mailto:{{organization.email}}"><ion-icon name="mail-outline"></ion-icon>{{organization.email}}</a>
 </div>
 <div id="description">{{organization.description}}</div>

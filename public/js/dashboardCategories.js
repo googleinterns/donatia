@@ -15,6 +15,17 @@ async function getAllCategories() {
   return allCategories;
 }
 
+const approvalMissingTemplate = `
+  <div class="alert">
+    Your account has not been activated.<br>
+    Please visit 
+    <a target="_blank" href="https://forms.gle/CoT6UXv7ppkJ42z98">
+      https://forms.gle/CoT6UXv7ppkJ42z98
+    </a>
+    to request activation.
+  </div>
+`;
+
 /**
  * Gets all categories that have been accepted by the currently logged in organization.
  * @return {JSON} Object containing all categories used by an organization.
@@ -22,6 +33,16 @@ async function getAllCategories() {
 async function getAllAcceptedCategories() {
   const memberData = await (await fetch('/data/member')).json();
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
+
+  // Display alert and return if the organization hasn't been approved yet.
+  if (!organizationData.id) {
+    const renderApprovalAlert = Handlebars.compile(approvalMissingTemplate);
+    document
+      .getElementById(`category-cards`)
+      .insertAdjacentHTML('afterbegin', renderApprovalAlert());
+    return;
+  }
+
   const responseData = await (
     await fetch(`/data/acceptedcategories/organization/${organizationData.id}`)
   ).json();
@@ -49,10 +70,18 @@ async function getInstructionsByType(type) {
   const inputArray = [];
   const instructionInputs = await document.querySelectorAll(`.${type}-container > input`);
   Array.prototype.forEach.call(instructionInputs, function (instruction) {
-    inputArray.push(instruction.value);
+    if (instruction.value) inputArray.push(instruction.value);
   });
   return inputArray;
 }
+
+const infoMissingTemplate = `
+  <div class="alert">
+    An error occurred while adding a new category. To resolve this:<br>
+    1. Ensure your account has been activated.<br>
+    2. Add at least one donation and quality instruction. 
+  </div>
+`;
 
 /**
  * Retrieves values from form and adds to database.
@@ -62,6 +91,14 @@ window.addCategory = async function addCategory() {
   const organizationData = await (await fetch(`/data/organization/member/${memberData.id}`)).json();
   const donationInstructions = await getInstructionsByType('donation');
   const qualityInstructions = await getInstructionsByType('quality');
+
+  // Display alert and return if there is an error posting the new category.
+  if (!organizationData.id || donationInstructions.length == 0 || qualityInstructions.length == 0) {
+    const renderInfoAlert = Handlebars.compile(infoMissingTemplate);
+    document.getElementById(`category-cards`).insertAdjacentHTML('afterbegin', renderInfoAlert());
+    return;
+  }
+
   fetch(`/data/acceptedcategories/organization/${organizationData.id}`, {
     method: 'POST',
     body: JSON.stringify({
