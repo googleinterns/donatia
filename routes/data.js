@@ -253,7 +253,7 @@ exports.acceptedCategoriesOrganizationPost = async function (req, res) {
   res.sendStatus(201);
 };
 
-exports.getMember = async function (req, res) {
+exports.getMember = async function (req, res, next) {
   const memberData = req.user;
   const userData = {
     authenticationID: memberData.id,
@@ -271,11 +271,7 @@ exports.getMember = async function (req, res) {
       res.json({id: doc.docs[0].id});
     } else {
       // Otherwise, create a new member.
-      firestore
-        .collection(resolveCollectionName('Members'))
-        .doc()
-        .set(userData)
-        .then(res.json({id: null}));
+      firestore.collection(resolveCollectionName('Members')).doc().set(userData).then(next());
     }
   });
 };

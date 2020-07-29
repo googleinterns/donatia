@@ -78,9 +78,12 @@ app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
 
 app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
+const data = require('./routes/data');
+
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {failureRedirect: '/'}),
+  data.getMember,
   (req, res) => res.redirect('/discover')
 );
 
@@ -90,7 +93,6 @@ app.get('/auth/logout', (req, res) => {
   res.redirect('/');
 });
 
-const data = require('./routes/data');
 app.get('/data/acceptedcategories/:id', data.acceptedCategoriesGet);
 app.post('/data/acceptedcategories/:id', data.acceptedCategoriesPost);
 app.delete('/data/acceptedcategories/:id', data.acceptedCategoriesDelete);
