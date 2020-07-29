@@ -81,7 +81,7 @@ app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'ema
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {failureRedirect: '/'}),
-  (req, res) => res.redirect('/discover')
+  (req, res) => res.redirect('/dashboard')
 );
 
 app.get('/auth/logout', (req, res) => {
