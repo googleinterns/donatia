@@ -122,7 +122,10 @@ it('POST Request /data/organizations/:id : Update an Organization', function (do
   const requestOptions = {
     headers: {'content-type': 'application/json'},
     url: process.env.BASE_URL + `data/organizations/${mockData.ORG_ID_FOOD_BANK}`,
-    body: JSON.stringify({name: newName}),
+    body: JSON.stringify({
+      name: newName,
+      address: '535 Portwall St, Houston, TX 77029',
+    }),
   };
   request.post(requestOptions, function (error, response, body) {
     expect(response.statusCode).to.equal(302);

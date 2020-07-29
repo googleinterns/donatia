@@ -1,5 +1,4 @@
 /* global google Handlebars */
-import {getAddressFromPlaceID} from '/static/js/global.js';
 
 /**
  * Gets the information of the organization assigned to the current user.
@@ -26,9 +25,7 @@ function initAutocomplete() {
   const autocomplete = new google.maps.places.Autocomplete(addressInput);
   autocomplete.setFields(['place_id', 'geometry', 'name']);
   autocomplete.addListener('place_changed', function () {
-    const place = autocomplete.getPlace();
-    if (!place.place_id) return;
-    document.getElementById('placeID').value = place.place_id;
+    autocomplete.getPlace();
   });
 }
 
@@ -57,7 +54,7 @@ window.onload = async function populateForm() {
     return;
   }
 
-  document.getElementById('address').value = await getAddressFromPlaceID(formJSON.placeID);
+  document.getElementById('address').value = formJSON.address;
   document.getElementById('name').value = formJSON.name;
   document.getElementById('description').value = formJSON.description;
   document.getElementById('phone').value = formJSON.phone;

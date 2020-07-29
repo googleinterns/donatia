@@ -1,5 +1,5 @@
 import {createOrganizationCards, selectCard} from './searchList.js';
-import {initMap, setLocationInfo, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
+import {initMap, createMarkers, selectMarker, removeAllMarkers} from './maps.js';
 
 /* global categories */
 
@@ -58,7 +58,6 @@ async function updateSearchResults() {
     data = await (await fetch('/discover/' + unparsedFilter)).json();
   }
 
-  await Promise.all(data.organizations.map(setLocationInfo));
   document.getElementById('loading-container').style.display = 'none';
   createOrganizationCards(data.organizations, data.isLoggedIn);
   createMarkers(data.organizations);
