@@ -6,11 +6,13 @@ Donatia simplifies this process by providing an online platform to let donors fi
 
 [Donatia App](https://gsi-step-capstone.wl.r.appspot.com/)
 
-![image](https://user-images.githubusercontent.com/10712922/87168036-e707f800-c29b-11ea-8d43-698253bdef57.png)
+![image](https://user-images.githubusercontent.com/10712922/89314326-845e0e00-d647-11ea-9415-aef9c1e18e74.png)
 
-![image](https://user-images.githubusercontent.com/10712922/87168160-1159b580-c29c-11ea-8e95-333a9945adc6.png)
+![image](https://user-images.githubusercontent.com/10712922/89314467-ad7e9e80-d647-11ea-812a-27eb634ee9a5.png)
 
-![image](https://user-images.githubusercontent.com/10712922/87168250-32220b00-c29c-11ea-81bc-e63f0a46c705.png)
+![image](https://user-images.githubusercontent.com/10712922/89314536-c5eeb900-d647-11ea-81f4-6e629d18f3cf.png)
+
+![image](https://user-images.githubusercontent.com/10712922/89314596-dc951000-d647-11ea-8500-4618b1c73a6c.png)
 
 ## Built With
 
