@@ -24,7 +24,6 @@ Donatia simplifies this process by providing an online platform to let donors fi
 - [firestore-mock](https://www.npmjs.com/package/firestore-mock)
 - [Mocha](https://mochajs.org/)
 
-
 ## Installation
 
 ### Node.js
