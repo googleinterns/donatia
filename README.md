@@ -4,7 +4,7 @@ Researching nonprofit organization to donate to can be tedious. There are roughl
 
 Donatia simplifies this process by providing an online platform to let donors filter through find organizations easily. By creating a streamlined way to discover nonprofit organizations, we hope to reduce waste and increase donations.
 
-[Donatia App](https://gsi-step-capstone.wl.r.appspot.com/)
+**Visit Donatia at [Donatia App](https://gsi-step-capstone.wl.r.appspot.com/)**
 
 ![image](https://user-images.githubusercontent.com/10712922/89314326-845e0e00-d647-11ea-9415-aef9c1e18e74.png)
 
@@ -20,6 +20,10 @@ Donatia simplifies this process by providing an online platform to let donors fi
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
 - [Google Cloud Firestore](https://cloud.google.com/firestore)
+- [Passport.js](http://www.passportjs.org/)
+- [firestore-mock](https://www.npmjs.com/package/firestore-mock)
+- [Mocha](https://mochajs.org/)
+
 
 ## Installation
 
@@ -53,7 +57,7 @@ npm install
 
 Finally, to run the project, use:
 
-`npm start`
+`npm run dev`
 
 After few seconds, your local instance of the project should be available at `http://localhost:3000`.
 
