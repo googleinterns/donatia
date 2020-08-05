@@ -12,6 +12,10 @@ Donatia simplifies this process by providing an online platform to let donors fi
 
 ![image](https://user-images.githubusercontent.com/10712922/89314536-c5eeb900-d647-11ea-81f4-6e629d18f3cf.png)
 
+![Screenshot 2020-08-05 at 9 08 41 AM](https://user-images.githubusercontent.com/34114190/89423288-ebd59580-d6fb-11ea-91d9-d7427ec2772b.png)
+
+![Screenshot 2020-08-05 at 9 02 28 AM](https://user-images.githubusercontent.com/34114190/89423337-fbed7500-d6fb-11ea-88e9-0219829468a9.png)
+
 ![image](https://user-images.githubusercontent.com/10712922/89314596-dc951000-d647-11ea-8500-4618b1c73a6c.png)
 
 ## Built With
