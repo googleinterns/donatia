@@ -21,6 +21,7 @@ it('Landing page status', function (done) {
 it('Dashboard categories page', function (done) {
   request(process.env.BASE_URL + 'dashboard/categories', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
+    expect(body).to.contain('Add a category');
     done();
   });
 });
@@ -28,6 +29,8 @@ it('Dashboard categories page', function (done) {
 it('Dashboard view page', function (done) {
   request(process.env.BASE_URL + 'dashboard', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
+    expect(body).to.contain('Edit');
+    expect(body).to.contain('Accepts drop off donations');
     done();
   });
 });
@@ -35,6 +38,8 @@ it('Dashboard view page', function (done) {
 it('Dashboard edit page', function (done) {
   request(process.env.BASE_URL + 'dashboard/edit', function (error, response, body) {
     expect(response.statusCode).to.equal(200);
+    expect(body).to.contain('Submit');
+    expect(body).to.contain('Accepts drop off donations');
     done();
   });
 });
