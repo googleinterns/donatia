@@ -41,6 +41,20 @@ const handlebarsConfig = handlebars.create({
   },
 });
 
+const testMiddleware = (req, res, next) => {
+  if (req && req.session && req.session.tmp_user) {
+    req.user = req.session.tmp_user;
+  }
+  if (next) next();
+};
+
+const testAccountInfo = require('./test/testAccountInfo.json');
+const testIsLoggedIn = (req, res, next) => {
+  if (!req.user) req.user = {};
+  req.session.tmp_user = testAccountInfo;
+  next();
+};
+
 // Environments configs.
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -74,7 +88,12 @@ const moreInfo = require('./routes/moreInfo');
 app.get('/discover/organization/:id', moreInfo.view);
 
 const dashboard = require('./routes/dashboard');
-app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
+if (process.env.NODE_ENV === 'testing') {
+  app.use(testMiddleware);
+  app.get('/dashboard/:page?', testIsLoggedIn, dashboard.view);
+} else {
+  app.get('/dashboard/:page?', isLoggedIn, dashboard.view);
+}
 
 app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 

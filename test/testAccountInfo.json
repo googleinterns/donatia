@@ -1,0 +1,23 @@
+{
+  "id": "114671053640055693297",
+  "displayName": "Authenticated Account",
+  "name": {"familyName": "Account", "givenName": "Authenticated"},
+  "emails": [{"value": "donatiatestwithauth@gmail.com", "verified": true}],
+  "photos": [
+    {
+      "value": "https://lh5.googleusercontent.com/-kujBr31m3wk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnfvVM5CsnovOAjMR1rVTOoteDA3A/photo.jpg"
+    }
+  ],
+  "provider": "google",
+  "_raw": "{\n \"sub\": \"114671053640055693297\",\n \"name\": \"Authenticated Account\",\n \"given_name\": \"Authenticated\",\n \"family_name\": \"Account\",\n \"picture\": \"https://lh5.googleusercontent.com/-kujBr31m3wk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnfvVM5CsnovOAjMR1rVTOoteDA3A/photo.jpg\",\n \"email\": \"donatiatestwithauth@gmail.com\",\n \"email_verified\": true,\n \"locale\": \"en\"\n}",
+  "_json": {
+    "sub": "114671053640055693297",
+    "name": "Authenticated Account",
+    "given_name": "Authenticated",
+    "family_name": "Account",
+    "picture": "https://lh5.googleusercontent.com/-kujBr31m3wk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnfvVM5CsnovOAjMR1rVTOoteDA3A/photo.jpg",
+    "email": "donatiatestwithauth@gmail.com",
+    "email_verified": true,
+    "locale": "en"
+  }
+}
