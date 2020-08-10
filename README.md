@@ -4,13 +4,19 @@ Researching nonprofit organization to donate to can be tedious. There are roughl
 
 Donatia simplifies this process by providing an online platform to let donors filter through find organizations easily. By creating a streamlined way to discover nonprofit organizations, we hope to reduce waste and increase donations.
 
-[Donatia App](https://gsi-step-capstone.wl.r.appspot.com/)
+**Visit Donatia at [Donatia App](https://gsi-step-capstone.wl.r.appspot.com/)**
 
-![image](https://user-images.githubusercontent.com/10712922/87168036-e707f800-c29b-11ea-8d43-698253bdef57.png)
+![image](https://user-images.githubusercontent.com/10712922/89314326-845e0e00-d647-11ea-9415-aef9c1e18e74.png)
 
-![image](https://user-images.githubusercontent.com/10712922/87168160-1159b580-c29c-11ea-8e95-333a9945adc6.png)
+![image](https://user-images.githubusercontent.com/10712922/89314467-ad7e9e80-d647-11ea-812a-27eb634ee9a5.png)
 
-![image](https://user-images.githubusercontent.com/10712922/87168250-32220b00-c29c-11ea-81bc-e63f0a46c705.png)
+![image](https://user-images.githubusercontent.com/10712922/89314536-c5eeb900-d647-11ea-81f4-6e629d18f3cf.png)
+
+![Screenshot 2020-08-05 at 9 08 41 AM](https://user-images.githubusercontent.com/34114190/89423288-ebd59580-d6fb-11ea-91d9-d7427ec2772b.png)
+
+![Screenshot 2020-08-05 at 9 02 28 AM](https://user-images.githubusercontent.com/34114190/89423337-fbed7500-d6fb-11ea-88e9-0219829468a9.png)
+
+![image](https://user-images.githubusercontent.com/10712922/89314596-dc951000-d647-11ea-8500-4618b1c73a6c.png)
 
 ## Built With
 
@@ -18,6 +24,9 @@ Donatia simplifies this process by providing an online platform to let donors fi
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
 - [Google Cloud Firestore](https://cloud.google.com/firestore)
+- [Passport.js](http://www.passportjs.org/)
+- [firestore-mock](https://www.npmjs.com/package/firestore-mock)
+- [Mocha](https://mochajs.org/)
 
 ## Installation
 
@@ -51,7 +60,7 @@ npm install
 
 Finally, to run the project, use:
 
-`npm start`
+`npm run dev`
 
 After few seconds, your local instance of the project should be available at `http://localhost:3000`.
 
