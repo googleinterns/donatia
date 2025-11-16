@@ -37,12 +37,12 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "ember-template-lint": "^2.9.0",
-    "eslint": "^7.4.0",
+    "eslint": "^9.39.1",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-hbs": "^1.0.0",
     "firestore-mock": "^1.0.4",
-    "mocha": "^8.0.1",
+    "mocha": "^11.7.5",
     "nodemailer": "^6.4.10",
     "prettier": "2.0.5",
     "request": "^2.88.2"
